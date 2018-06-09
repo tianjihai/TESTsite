@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>产品测评TEST</title>
+		<link href="css/bootstrap.css" type="text/css" rel="stylesheet" />
+		<link href="css/stylexg.css" rel="stylesheet">
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet" /> 
+		<script src="jquery1.11.3/jquery-1.11.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<style>
+			.head{
+				position:absolute;
+				width: 100%;
+				height: 80px;
+				background-color: black;  
+			}
+			.hd{
+				width: 1100px;
+				margin: 0 auto; 
+				height: 100%;   
+			} 
+			.logo {
+				float: left;
+			}
+			.lie{
+				float: left;
+				margin-left: 20px;
+			}
+			.lie li{
+				list-style: none;line-height: 80px;width: 170px;
+				text-align: center ; float: left;
+			}
+			.lie li a{
+				display: block; width: 100%; height: 100%; font-size: 20px;
+				color: white; text-decoration: none;font-family: "幼圆";
+			}
+			.lie li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+			} 
+			.main1{
+				width: 1090px;
+				height: 440px;
+				border: 0px solid red;
+				margin: 0 auto;
+				position: relative;
+				top: 110px; 
+			}
+			.mainleft{
+				border: 0px solid blue;
+				width: 70%;
+				height: auto;
+				float: left;
+			}
+			.mainrightT{
+				width: 30%;
+				float: left;
+				height: 200px;
+				border: 0px solid green;
+			}
+			.mainrightB{
+				width: 30%;
+				float: left;
+				height: 200px;
+				border: 0px solid brown;
+			}
+			.main2back{ 
+				width: 100%;
+				height: 500px; 
+				position: absolute;
+				top: 580px;
+				background-color: #222;
+			}
+			.main2{
+				width: 1100px;
+				height: 480px;
+				border: 0px solid red;
+				margin: 0 auto;
+				position: relative;
+				top: 10px;
+			}
+			.main2left{
+				background-color: darkslateblue;
+				width: 25%;
+				height: 440px;
+				line-height: 440px;
+				border: 0px solid green;
+				font-size: 40px;
+				color: white;
+				text-align: center;
+				position: relative;
+				top: 20px;
+				float: left;
+				border-radius: 30px 30px 30px 30px;
+			}
+			.main2left:hover{
+				position: relative;
+				top: 1px;
+				transition: 0.5s;
+				float: left;
+			}
+			.main2right{
+				border: 0px solid yellow;
+				width:75% ;
+				height: 440px;
+				position: relative;
+				top: 20px;
+				float: left;
+			}
+			.mr1,.mr2,.mr3,.mr4,.mr5,.mr6{
+				width: 200px;
+				height: 200px; 
+				float: left;
+				margin-top: 10px;
+				margin-bottom: 10px;
+				margin-left: 50px;
+			}
+			.main3back{ 
+				width: 100%;
+				height: 400px; 
+				position: absolute;
+				top: 1080px;
+				background-color: #4F4F4F;
+			}
+			.main3{
+				width: 1100px;
+				height: 380px;
+				border: 0px solid red;
+				margin: 0 auto;
+				position: relative;
+				top: 10px;
+			}
+			.main3right{
+				background-color: darkcyan;
+				width: 20%;
+				height: 340px;
+				line-height: 340px;
+				border: 0px solid green;
+				font-size: 40px;
+				color: white;
+				text-align: center;
+				position: relative;
+				top: 20px;
+				float: right;
+				border-radius: 30px 30px 30px 30px;
+			}
+			.main3right:hover{
+				position: relative;
+				top: 1px;
+				transition: 0.5s;
+				float: right;
+			}
+			.main3left{
+				border: 0px solid yellow;
+				width:80% ;
+				height: 340px;
+				position: relative;
+				top: 20px;
+				float: left;
+			}
+			.ml1,.ml2,.ml3{
+				width: 250px;
+				height: 250px; 
+				float: right;
+				margin-top: 40px;
+				margin-bottom: 30px;
+				margin-right: 30px;
+			} 
+			.mrr1,.mrr2,.mrr3{
+				width: 250px;
+				height: 250px; 
+				float: left;
+				margin-top: 40px;
+				margin-bottom: 30px;
+				margin-left: 30px;
+			}
+			.foot{ 
+				position: absolute;
+				width: 100%; 
+				height: 240px;
+				background: black;   
+				margin-top:1040px ;
+			}
+			.ftmain{
+				padding-top: 40px;
+				padding-bottom: 50px;
+				width: 1000px; 
+				margin: 0 auto;
+			}
+			.ft1{
+				font-size: 16px;
+				width: 600px;
+				border-radius: 30px 30px 30px 30px;
+				color: white;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				margin: 0 auto;
+			}
+			.ft1:hover{
+				color: black;
+				transition: background .500s ease;
+				width: 600px;
+				height: 50px;
+				background-color: white;
+				border-radius: 30px 30px 30px 30px;
+			} 
+			body{
+				background-image: url(img/backimgg.png);
+			}
+		</style>
+	</head>
+	<body >
+		<div class="head">
+			<div class="hd">
+				<div class="logo"><a href="home.html"><img src="img/logo.png"></a></div>
+				<div class="lie">
+					<ul class="hmn">
+						<li><a href="#phone">手机测评</a></li>
+						<li><a href="#computer">电脑测评</a></li>
+						<li><a href="#bq">版权信息</a></li> 
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="main1">
+			<div class="mainleft"> 
+ 		
+		<div class="carousel slide" id="carousel-4751">
+				<ol class="carousel-indicators">
+					<li data-target="#carousel-4751" data-slide-to="0">
+					</li>
+					<li data-target="#carousel-4751" data-slide-to="1">
+					</li>
+					<li class="active" data-target="#carousel-4751" data-slide-to="2">
+					</li>
+				</ol>
+				<div class="carousel-inner">
+					<div class="item" onclick="window.location.href='note8.html'">
+						<img alt="Carousel Bootstrap First" src="img/main/note8.png" style="margin: 0 auto;">
+						<div class="carousel-caption">
+							<h2>
+								三星NOTE 8 评测
+							</h2> 
+						</div>
+					</div>
+					<div class="item"  onclick="window.location.href='iphonex.html'">
+						<img alt="Carousel Bootstrap Second"src="img/main/ipx.png" style="margin: 0 auto;height: 375px;">
+						<div class="carousel-caption">
+							<h2>
+								iPhone X 评测
+							</h2> 
+						</div>
+					</div>
+					<div class="item active" onclick="window.location.href='iPhone8.html'">
+						<img alt="Carousel Bootstrap Third"src="img/main/iphone88.png" style="margin: 0 auto;height: 375px;">
+						<div class="carousel-caption">
+							<h2>
+								iPhone 8  评测
+							</h2> 
+						</div>
+					</div>
+				</div> <a class="left carousel-control" href="#carousel-4751" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-4751" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+			</div>
+			
+
+			</div>
+			
+			<div class="mainrightT"  onclick="window.location.href='phonetest.html'">
+				<figure class="effect-bubba">
+				<img src="img/bb1.jpg" width="255" height="175"/>
+				<figcaption>
+					<h2>拍照评测</h2>
+					<p style="font-size: 23px;font-family: '微软雅黑'; ">各大旗舰拍照评测</p>
+				</figcaption>
+				</figure>
+			</div>
+			<div class="mainrightB" onclick="window.location.href='note8.html'">
+				<figure class="effect-bubba">
+				<img src="img/tt1.jpg" width="255" height="175"/>
+				<figcaption>
+					<h2>手机评测</h2>
+					<p style="font-size: 23px;font-family: '微软雅黑'; ">三星NOTE8 评测</p>
+				</figcaption>
+				</figure>
+			</div>
+			
+			
+		</div>
+		
+		<div class="main2back">
+			
+			<div class="main2">
+				<div class="main2left" id="phone">
+					手机测评 
+				</div>
+				
+				<div class="main2right">
+					<div class="mr1"  onclick="window.location.href='iphonex.html'">
+						<figure class="effect-bubba">
+						<img src="img/phone/iphx.png" width="200" height="200"/>
+						<figcaption>
+							<h3>iPhone X</h3>
+							 </figcaption>
+						</figure>
+					</div>
+					
+					<div class="mr2" onclick="window.location.href='note8.html'">
+						<figure class="effect-bubba">
+						<img src="img/phone/note8.jpg" width="200" height="200"/>
+						<figcaption>
+							<h3>三星Note 8</h3>
+							 </figcaption>
+						</figure>
+					</div>
+					
+					<div class="mr3" onclick="window.location.href='S8.html'">
+						<figure class="effect-bubba">
+						<img src="img/phone/S8.jpg" width="200" height="200"/>
+						<figcaption>
+							<h3>三星 S8</h3>
+							 </figcaption>
+						</figure>
+					</div>
+					
+					<div class="mr4" onclick="window.location.href='iPhone8.html'">
+						<figure class="effect-bubba">
+						<img src="img/phone/ip8.jpg" width="200" height="200"/>
+						<figcaption>
+							<h3>iPhone 8</h3>
+							 </figcaption>
+						</figure>
+					</div>
+					
+					<div class="mr5" onclick="window.location.href='mate10.html'">
+						<figure class="effect-bubba">
+						<img src="img/phone/mate10.jpg" width="200" height="200"/>
+						<figcaption>
+							<h3>华为Mate 10 Pro</h3>
+							 </figcaption>
+						</figure>
+					</div>
+					
+					<div class="mr6" onclick="window.location.href='mix2.html'">
+						<figure class="effect-bubba">
+						<img src="img/phone/mix2.jpg" width="200" height="200"/>
+						<figcaption>
+							<h3>小米 MIX2</h3>
+							 </figcaption>
+						</figure>
+					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		<div class="main3back">
+			<div class="main3">
+				
+				<div class="main3right" id="computer">
+					电脑测评 
+				</div>
+				
+				<div class="main3left">
+					<div class="ml1" onclick="window.location.href='yoga.html'">
+						<figure class="effect-bubba">
+						<img src="img/compu/yogapro.jpg" width="250" height="250"/>
+						<figcaption>
+							<h1>联想 YOGA</h1>
+							 </figcaption>
+						</figure>
+					</div>
+					
+					<div class="ml2" onclick="window.location.href='surface.html'">
+						<figure class="effect-bubba">
+						<img src="img/compu/surface.jpg" width="250" height="250"/>
+						<figcaption>
+							<h1>Surface Book</h1>
+							 </figcaption>
+						</figure>
+					</div>
+					
+					<div class="ml3" onclick="window.location.href='macpro.html'">
+						<figure class="effect-bubba">
+						<img src="img/compu/macbook.jpg" width="250" height="250"/>
+						<figcaption>
+							<h1>MacBook Pro</h1>
+							 </figcaption>
+						</figure>
+					</div>
+				</div>
+			</div>
+		</div> 
+		
+		<div class="foot" id="bq">
+			<div class="ftmain">
+				<div class="ft1">
+					<font style="font-size: 20px;font-weight: bold;">版权信息：</font>&copy; 软件17201班 - 17180620103  田纪海.<br /><br />
+				</div>
+				<div class="ft1">
+					<font style="font-size: 20px;font-weight: bold;">Designed by：</font>软件17201班 - 17180620103  田纪海.<br /><br />
+				</div>
+				<div class="ft1">
+				<font style="font-size: 20px;font-weight: bold;">Code by：</font> 软件17201班 - 17180620103  田纪海.
+				</div>
+			</div>
+				
+		</div>
+			
+	</body>
+</html>

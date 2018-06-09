@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>三星 Galaxy S8 评测</title>
+		
+		<link href="css/bootstrap.css" type="text/css" rel="stylesheet" />
+		<link href="css/stylexg.css" rel="stylesheet">
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet" /> 
+		<script src="jquery1.11.3/jquery-1.11.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script> 
+		<script type="text/javascript">
+		window.onload=function() {
+	            initDB();
+		}
+	        function initDB() {
+	            var db=getDB();
+		    if(db){
+	            	db.transaction(function (trans) { 
+	                trans.executeSql("create table if not exists message(username text null,title text null,content text null)", [], 		function (trans, result) {
+	
+	                },
+			function (trans, message) {
+				alert(message);
+	            	});
+			});
+		    }
+	        }
+	        
+		function getDB(){ 
+	            var db = openDatabase("iphonex", "1.0", "My Message Pad", 1024 * 1024); 
+	            if(!db) {
+			alert("您的浏览器不支持HTML5本地数据库");
+			return false;
+		    }
+		    return db;
+		}
+		
+	        function save(){
+		    var username = document.getElementById("username").value;
+	 	    var title = document.getElementById("title").value;
+		    var content = document.getElementById("content").value;
+		    
+	            var db = getDB();
+		    if(db){ 
+	               	db.transaction(function(trans) {
+	                trans.executeSql("insert into message(username,title,content) values(?,?,?) ", [username, title, content], 
+			function (ts, data) {
+				alert("留言保存成功");
+	                }, 
+			function (ts, message) {
+	                	alert(message);
+	                });
+	                });	
+		    }
+	        }
+	        
+	        function showAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("select * from message ", [], 					function (ts, result) {
+	                    if (result) {
+				show.innerHTML += "<th>用户名</th><th>标题</th><th>留言</th>";
+	                        for (var i = 0; i < result.rows.length; i++) {
+	                            writeTable(result.rows.item(i)); 
+	                        }
+	                    }
+	                }, 
+			function (ts, message) {
+				alert(message);
+				var tst = message;
+			});
+	            	});
+		    }
+	        }
+	        
+		function writeTable(data) {
+	            var show=document.getElementById("show");
+	            var username = data.username;
+	            var title = data.title;
+	            var content = data.content;
+	            var str = "";
+		    str += "<tr>";
+		    str += "<td>" + username + "</td>";
+		    str += "<td>" + title + "</td>";
+		    str += "<td>" + content + "</td>";
+		    str += "</tr>";
+		    show.innerHTML += str; 
+	        }
+	        
+		function clearAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("delete from message ", [], 					function (ts, data) {
+	                    alert("已清空留言本所有留言");
+	                }, 
+			function (ts, message) {
+			    alert(message);
+			    var tst = message;
+			});
+	            	});
+		    }
+		}
+	    </script>
+   
+		<style>
+			.head{
+				position:absolute;
+				top: 0px;
+				width: 100%;
+				height: 80px;
+				background-color: black;  
+			}
+			.hd{
+				width: 1100px;
+				margin: 0 auto; 
+				height: 100%;   
+			} 
+			.logo {
+				float: left;
+			}
+			.lie{
+				float: left;
+				margin-left: 20px;
+			}
+			.lie li{
+				list-style: none;line-height: 80px;width: 170px;
+				text-align: center ; float: left;
+			}
+			.lie li a{
+				display: block; width: 100%; height: 100%; font-size: 20px;
+				color: white; text-decoration: none;font-family: "幼圆";
+			}
+			.lie li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+			} 
+			.daohang{
+				background-color: black;
+				width: 150px;
+				height: 340px;
+				position: fixed;
+				border: 0px solid yellow;
+				top: 210px; 
+				z-index: 1111;
+			}
+			.daohang li{   
+				list-style: none;line-height: 40px;width: 110px;
+				 border: 0px solid red; 
+			}
+			.daohang li a{
+				display: block; width: 100%; height: 100%; font-size: 18px;
+				color: white; text-decoration: none;font-family: "comic sans ms";
+				 padding-left: 10px;
+			}
+			.daohang li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+				 padding-left: 10px;
+			} 
+			.main1back{
+				width: 1000px;
+				height: 140px;
+				border-bottom: 1px solid gray;
+				margin: 0 auto;
+				position: relative;
+				top: 110px;
+			}
+			.m1top{
+				width: auto;
+				height: auto;
+				position: relative;
+				top: 1px;
+				left: 1px;
+				color: white;
+			}
+			.main2back{
+				width: 1000px;
+				height: auto; 
+				padding-top: 50px;
+				margin: 0 auto;
+				position: relative;
+				top: 110px;
+			} 
+			.main3back{ 
+				width: 1000px;
+				height:auto; 
+				border: 0px solid red;
+				padding-top: 160px; 
+				margin: 0 auto;
+				position: relative;
+				top: 110px; 
+			}
+			.m3l{
+				border: 0px solid blue;
+				width: 50%;
+				height: auto;
+				margin-top: 17px;
+				float: left;
+			}
+			.m3rback{
+				background-color: #282828;
+				border: 0px solid green;
+				width: 497px;
+				height: 328px;
+				margin-top: 17px;
+				float: left;
+				border-radius: 20px 20px 20px 20px;
+			}
+			.m3rmain{
+				margin-top: 20px;
+				background-color: #282828;
+				border: 0px solid orange;
+				width: 497px;
+				height: auto;
+				padding: 25px;
+				font-size: 17px; 
+				color: white;
+				text-align: center;
+			}
+			.m3a{ 
+				border: 0px solid black;
+				height: 400px;
+				width: auto; 
+			}
+			.m3b{
+				border: 0px solid orange;
+				padding-top: 60px;
+			}
+			.m3b img{
+				width: 250px;
+				border-radius: 20px 20px 20px 20px; 
+				transition: width .500s ease-out;
+				animation: donghuaout 5s;
+				position: relative;
+				top: 0px;
+				left: 0px;
+			}
+			.m3b img:hover{
+				animation: donghuain 5s;
+				position: relative;
+				top: 0px;
+				left: 0px;
+				transition: width .500s ease-in;	 
+				width: 600px;
+				border-radius: 20px 20px 20px 20px; 
+			} 
+			@keyframes donghuain{
+				0%{top: 0px;left: 0px;}
+				100%{top: 0px; left: 15%;}
+			}
+			@keyframes donghuaout{
+				0%{top: 0px;left: 15%;}
+				100%{top: 0px; left: 0px;}
+			}
+			.hname{
+				border-bottom: 2px solid gray; 
+				padding-bottom: 15px;
+				width: 300px;
+				font-weight: bold;
+				color: white;
+			}
+			.intro{
+				padding-top: 30px;
+				padding-bottom: 30px; 
+				font-size:17px;
+				color: white;
+			}
+			.intro li{
+				list-style: disc;
+				margin-left: 80px;
+			}
+			.foot{
+				font-size: 17px; 
+				position: absolute;
+				width: 100%; 
+				height: 70px;
+				background: black; 
+				line-height: 70px; 
+				text-align: center;
+				color: white;
+				margin-top:200px ;
+			}
+			.pl{
+				border: 0px solid red;
+				margin-top: 50px;
+				color: white;
+			}
+			.pl table{
+				width: 100%;
+				border: 0px;
+			}
+			.pl tr{
+				border-bottom: 1px solid gray;
+			}
+			.pl table td{
+				border: 0px solid gray;
+				height: 70px;
+				font-size: 20px; 
+			}
+			.liuyan{
+				border: 0px solid blue;
+				margin: 0 auto;
+				padding: 50px;
+				color: white;
+			}
+			.liuyan input{
+				width: 400px;
+				border-radius: 15px 15px 15px 15px;
+				border: 1px solid gray;
+				margin: 10px;
+				height: 30px;
+				text-align: center;
+				font-size: 17px;
+				color: black;
+			}
+			.liuyan textarea{ 
+				width: 420px;
+				height: 150px;
+				color: black;
+			} 
+			body{
+				background-color: black;
+			}
+			.peizhi{
+				border: 0px solid red;  
+				font-size: 17px;
+				padding: 50px;
+				color: white;
+			} 
+			.peizhi tr{
+				height: 30px;
+			}
+			.neir{
+				padding-left: 30px;
+				width: 500px;
+				font-weight: bold;
+				border: 0px;
+				background-color: transparent;
+			}
+			.bttn{
+				width: 190px;
+				height: 40px;
+				background-color: white;
+				border: 1px solid black;
+				border-radius: 20px 20px 20px 20px;
+				color: black;
+			}
+			.bttn:hover{
+				transition: background .500s ease;	
+				width: 190px;
+				height: 40px;
+				background-color:  lightblue;
+				border: 1px solid lightblue;
+				border-radius: 20px 20px 20px 20px;
+				color: dimgray;
+			}
+		</style>
+	</head>
+	<body onload="showAll()">
+		<div class="head">
+			<div class="hd">
+				<div class="logo"><a href="home.html"><img src="img/logo.png"></a></div>
+				<div class="lie">
+					<ul class="hmn">
+						<li><a href="home.html#phone">手机测评</a></li>
+						<li><a href="home.html#computer">电脑测评</a></li> 
+						<li><a href="#bq">版权信息</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="main1back">
+			<div class="m1top">
+				<h1>三星 Galaxy S8评测：王者归位</h1> <br />
+				<h4>是否「真金不怕火炼」仍待时间验证，但 S8 无庸置疑堪称当今最佳旗舰机之一。</h4> 
+			</div>
+		</div>
+		
+		<div class="main2back">
+			<img src="img/s8/galaxyS8M.jpg" style="width: 100%; "/>
+		</div>
+		
+		<div class="daohang">
+			<ul> 
+				<li><a href="#zdgg">重点规格</a></li>
+				<li><a href="#yjsj">硬件设计</a></li>
+				<li><a href="#pm">屏幕</a></li>
+				<li><a href="#dex">DeX 工作站</a></li>
+				<li><a href="#xjxj">相机</a></li>
+				<li><a href="#dcxh">性能续航</a></li>
+				<li><a href="#zj">总结</a></li>
+				<li><a href="#pl">评论</a></li>
+			</ul>
+		</div>
+		
+		<div class="main3back">
+			<div class="m3a">
+			<div class="m3l">
+				<img src="img/s8/se1.jpg"width="100%" />
+			</div>
+			<div class="m3rback">
+				<div class="m3rmain">
+					三星Galaxy S8是三星推出的新一代智能手机产品，
+					在2017年2月MWC会展亮相。搭载10nm制程的骁龙835和Exynos
+					 8895处理器，有5.8英寸和6.2英寸两个版本。全网通、指纹识别、
+					 双频WIFI、高通骁龙、GPS导航。
+					相对于前几代 Galaxy 机型用 Edge 双曲面屏幕赢得的消费者眼光，
+					这次三星搭配用上了超高占比的「无边际屏幕」
+					让 S8 一看过去很轻易地就能以这两个特征找到这部旗舰。
+					而除了藏身在音量钮下方的 AI 助理 Bixby 外，
+					三星还带来了可让 S8 与 Note 系列比拼生产力的 DeX 移动工作站，
+					通过简单的连接实现手机秒变桌机的使用情境。
+				</div>
+			</div>
+			</div>
+			
+			
+			<script>
+			  	var c,ctx;
+			  	var img=new Image();
+			  	window.onload=function(){
+					c=document.getElementById("myCanvas");
+			  		ctx=c.getContext("2d");
+			  		img.src="img/s8/s888.jpg";
+			  		ctx.drawImage(img,0,0,c.width,c.height);  
+			  	}
+			  	function enlarge(ev){
+			  		var ev=ev||window.event;
+			  		var x=ev.clientX-1;
+			  		var y=ev.clientY+100; 
+			 		ctx.drawImage(img,x,y,400,400,0,0,c.width,c.height);  
+			  	} 
+			   </script>
+			   <div style="float: left;width: 100%;">
+		    	<img src="img/s8/s888.jpg" width="500" height="500" onmousemove="enlarge(event)" style="float: left;margin-top: 100px;margin-bottom: 100px;">
+   				<canvas id="myCanvas" width="400" height="400" style="float: left;margin-top: 150px;margin-bottom: 100px;margin-left: 60px;border-radius: 30px 30px 30px 30px;" ></canvas>
+   				</div>
+   				
+   				
+			<div class="m3b">  
+				
+				<h2 class="hname" >重点规格</h2>
+				
+					<div class="peizhi" id="zdgg">
+					  <form>   
+						<input type="hidden" name="imgsrc" value="S8.jpg">  
+						<table>
+							<tr>
+								<td>&gt; 名称：</td>
+								<td><input type="text" name="bookname" value="三星 Galaxy S8" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 屏幕：</td>
+								<td><input type="text" name="bookn" value="5.8 英寸 2960 x 1440 像素 Super AMOLED 全面屏" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 相机：</td>
+								<td><input type="text" name="camera" value="1200 万像素摄像头   ƒ/1.6 光圈" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 处理器：</td>
+								<td><input type="text" name="cpu" value="高通 骁龙835（MSM8998）" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 内存：</td>
+								<td><input type="text" name="ram" value="4GB RAM" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 电量：</td>
+								<td><input type="text" name="baterry" value="3000mAh" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 预载系统：</td>
+								<td><input type="text" name="os" value="Android 7.0" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 无线支持：</td>
+								<td><input type="text" name="wifi" value="802.11ac 双频无线MIMO网络，蓝牙 5.0   支持NFC" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 是否防尘防水：</td>
+								<td><input type="text" name="wcws" value="是" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 三围 重量：</td>
+								<td><input type="text" name="size" value="148.9 x 68.9 x 8mm，重 155g" readonly class="neir"></td>
+							</tr>
+							
+						</table>
+						<br />
+						
+						<INPUT TYPE="button" value="添加比较" onclick="addBj(this)" class="bttn">
+						<INPUT TYPE="button" value="查看比较内容" onclick="javascript:location.href='bijiao.html';" class="bttn">
+						<INPUT TYPE="button" value="清空比较" onclick="clearBj()" class="bttn">
+						  </form>
+					</div>
+		
+				  
+				  <SCRIPT LANGUAGE="JavaScript">
+				  
+				 function addBj(bt){
+				
+					var str=localStorage.getItem("json");
+					var json= JSON.parse(str);
+					
+					if(json==null)
+					{
+					json= { "list": []};
+					
+					}
+					
+						var data=new Object;
+						data.bid=json.list.length;
+						data.name=bt.form.bookname.value;
+						data.bkname=bt.form.bookn.value;
+						data.cmr=bt.form.camera.value;
+						data.cenpu=bt.form.cpu.value;
+						data.neic=bt.form.ram.value;
+						data.dianl=bt.form.baterry.value;
+						data.ios=bt.form.os.value;
+						data.wire=bt.form.wifi.value;
+						data.fcfs=bt.form.wcws.value;
+						data.big=bt.form.size.value;
+						
+						path=bt.form.imgsrc.value;
+						var n=path.lastIndexOf("/")+1;
+						data.pic=path.substring(n);
+						
+						json.list.push(data);
+						 var str = JSON.stringify(json);
+						localStorage.setItem("json",str);
+						alert("添加成功");
+					} 
+				 function clearBj(){
+						localStorage.removeItem("json"); 
+						alert("比较页面已清空");
+				  	}
+				
+				  </SCRIPT> 
+				  
+				<h2 id="yjsj" class="hname" >硬件设计</h2> 
+				 <div class="intro">
+					S8 与 S8+ 的设计语言很好理解，但却很难用相机拍出它的美。
+					基本上它就是一支拿掉了笔、并且将手机与屏幕都变得更高、
+					占比变得超猛的 Note 7（谜之声：额... 说好不提的）。
+					手机侧面采用平整融入边框曲线的曲面屏幕玻璃，并且将中框改为亮面漆面覆盖，
+					让整体手感获得了更进一步提升。
+					<br /><br />
+					在高屏幕占比 + 机身变长的变化下所得到的好处，
+					是在与前代接近的宽度下可获得更大（其实是高）的屏幕范围。
+					S8 与 S8+ 分别在保持差不多的尺寸的同时，
+					都由前代的 5.1 吋与 5.5 吋 S-AMOLED 
+					增大来到了 5.8 吋与 6.2 吋。原本一直以来在小尺寸屏幕上没见到曲面屏幕，
+					也加入了 S8 ，让全系列产品都拥有这样的规格。
+				</div>
+				<div class="tupian"><img src="img/s8/se2.jpg" width="70%" /></div>
+				<div class="intro">
+					这样 18.5:9 高屏幕占比的规格 LG G6 也不是没有提前端出来，
+					不过通过前后曲面玻璃漂亮的收边，说真的，S8 与 S8+ 
+					真的是会让人一拿 / 一看就上瘾的手机。
+					小编直接拿 S8 与 S7 对照比较时，发现单从视频观赏时的情境而言，
+					S8 在看 16:9 视频的时候并没有多大的优势。
+				</div> 
+				<img src="img/s8/se3.jpg" width="70%" />
+				<div class="intro">
+					从上图可以看出，在观看这种 16:9 视频时，S8 的左右还是有着相当大的黑边。
+					整体面积虽然有大一些，但跟 S7 没有太大的差异。此时虽然原厂会主动跳出裁切至全屏幕的选项，
+					但视频上下就会被切到了（点我看范例截图，下方字幕都被裁到了啊）。
+					加上 S8 还是没有提供立体双喇叭的规格，所以单就个人的感觉，
+					是认为 S8 的观赏视频体验还是有改进之处。不过看更宽比例的视频爽度就会直线上升了就是了。
+					<br /><br />
+					不过，一旦放直，S8 的「视界」就跟 S7 拉开距离了 -- 虽然很想讲「大大地」拉开距离，
+					不过就我们的比较之下，由于底部始终还是得要放着系统按钮海苔条的关系，所以以聊天功能来讲，
+					大概就是增高了一两行字这样的高度而已（当然，如果能让系统进入沉浸模式就能更为拉大，
+					但基本上键盘一弹出来就一定会有系统按钮）。手感部分，因为手机主要只是变长了，
+					所以两者单手操控的手感都与前代接近。S8+ 基本上误触的机会已经很少了，
+					改了曲面屏幕的 S8 更是好操控。
+				</div>
+				
+				<h2 id="pm" class="hname">屏幕</h2>
+				<div class="intro"> 
+				虽然传出了偏红的问题，但这次 S8 与 S8+ 依旧保持着相当赞的显示表现。
+				他们的 Super AMOLED 在进入了 18.5:9 比例世代之后，
+				无论在色彩表现与动态范围上（毕竟有 HDR 认证）都十分优秀。
+				配合内建的影像增强功能，更是可以让视频的播放表现更为讨喜。
+				如同前面硬件篇所提到的，这个三星称之为无边际屏幕的 18.5:9 屏幕，
+				在播放大多 16:9 的视频之下左右会显示黑边，甚至用 YouTube app 看视频的时候，
+				还发现软件浮水印会被压在黑边之上，感觉有点有趣 -- 这里有个好处是 FB Messenger 
+				的聊天大头视窗收起时，其实是刚好收在黑边的，就反而不会遮到屏幕。
+				</div>
+				<img src="img/s8/se4.png" width="70%"/>
+				<div class="intro">
+					无论是 S8 或是 S8+，这次的屏幕最高分辨率皆为 2,960 x 1,440，
+					不过三星在预设值之下都会将其调整至 Full HD+ 的 2,220 x 1,080。
+					所以如果想要享有最高画质，则是必须进入显示选项中将分辨率拉到最高。
+					当然，如果你很想省电的话，也是可以降到最低的 HD+ 啰，
+					不过个人认为这样的调整对续航的帮助并没有太大。
+					加上除了原厂的闪电快充之外，S8 也都还是具备无线充电的规格，
+					「补血」手段还算多啦，所以倒不如多多享受它所能给你的旗舰级观赏享受比较实在些。 
+				</div>
+				
+				<h2 id="dex" class="hname" >DeX 工作站</h2>
+				<div class="intro">
+					这次的评测中我们也花了几天的时间试用了 DeX 移动工作站。先讲结论，
+					假若小编真的入手了 S8，真的会把这配件列入必买的购物清单之中。
+					它，设置起来相当简单，基本上就是线插一插就可以运作了。
+					唯一比较麻烦之处，是它必须使用原厂的 USB 快充才可以驱动
+					（Note 4 用的，最高 9V / 2A）。小编试着用一般的充电器或移动电源来供电，
+					基本上手机插上去是连充电都不显示的，更别说是启动屏幕来显示了。
+				</div>
+				<img src="img/s8/se5.jpg" width="70%" />
+				<div class="intro">
+					在 DeX 插上 S8 之后，首次使用的话系统会询问你是要做 DeX 的工作站，
+					亦或是单纯镜射使用。这里我们当然是希望能进入 DeX 来试试它的表现啰！
+					说真的，一切的体验就跟我们记者会所感受到的差不多，
+					基本上支持 DeX 的 App 如 Chrome 与 Samsung Notes 等，
+					都能提供可全屏幕或放大缩小屏幕的使用方式（甚至 Chrome 还可以开启多视窗）。
+					但也有满多一般 App 是仅能用手机的长方尺寸开启，并且仅能调整横向或直向而已。 
+				</div> 
+				
+				<h2 id="xjxj" class="hname" >相机</h2>
+				<div class="intro">
+					S8 与 S7 系列的主相机都还是采用了 12MP 的感光元件，
+					规格与实际上的差异并不很大，但在现有手机厂牌中都算数一数二厉害了。
+					都能提供相当棒的对焦（毕竟是 Dual Pixel 对焦系统啊！）
+					与色彩表现，并且搭载了在录影与拍照都有很好表现的光学防抖系统。
+				</div> 
+				<img src="img/s8/se6.jpg" width="70%"/> 
+				<div class="intro"> 
+					三星有特别强调这次 S8 在低光时的多影像叠合功能可以增进拍摄的效果，
+					而就我们实际拍摄的感想是觉得，在配合 1.4µm 感光元件与 f/1.7 光圈之下，
+					S8 已经比一般相机要能捕捉到更多细节了，加上叠合之后在低光环境下的确算可圈可点。
+					前置相机的部分，这次 S8 搭载了广角 f/1.7 的镜头，
+					亦提供了很有意思的 AR 自拍道具效果。
+				</div>
+				
+				<h2 id="dcxh" class="hname" >性能续航</h2>
+				<div class="intro">
+					简而言之，无论是高通或是 Exynos 8895 的版本
+					（看起来这次 S835 也很不错？）的 S8 与 S8 Plus 都缴出了相当高规的跑分成绩。
+					重点是，这还是在皇帝版尚未登场的状态之下，
+					以 4GB RAM 的一般版本所跑出的成绩（
+					日后如果有机会使用到 6GB RAM 版本再来比较试试）。
+					基本上这样的表现要拿来玩一些 3D 游戏都不是什么问题的啦。
+				</div>
+				<img src="img/s8/se7.jpg" width="70%"/>
+				<div class="intro">
+					更惊人的是，S8 与 S8+ 的电量并没有屏幕变大，加上电池容量持平甚至小减而退步，
+					而且是 S835 跟 Exynos 8895 的版本都基本一致。
+					3,000mAh 的 S8 的高通版本缴出了 13 小时又 27 分、Exynos 
+					版则为 14 小时又 3 分；电量降到 3,500mAh 的 S8+ 
+					则为 15 小时又 8 分（S835）与 14 小时 54 分（Exynos 8895）。
+					喔对了，这个成绩是跟主站编辑的综合测试整理，交代一下我们这边（Exynos 8895 版）的测试基准。
+					首先，一开始我们就把系统调整到最高分辨率，
+					视频测试的时候也将视频占满整个屏幕，
+					所以应该算是比较严苛一点的测试条件 。
+					<br /><br />
+					从标准续航测试中，可以看出这次三星总算将双版本的能耗调整的较为接近了，
+					跟其他对手包括 Pixel XL 与 Moto Z Force 相比也还是胜出；
+					跟 Note 7 比则是夹在双版本之间差距没有很大（Note 7 的 Exynos 8890 续航算是障壁啊！）
+					整体来讲，无论是什么版本的 S8 或 S8+，
+					性能都是当今高标了，所以如果你是对于手机性能非常讲究的人，
+					它应该不会让你失望啰。而且其实在运行了很多跑分软件之后，
+					S8 的机身并不会有特别烫手的感觉，这点十分不错。
+				</div>
+				 
+				 
+				<h2 id="zj" class="hname" >总结</h2>  
+				<div style="background-image: url(img/s8/sefoot.png);width: 100%;height: 380px;"></div>
+				<div class="intro">
+					从这次的 S8 与 S8+，感觉出来三星是希望离「当红炸子鸡」的红与炸两个字越远越好。
+					也因此，虽然我们一方面可以感受到这次旗舰机的各种进步，
+					但又同时能深刻体会他们的确也是步步为营小心谨慎。所以即便搭载了这么抢眼的屏幕，
+					但大多设计上还是走着 Note 7 承袭而来的基础，并没有做出太大的改变，
+					也不断通过前期针对安全的宣传来希望脱离前阵子的阴霾。
+					事实上，虽然这一年还很久，不过就我们目前所见，
+					只要没有太大意外发生的话（你懂的），
+					这次的 S8 与 S8+ 无庸置疑将会是最近最值得购买的旗舰机之一。<br /><br />
+					好机无庸置疑，但，接下来就是靠时间对品质的验证了。
+				</div>
+				
+				<br />
+				<h2 id="pl" class="hname">评论</h2>
+				<div>
+				    <table class="liuyan" >
+				        <tr>
+				           <td>用户名：</td>
+				           <td><input type="text" name="userame" id="username" required/></td>
+				        </tr>
+				        <tr>
+				            <td>标题：</td>
+				            <td><input type="text" name="title" id="title" required/></td>
+				        </tr>
+				        <tr>
+				            <td>评论：</td>
+				            <td><textarea name="content" id="content" required/></textarea></td>
+				        </tr>
+				        <tr>
+				        	<td></td>
+				        	<td><input type="button" class="tj" value="提交" id="save" onclick="save()"/></td>
+				        </tr>
+				    </table>
+				        <hr>
+				        <input type="button" value="查看留言本" onclick="showAll()"/> 
+				        
+				        <div class="pl">
+				        	<h2>网友评论区</h2><br />
+						<table id="show" border="1" >
+				        </table>
+						</div>
+				</div>
+				
+				
+			</div>
+			
+			
+		</div>
+		
+			<div class="foot" id="bq">
+				版权信息：&copy;软件17201班 - 17180620103  田纪海.
+			</div>
+	</body>
+</html>

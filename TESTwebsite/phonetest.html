@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>各大旗舰机相机评测</title>
+		
+		<link href="css/bootstrap.css" type="text/css" rel="stylesheet" />
+		<link href="css/stylexg.css" rel="stylesheet">
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet" /> 
+		<script src="jquery1.11.3/jquery-1.11.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		
+		<script type="text/javascript">
+		window.onload=function() {
+	            initDB();
+		}
+	        function initDB() {
+	            var db=getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	            		
+	                trans.executeSql("create table if not exists message(username text null,title text null,content text null)", [], 		function (trans, result) {
+	
+	                },
+			function (trans, message) {
+				alert(message);
+	            	});
+			});
+		    }
+	        }
+	        
+		function getDB(){
+			
+	            var db = openDatabase("iphonex", "1.0", "My Message Pad", 1024 * 1024); 
+	            if(!db) {
+			alert("您的浏览器不支持HTML5本地数据库");
+			return false;
+		    }
+		    return db;
+		}
+		
+	        function save(){
+		    var username = document.getElementById("username").value;
+	 	    var title = document.getElementById("title").value;
+		    var content = document.getElementById("content").value;
+		    
+	            var db = getDB();
+		    if(db){ 
+	               	db.transaction(function(trans) {
+	                trans.executeSql("insert into message(username,title,content) values(?,?,?) ", [username, title, content], 
+			function (ts, data) {
+				alert("留言保存成功");
+	                }, 
+			function (ts, message) {
+	                	alert(message);
+	                });
+	                });	
+		    }
+	        }
+	        
+	        function showAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("select * from message ", [], 					function (ts, result) {
+	                    if (result) {
+				show.innerHTML += "<th>用户名</th><th>标题</th><th>留言</th>";
+	                        for (var i = 0; i < result.rows.length; i++) {
+	                            writeTable(result.rows.item(i)); 
+	                        }
+	                    }
+	                }, 
+			function (ts, message) {
+				alert(message);
+				var tst = message;
+			});
+	            	});
+		    }
+	        }
+	        
+		function writeTable(data) {
+	            var show=document.getElementById("show");
+	            var username = data.username;
+	            var title = data.title;
+	            var content = data.content;
+	            var str = "";
+		    str += "<tr>";
+		    str += "<td>" + username + "</td>";
+		    str += "<td>" + title + "</td>";
+		    str += "<td>" + content + "</td>";
+		    str += "</tr>";
+		    show.innerHTML += str; 
+	       } 
+		function clearAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("delete from message ", [], 					function (ts, data) {
+	                    alert("已清空留言本所有留言");
+	                }, 
+			function (ts, message) {
+			    alert(message);
+			    var tst = message;
+			});
+	            	});
+		    }
+		}
+	    </script>
+	    
+		<style>
+			.head{
+				position:absolute;
+				top: 0px;
+				width: 100%;
+				height: 80px;
+				background-color: black;  
+			}
+			.hd{
+				width: 1100px;
+				margin: 0 auto; 
+				height: 100%;   
+			} 
+			.logo {
+				float: left;
+			}
+			.lie{
+				float: left;
+				margin-left: 20px;
+			}
+			.lie li{
+				list-style: none;line-height: 80px;width: 170px;
+				text-align: center ; float: left;
+			}
+			.lie li a{
+				display: block; width: 100%; height: 100%; font-size: 20px;
+				color: white; text-decoration: none;font-family: "幼圆";
+			}
+			.lie li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+			} 
+			.daohang{
+				background-color: black;
+				width: 150px;
+				height: 240px;
+				position: fixed;
+				border: 0px solid yellow;
+				top: 280px; 
+				z-index: 1111;
+			}
+			.daohang li{   
+				list-style: none;line-height: 40px;width: 110px;
+				 border: 0px solid red; 
+			}
+			.daohang li a{
+				display: block; width: 100%; height: 100%; font-size: 18px;
+				color: white; text-decoration: none;font-family: "comic sans ms";
+				 padding-left: 10px;
+			}
+			.daohang li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+				 padding-left: 10px;
+			} 
+			.main1back{
+				width: 1000px;
+				height: 140px;
+				border-bottom: 1px solid gray;
+				margin: 0 auto;
+				position: relative;
+				top: 110px;
+			}
+			.m1top{
+				width: auto;
+				height: auto;
+				position: relative;
+				top: 1px;
+				left: 1px;
+			}
+			.main2back{
+				width: 1000px;
+				height: auto; 
+				padding-top: 50px;
+				margin: 0 auto;
+				position: relative;
+				top: 110px;
+			} 
+			.main3back{ 
+				width: 1000px;
+				height:auto; 
+				border: 0px solid red;
+				padding-top: 100px;
+				margin: 0 auto;
+				position: relative;
+				top: 110px; 
+			}   
+			.hname{
+				border-bottom: 2px solid gray; 
+				padding-bottom: 15px;
+				width: 300px;
+				font-weight: bold;
+			}
+			.intro{
+				padding-top: 30px;
+				padding-bottom: 30px; 
+				font-size:17px;
+			}
+			.foot{
+				font-size: 17px; 
+				position: absolute;
+				width: 100%; 
+				height: 70px;
+				background: black; 
+				line-height: 70px; 
+				text-align: center;
+				color: white;
+				margin-top:200px ;
+			}
+			.pl{
+				border: 0px solid red;
+				margin-top: 50px;
+			}
+			.pl table{
+				width: 100%;
+				border: 0px;
+			}
+			.pl table td{
+				border: 1px solid gray;
+				height: 70px;
+				font-size: 20px; 
+			}
+			.liuyan{
+				border: 0px solid blue;
+				margin: 0 auto;
+				padding: 50px;
+			}
+			.liuyan input{
+				width: 300px;
+				border-radius: 15px 15px 15px 15px;
+				border: 1px solid gray;
+				margin: 10px;
+				height: 30px;
+				text-align: center;
+				font-size: 17px;
+			}
+			.liuyan textarea{ 
+				width: 320px;
+				height: 150px; 
+			} 
+		</style>
+	</head>
+	<body onload="showAll()">
+		
+		<div class="head">
+			<div class="hd">
+				<div class="logo"><a href="home.html"><img src="img/logo.png"></a></div>
+				<div class="lie">
+					<ul class="hmn">
+						<li><a href="home.html#phone">手机测评</a></li>
+						<li><a href="home.html#computer">电脑测评</a></li> 
+						<li><a href="#bq">版权信息</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="main1back">
+			<div class="m1top">
+				<h1>各大旗舰手机拍照评测</h1> <br />
+				<h4>iPhone 6s Plus / iPhone 7 / Galaxy Note7 / LG G5拍照横评</h4> 
+			</div>
+		</div>
+		
+		<div class="main2back">
+			<img src="img/camete/camera.jpg" style="width: 100%; "/>
+		</div>
+		 
+		
+		<div class="daohang">
+			<ul>
+				<li><a href="#ztcs">整体参数</a></li>
+				<li><a href="#rjcs">日间测试</a></li>
+				<li><a href="#yjcs">夜间测试</a></li>
+				<li><a href="#syty">使用体验</a></li>
+				<li><a href="#zjzj">总结</a></li>
+				<li><a href="#pl">评论</a></li>
+			</ul>
+		</div>
+		
+		<div class="main3back"> 
+			<div class="m3b"> 
+				<div class="intro">
+					自Galaxy Note4开始，三星在手机拍照方面开始赶超iPhone，
+					LG则是从G4开始在拍照方面大作文章，并跻身智能手机拍照的第一阶梯。
+					近年来智能手机的拍照素质大幅提升，让许多业内人士跌破眼镜，
+					如今的我们再不敢说出卡片秒手机这种一概而论的观点。
+				</div>
+				<center>
+					<img src="img/camete/cm1.jpg" id="ztcs" width="75%"/>
+				</center>
+				
+				<div class="intro">
+					虽然受限于体积大小，智能手机无法使用体积庞大的传感器和镜头，
+					但它们依靠着强大的ISP、算法、先进感光技术，
+					让手机拍照一直不断进步至今。苹果虽然在6s Plus一代抛弃了800万像素的摄像头，
+					但实际上我们并没有在6s Plus上看到令人惊艳拍照表现，
+					它与同期的Galaxy Note 5系列有不小的差距。
+					这一次iPhone 7上使用了一颗全新的1200万像素摄像头，
+					而且也是第一次将光学防抖用于5英寸以下的苹果机型，
+					在开始评测之前我们也看过一些外媒的样张，
+					这让我们对新一代iPhone 7的拍照产生了极大的好奇。<br /><br />
+					这次的拍照横评我们选用了上一代的苹果机型<b>iPhone 6s Plus</b>、
+					三星现役最强拍照手机<b>Galaxy Note7</b>、
+					以变态解析力著称<b>LG G5</b>这三台具有代表性智能手机与<b>iPhone 7</b>进行比较。<br /><br />
+					<b>备注：</b>iPhone 7的后置摄像头拍摄的照片都为DCI-P3色彩标准，放在绝大多数显示设备上都无法正常显示其色彩，
+					因此测试当中，我们将所有iPhone 7的照片都转换成了sRGB的模式进行对比。
+				</div>
+				
+				<h2 id="rjcs" class="hname" >日间测试</h2>
+				<br />
+				<img src="img/camete/cm2.png" width="100%" />
+				<br />
+				<img src="img/camete/cm3.png" width="100%"/>
+				<br />
+				<img src="img/camete/cm4.png" width="100%"/>
+				<br />
+				
+				<div class="intro">
+					在日间场景中，由于光线充足，四台手机都不会因为弱光或噪点而丢失大量细节，
+					总体来说它们之间差距不会特别大。但我们注意到，在日间样张中，
+					LG G5的整体的画面色彩会有一点失真，它的白平衡表现没有其它三部机子那么正常。
+				</div>
+				
+				<h2 id="yjcs" class="hname" >夜间测试</h2>
+				<br />
+				<img src="img/camete/cm5.png" width="100%" />
+				<br />
+				<div class="intro">
+					在多数夜间场景中iPhone 7的成像风格与iPhone 6s Plus相似，
+					在不放大样张看细节的情况下很难分别谁是6s Plus，谁是iPhone 7，
+					但放大仔细观察就会发现，iPhone 7会有意的提高暗部的曝光，以增加画面的细节，
+					同时会对暗部噪点进行涂抹处理，特别是在超弱光环境下，这种改变更加明显。
+				</div>
+				<br />
+				<img src="img/camete/cm7.png" width="100%" />
+				<div class="intro">
+					这组超弱光样张中，Galaxy Note7的解析力、纯净度、画面曝光都明显好于iPhone 7,
+					Galaxy Note7的画面纯净度、噪点控制、色彩还原都要好于iPhone 7。
+				</div>
+				<br />
+				<img src="img/camete/cm6.png" width="100%" />
+				<br />
+				<div class="intro">
+					iPhone 7相对于iPhone 6s Plus而言在暗光、超弱光下有较大提升，
+					但是与Galaxy Note7相比还是稍有逊色，Note7胜在画面纯净度高，
+					噪点少，它的暗部噪点都进行大面积涂抹，而且画面曝光再高一小档，
+					但可能因为Note7积极的涂抹算法，导致它在部分场景中涂抹了该有的细节。
+				</div>
+				<img src="img/camete/cm9.png" width="100%" />
+				<div class="intro">
+					在这组弱光样张中，Galaxy Note7的字体细节有所丢失，
+					而LG G5的解析力简直强得和其它三台手机不在一个位面。
+					<br /><br />
+					<b>夜间拍照小结：</b>由于夜间光线不佳，在超弱光下又容易产生大量噪点，
+					这十分考验手机的拍照算法，优秀的算法可以通过涂抹来降低噪点，
+					提升画面纯净度，这对于夜间成像整体的观感是十分简单粗暴的，
+					如果算法足够优秀，在此基础上还能够提升画面的解析力。
+					LG G5全方位的从曝光、细节、纯净度、噪点这几个方面完胜iPhone 7，
+					iPhone 7在夜景当中仅能在白平衡这一项上占一点优势，
+					Galaxy Note7也只有在画面纯净度上小胜LG G5。
+					这一代的iPhone 7在成像上的提升主要还是弱光方面，
+					不过夜景综合表现依然不如Note7，更不如LG G5，
+					但相比于上一代的提升还是值得我们肯定的。
+				</div>
+				<br /> 
+				
+				<h2 id="syty" class="hname" >使用体验</h2> 
+				<div class="intro">
+					如果单论成像结果的话，LG G5会毫无疑问的夺取第一，
+					但是我们知道不管是手机拍照还是相机拍照，
+					拍照的使用体验也是十分影响用户消费的因素。
+					何为拍照使用体验？对焦、取景、操控这些都可以算是使用体验，
+					甚至在更早之前Wi-Fi SD卡没有的时候，
+					相机通过Wi-Fi传图到手机也是一项十分重要的使用体验。
+					<br /><br />
+					<b>对焦：</b>对于一台手机来说，我们随身携带，很多时刻都是转瞬即逝，
+					能否做到快速对焦后的抓拍会对使用体验造成影响，
+					在四台手机当中，对焦速度最快的是采用了全像素双核AF传感器的Galaxy Note7，
+					对焦在取景的那一刻瞬间完成，完全感受不到对焦的存在。
+					iPhone 7的对焦也很快，但是如果极限对比还是会慢于Galaxy Note7，
+					而LG G5则会稍慢于iPhone 7，iPhone 6s Plus则是最慢的。
+					<br /><br />
+					<b>取景：</b>可能很多人认为取景没什么讲的，
+					其实我们在真正使用手机拍照的时候会发现在一些高端智能手机上，
+					它们的取景非常的实时，取景画面与拍摄画面几乎是同步的，
+					如果取景稍延严重，那么同样会影响拍照的使用体验。正常情况下，
+					在日间光线充足的情况下，即便是千元机的取景也不会有高延迟，
+					而在弱光情况下情况就不一样了。<b>弱光情况，
+					Galaxy Note7的取景是与拍摄画面同步率最高的，
+					几乎感觉不到延迟的存在的。</b>iPhone在拍照体验方面做得一向不错，
+					iPhone 7/6s Plus弱光下的取景延迟较低，
+					LG G5则会感到明显的延迟，这是LG G5的一个弱点。
+				</div>
+				<img src="img/camete/note7.jpg" width="100%"/>
+				<center style="padding-top: 10px;padding-bottom: 50px; font-size:20px;font-weight: bold;">
+					Galaxy Note7拍照界面
+				</center>
+				<img src="img/camete/ip7.jpg" width="100%"/>
+				<center style="padding-top: 10px;padding-bottom: 50px; font-size:20px;font-weight: bold;">
+					iPhone 7拍照界面
+				</center>
+				<img src="img/camete/lg5.jpg" width="100%"/>
+				<center style="padding-top: 10px;padding-bottom: 50px; font-size:20px;font-weight: bold;">
+					LG G5拍照界面
+				</center>
+				
+				<div class="intro">
+					<b>操控：</b>其实手机对于拍照的操控要求并不高，因为手机不像相机一样有拨盘，
+					也不会经常用到手动档。iPhone 7的拍照界面基本与
+					iPhone 6s Plus一致，也是iPhone一贯的风格，
+					没有给用户太多的选项，也没有手动模式。
+					LG G5与Galaxy Note7都拥有比较强的手动模式，
+					不过Galaxy Note7在功能上会比LG G5更丰富。
+					<br /><br />
+					补充：LG G5在某些弱光场景下，
+					它的快门响应速度（非快门时间）会明显慢于iPhone 7和Galaxy Note 7。
+				</div>
+				
+				<h2 id="zjzj" class="hname" >总结</h2> 
+				<div class="intro">
+					曾有很多人对iPhone的拍照有误解，也有太多人神话了三星的拍照，
+					我们认为这iPhone 7、Galaxy Note7、
+					LG G5这三台手机都是处于目前智能手机拍照的第一阶梯，
+					只是三者有所侧重。
+					<br /><br />
+					Galaxy Note7在夜间拥有优秀的涂抹、降噪算法，
+					在超弱光下也能保持很高的纯净度，同时对焦最快，但是会丢失一点细节，它的样张色彩浓艳，
+					讨人喜欢。Galaxy Note7十分适合弱光下的人像、
+					景物拍摄，但是拍字体那种需要强解析的时候表现稍弱。
+					<br /><br />
+					LG G5的解析力可以实力压制所有正常范畴的智能手机（诺基亚808、松下CM1这两台除外），
+					弱光成像也非常强，弱光下的解析力实力秒杀Galaxy Note7、iPhone 7，
+					不过纯净度比Galaxy Note7稍差，它的样张色彩偶尔会出问题，
+					白平衡表现不如另外两部，而且取景延迟会影响实际拍照体验。
+					<br /><br />
+					iPhone 7的白平衡和色彩表现无论是在日间也是夜间都是最稳定、
+					最准确的，但是由于它拍摄的照片都是DCI-P3标准的，
+					所以自己看的色彩和别人看到的会有一些偏差。
+					iPhone 7日间和夜间解析力都比Galaxy Note7强一点，
+					它的弱项在于夜间纯净度、噪点控制，采用了大光圈、
+					改良算法后的iPhone 7在夜景的表现明显好于6s Plus，
+					它对焦速度、取景速度仅次于Galaxy Note 7。
+					最后一点，iOS的微信客户端发朋友圈的照片最大分辨率为
+					1440*1080，而Android的是1280*960，
+					这也是iPhone的照片发朋友圈会更清一些的原因。
+				</div>
+				
+				<br />
+				<h2 id="pl" class="hname">评论</h2>
+				<div>
+				    <table class="liuyan" >
+				        <tr>
+				           <td>用户名：</td>
+				           <td><input type="text" name="userame" id="username" required/></td>
+				        </tr>
+				        <tr>
+				            <td>标题：</td>
+				            <td><input type="text" name="title" id="title" required/></td>
+				        </tr>
+				        <tr>
+				            <td>评论：</td>
+				            <td><textarea name="content" id="content" required/></textarea></td>
+				        </tr>
+				        <tr>
+				        	<td></td>
+				        	<td><input type="button" class="tj" value="提交" id="save" onclick="save()"/></td>
+				        </tr>
+				    </table>
+				        <hr>
+				        <input type="button" value="查看留言本" onclick="showAll()"/> 
+				        
+				        <div class="pl">
+				        	<h2>网友评论区</h2><br />
+						<table id="show" border="1" >
+				        </table>
+						</div>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+			<div class="foot" id="bq">
+				版权信息：&copy;软件17201班 - 17180620103  田纪海.
+			</div>
+	</body>
+</html>

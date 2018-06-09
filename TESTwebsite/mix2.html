@@ -1,0 +1,743 @@
+<!--https://cn.engadget.com/2017/10/14/xiaomi-mix-2-review/-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>小米MIX 2评测</title>
+		
+		<link href="css/bootstrap.css" type="text/css" rel="stylesheet" />
+		<link href="css/stylexg.css" rel="stylesheet">
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet" /> 
+		<script src="jquery1.11.3/jquery-1.11.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script> 
+		<script type="text/javascript">
+		window.onload=function() {
+	            initDB();
+		}
+	        function initDB() {
+	            var db=getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	            		
+	                trans.executeSql("create table if not exists message(username text null,title text null,content text null)", [], 		function (trans, result) {
+	
+	                },
+			function (trans, message) {
+				alert(message);
+	            	});
+			});
+		    }
+	        }
+	        
+		function getDB(){
+			
+	            var db = openDatabase("iphonex", "1.0", "My Message Pad", 1024 * 1024); 
+	            if(!db) {
+			alert("您的浏览器不支持HTML5本地数据库");
+			return false;
+		    }
+		    return db;
+		}
+		
+	        function save(){
+		    var username = document.getElementById("username").value;
+	 	    var title = document.getElementById("title").value;
+		    var content = document.getElementById("content").value;
+		    
+	            var db = getDB();
+		    if(db){ 
+	               	db.transaction(function(trans) {
+	                trans.executeSql("insert into message(username,title,content) values(?,?,?) ", [username, title, content], 
+			function (ts, data) {
+				alert("留言保存成功");
+	                }, 
+			function (ts, message) {
+	                	alert(message);
+	                });
+	                });	
+		    }
+	        }
+	        
+	        function showAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("select * from message ", [], 					function (ts, result) {
+	                    if (result) {
+				show.innerHTML += "<th>用户名</th><th>标题</th><th>留言</th>";
+	                        for (var i = 0; i < result.rows.length; i++) {
+	                            writeTable(result.rows.item(i)); 
+	                        }
+	                    }
+	                }, 
+			function (ts, message) {
+				alert(message);
+				var tst = message;
+			});
+	            	});
+		    }
+	        }
+	        
+		function writeTable(data) {
+	            var show=document.getElementById("show");
+	            var username = data.username;
+	            var title = data.title;
+	            var content = data.content;
+	            var str = "";
+		    str += "<tr>";
+		    str += "<td>" + username + "</td>";
+		    str += "<td>" + title + "</td>";
+		    str += "<td>" + content + "</td>";
+		    str += "</tr>";
+		    show.innerHTML += str; 
+	        }
+	        
+		function clearAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("delete from message ", [], 					function (ts, data) {
+	                    alert("已清空留言本所有留言");
+	                }, 
+			function (ts, message) {
+			    alert(message);
+			    var tst = message;
+			});
+	            	});
+		    }
+		}
+	    </script>
+   
+		<style>
+			.head{
+				position:absolute;
+				top: 0px;
+				width: 100%;
+				height: 80px;
+				background-color: black;  
+			}
+			.hd{
+				width: 1100px;
+				margin: 0 auto; 
+				height: 100%;   
+			} 
+			.logo {
+				float: left;
+			}
+			.lie{
+				float: left;
+				margin-left: 20px;
+			}
+			.lie li{
+				list-style: none;line-height: 80px;width: 170px;
+				text-align: center ; float: left;
+			}
+			.lie li a{
+				display: block; width: 100%; height: 100%; font-size: 20px;
+				color: white; text-decoration: none;font-family: "幼圆";
+			}
+			.lie li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+			} 
+			.daohang{
+				background-color: black;
+				width: 150px;
+				height: 350px;
+				position: fixed;
+				border: 0px solid yellow;
+				top: 200px; 
+				z-index: 1111;
+			}
+			.daohang li{   
+				list-style: none;line-height: 40px;width: 110px;
+				 border: 0px solid red; 
+			}
+			.daohang li a{
+				display: block; width: 100%; height: 100%; font-size: 18px;
+				color: white; text-decoration: none;font-family: "comic sans ms";
+				 padding-left: 10px;
+			}
+			.daohang li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+				 padding-left: 10px;
+			} 
+			.main1back{
+				width: 1000px;
+				height: 140px;
+				border-bottom: 1px solid gray;
+				margin: 0 auto;
+				position: relative;
+				top: 110px;
+				color: white;
+			}
+			.m1top{
+				width: auto;
+				height: auto;
+				position: relative;
+				top: 1px;
+				left: 1px;
+			}
+			.main2back{
+				width: 1000px;
+				height: auto; 
+				padding-top: 50px;
+				margin: 0 auto;
+				position: relative;
+				top: 110px;
+			} 
+			.main3back{ 
+				width: 1000px;
+				height:auto; 
+				border: 0px solid red;
+				padding-top: 100px; 
+				margin: 0 auto;
+				position: relative;
+				top: 110px; 
+			}
+			.m3l{
+				border: 0px solid blue;
+				width: 50%;
+				height: auto; 
+				float: left; 
+				margin-top: 70px;
+			}
+			.m3rback{
+				background-color: #282828;
+				border: 0px solid green;
+				width: 497px;
+				height: auto;
+				margin-top: 70px;
+				float: left;
+				border-radius: 20px 20px 20px 20px;
+			}
+			.m3rmain{
+				margin-top: 15px;
+				background-color: #282828; 
+				width: 495px;
+				height: auto;
+				padding: 30px;
+				font-size: 17px; 
+				color: white;
+				border-radius: 20px 20px 20px 20px;
+				text-align: center;
+			}
+			.m3a{ 
+				border: 0px solid black;
+				height: 400px;
+				width: auto; 
+			}
+			.m3b{
+				border: 0px solid orange;
+				padding-top: 60px;
+				color: white;
+			}
+			.m3b img{
+				width: 250px;
+				border-radius: 20px 20px 20px 20px; 
+				transition: width .500s ease-out;
+				animation: donghuaout 5s;
+				position: relative;
+				top: 0px;
+				left: 0px;
+			}
+			.m3b img:hover{
+				animation: donghuain 5s;
+				position: relative;
+				top: 0px;
+				left: 0px;
+				transition: width .500s ease-in;	 
+				width: 600px;
+				border-radius: 20px 20px 20px 20px; 
+			} 
+			@keyframes donghuain{
+				0%{top: 0px;left: 0px;}
+				100%{top: 0px; left: 15%;}
+			}
+			@keyframes donghuaout{
+				0%{top: 0px;left: 15%;}
+				100%{top: 0px; left: 0px;}
+			}
+			.hname{
+				border-bottom: 2px solid gray; 
+				padding-bottom: 15px;
+				width: 300px;
+				font-weight: bold;
+			}
+			.intro{
+				padding-top: 30px;
+				padding-bottom: 30px; 
+				font-size:17px;
+			}
+			.intro li{
+				list-style: disc;
+				margin-left: 80px;
+			}
+			.foot{
+				font-size: 17px; 
+				position: absolute;
+				width: 100%; 
+				height: 70px;
+				background: black; 
+				line-height: 70px; 
+				text-align: center;
+				color: white;
+				margin-top:200px ;
+			}
+			.pl{
+				border: 0px solid red;
+				margin-top: 50px;
+			}
+			.pl table{
+				width: 100%;
+				border: 0px;
+			}
+			.pl tr{
+				border-bottom: 1px solid gray;
+			}
+			.pl table td{
+				border: 0px solid gray;
+				height: 70px;
+				font-size: 20px; 
+			}
+			.liuyan{
+				border: 0px solid blue;
+				margin: 0 auto;
+				padding: 50px;
+			}
+			.liuyan input{
+				width: 300px;
+				border-radius: 15px 15px 15px 15px;
+				border: 0px solid gray;
+				margin: 10px;
+				height: 30px;
+				text-align: center;
+				font-size: 17px;
+				color: black;
+			}
+			.liuyan textarea{ 
+				width: 320px;
+				height: 150px; 
+				color: black;
+			} 
+			body{
+				background-color: black;
+			}
+			.peizhi{
+				border: 0px solid red;  
+				font-size: 17px;
+				padding: 50px;
+				color: white;
+			} 
+			.peizhi tr{
+				height: 30px;
+			}
+			.neir{
+				padding-left: 30px;
+				width: 500px;
+				font-weight: bold;
+				border: 0px;
+				background-color: transparent;
+			}
+			.bttn{
+				width: 190px;
+				height: 40px;
+				background-color: white;
+				border: 1px solid black;
+				border-radius: 20px 20px 20px 20px;
+				color: black;
+			}
+			.bttn:hover{
+				transition: background .500s ease;	
+				width: 190px;
+				height: 40px;
+				background-color:  lightblue;
+				border: 1px solid lightblue;
+				border-radius: 20px 20px 20px 20px;
+				color: dimgray;
+			}
+		</style>
+	</head>
+	<body onload="showAll()">
+		<div class="head">
+			<div class="hd">
+				<div class="logo"><a href="home.html"><img src="img/logo.png"></a></div>
+				<div class="lie">
+					<ul class="hmn">
+						<li><a href="home.html#phone">手机测评</a></li>
+						<li><a href="home.html#computer">电脑测评</a></li> 
+						<li><a href="#bq">版权信息</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="main1back">
+			<div class="m1top">
+				<h1>小米 MIX 2 评测：工夫在诗外</h1> <br />
+				<h4>一句古诗，两种解读。</h4> 
+			</div>
+		</div>
+		
+		<div class="main2back">
+			<img src="img/mix/mix3.jpg" style="width: 100%; "/>
+		</div>
+		
+		<div class="daohang">
+			<ul>
+				<li><a href="#zdgg">重点规格</a></li>
+				<li><a href="#wgsg">外观及手感</a></li>
+				<li><a href="#pm">屏幕</a></li>
+				<li><a href="#xj">相机</a></li>
+				<li><a href="#xt">系统</a></li> 
+				<li><a href="#xhl">性能续航力</a></li>
+				<li><a href="#zj">总结</a></li>
+				<li><a href="#pl">评论</a></li>
+			</ul>
+		</div>
+		
+		<div class="main3back">
+			<div class="m3a">
+			<div class="m3l" align="center">
+				<img src="img/mix/mix2.jpg" width="490px" />
+			</div>
+			<div class="m3rback">
+				<div class="m3rmain">
+					小米MIX2是小米科技在2017年9月11日下午在
+					北京召开秋季新品发布会正式发布的第二代全面屏手机。
+					小米MIX2采用全新的18:9圆角全面屏幕，搭载骁龙835移动平台，
+					提供独具匠心的全陶瓷尊享版本可选。
+					今年俨然已成为各家手机厂商标配的「全面屏」，真要往前追溯起来，
+					名称、概念的推广过程中小米 MIX 这款「概念机」的确是功不可没。
+					只是，也正由于它身上的「概念」属性，初代 MIX 在产品的实用性上不可避免做出了牺牲。
+					但就算是这样，雷军的大胆尝试还是取得了很惊艳的效果，
+					把 MIX 算作小米发展历史上的一大里程碑应该是不为过的。
+				</div>
+			</div>
+			</div>
+			
+			
+			<script>
+			  	var c,ctx;
+			  	var img=new Image();
+			  	window.onload=function(){
+					c=document.getElementById("myCanvas");
+			  		ctx=c.getContext("2d");
+			  		img.src="img/mix/mixxx.png";
+			  		ctx.drawImage(img,0,0,c.width,c.height);  
+			  	}
+			  	function enlarge(ev){
+			  		var ev=ev||window.event;
+			  		var x=ev.clientX-1;
+			  		var y=ev.clientY+100; 
+			 		ctx.drawImage(img,x,y,400,400,0,0,c.width,c.height);  
+			  	} 
+			   </script>
+			   <div style="float: left;width: 100%;">
+		    	<img src="img/mix/mixxx.png" width="500" height="500" onmousemove="enlarge(event)" style="float: left;margin-top: 100px;margin-bottom: 100px;">
+   				<canvas id="myCanvas" width="400" height="400" style="float: left;margin-top: 150px;margin-bottom: 100px;margin-left: 60px;border-radius: 30px 30px 30px 30px;" ></canvas>
+   				</div>
+   				
+   				
+			<div class="m3b">  
+				
+				<h2 class="hname" >重点规格</h2>
+				
+					<div class="peizhi" id="zdgg">
+					  <form>   
+						<input type="hidden" name="imgsrc" value="mix2.jpg">  
+						<table>
+							<tr>
+								<td>&gt; 名称：</td>
+								<td><input type="text" name="bookname" value="小米  Mix 2" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 屏幕：</td>
+								<td><input type="text" name="bookn" value="5.99 英寸 2160 x 1080 像素   DCI-P3全面屏，对比度：1500:1" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 相机：</td>
+								<td><input type="text" name="camera" value="1200万像素 + 500万像素" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 处理器：</td>
+								<td><input type="text" name="cpu" value="高通 骁龙835（MSM8998）" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 内存：</td>
+								<td><input type="text" name="ram" value="6GB RAM" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 电量：</td>
+								<td><input type="text" name="baterry" value="3400mAh" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 预载系统：</td>
+								<td><input type="text" name="os" value="MIUI 9（基于Android 7.1）" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 无线支持：</td>
+								<td><input type="text" name="wifi" value="双频WIFI，IEEE 802.11 a/b/g/n/ac ，蓝牙 5.0  NFC" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 是否防尘防水：</td>
+								<td><input type="text" name="wcws" value="否" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 三围 重量：</td>
+								<td><input type="text" name="size" value="151.8 x 75.5 x 7.7 mm，重 175g" readonly class="neir"></td>
+							</tr>
+							
+						</table>
+						<br />
+						
+						<INPUT TYPE="button" value="添加比较" onclick="addBj(this)" class="bttn">
+						<INPUT TYPE="button" value="查看比较内容" onclick="javascript:location.href='bijiao.html';" class="bttn">
+						<INPUT TYPE="button" value="清空比较" onclick="clearBj()" class="bttn">
+						  </form>
+					</div>
+		
+				  
+				  <SCRIPT LANGUAGE="JavaScript">
+				  
+				 function addBj(bt){
+				
+					var str=localStorage.getItem("json");
+					var json= JSON.parse(str);
+					
+					if(json==null)
+					{
+					json= { "list": []};
+					
+					}
+					
+						var data=new Object;
+						data.bid=json.list.length;
+						data.name=bt.form.bookname.value;
+						data.bkname=bt.form.bookn.value;
+						data.cmr=bt.form.camera.value;
+						data.cenpu=bt.form.cpu.value;
+						data.neic=bt.form.ram.value;
+						data.dianl=bt.form.baterry.value;
+						data.ios=bt.form.os.value;
+						data.wire=bt.form.wifi.value;
+						data.fcfs=bt.form.wcws.value;
+						data.big=bt.form.size.value;
+						
+						path=bt.form.imgsrc.value;
+						var n=path.lastIndexOf("/")+1;
+						data.pic=path.substring(n);
+						
+						json.list.push(data);
+						 var str = JSON.stringify(json);
+						localStorage.setItem("json",str);
+						alert("添加成功");
+					} 
+				 function clearBj(){
+						localStorage.removeItem("json"); 
+						alert("比较页面已清空");
+				  	}
+				
+				  </SCRIPT> 
+				  
+				  
+				<h2 id="wgsg" class="hname" >外观及手感</h2>  
+				 <div class="intro">
+					MIX 2 的设计仍旧是由大师 Philippe Starck 操刀，
+					整体的外型风格没有太偏离初代，更多是在一些小的细节上做变化。
+					首先，塞入了近 6 吋屏幕的机身将尺寸控制在了「相当于超窄边 5.5 吋传统手机」的大小，
+					拿在手上比前一代要好掌控得多。与此同时，手机的边角处理更趋圆润，
+					而这点在使用铝制中框、售价 3,299 元的标准版上体现得尤为明显。
+				</div>
+				<img src="img/mix/mix4.jpg" width="60%"  /> 
+				<div class="intro">
+					至于要价 4,699 元的尊享版，之所以三围（150.5 x 74.6 x 7.7 mm）
+					中长宽比标准版（151.8 x 75.5 x 7.7 mm）小一点点，
+					原因之一就是中框外侧的弧度相对拉得更平一些。
+					而这也就导致它算上玻璃下黑边的屏幕外轮廓实际视觉宽度，
+					会比标准版显得更窄。但即便如此，设备的「无边框」效果还是要逊于去年的初代 MIX，
+					在惊艳程度上是有退步的。 
+					<br /><br />
+					是说，这种由概念机转化为成熟商品过程中的改变，笔者原本是完全可以接受的。
+					毕竟边缘多留出那么点空间后，替换压电陶瓷的导管式听筒通话效果明显更好了
+					（虽然开槽变得很容易积灰...）。而且可以预期到边角的抗摔碎能力也会加强，
+					手机不会再像之前那么脆弱。但问题是，在发售初期小米又玩了一把夸大宣传的套路。
+					官方一开始给出的电脑图里 MIX 2 几乎把上方和左右两侧的边框压缩到了极致，
+					但实际上所谓的「全面屏 2.0」远没有达到这样的效果，
+					而同期发布的小米笔记本 Pro 也存在粉饰厚度的问题。
+				</div>  
+				
+				<h2 id="pm" class="hname" >屏幕</h2>
+				<div class="intro">
+					就显示效果来说，MIX 2 的这块 5.99 吋圆角屏幕发挥应该算中规中矩。
+					其亮度堪用，但最高值和调光体验不如小米 6。色彩的准确度比较不错，
+					而且也顺应潮流加入了 DCI-P3 色域。其色温感觉有一点点偏冷，
+					应该能符合大部分人的观赏习惯。至于 JDI LCD 面板老被诟病的斜纹问题嘛，
+					眼睛敏感的朋友面对这款手机估计还是会有点纠结吧。
+				</div>
+				<img src="img/mix/mix5.jpg" width="70%"/>
+				<div class="intro">
+					但不管怎么说，MIX 2 这块「全面屏」点亮之后的视觉冲击力还是不差的，
+					而这在很大程度上其实能弥补掉不少小毛病。要问笔者，
+					最希望看到的是小米在下代 MIX 上把 2,160 x 1,080 这样级别的分辨率提升一下啦。
+				</div>
+				
+				
+				
+				
+				
+				<h2 id="xj" class="hname" >相机</h2>
+				<div class="intro">
+					初代的 MIX 除了打电话吃力以外，另一大短板就是拍照了。为了不让主相机凸起，
+					小米故意选择了一款把轻薄度排在拍摄效果之上的 OmniVision 模块，
+					成像品质是真的不怎么拿得出手。不过考虑到是「概念机」而且产品的打造
+					理念是以造型为先，当时这么取舍个人倒是也完全能理解。那现在到了二
+					代目，既然已经是把 MIX 2 当成是正儿八经的旗
+					舰机来卖，在相机这一块显然久不能像去年那般任性了。
+					<br /><br />
+					于是我们在 MIX 2 身上，看到了主流的 12MP IMX386 感光元件，
+					为了画质不得不凸也可谓是意料之中的事情。许多人期待的双摄没有出现，
+					对此笔者自己其实并没有很在乎。理由之前也提过，一是目
+					前很多双摄方案带来的功能，对相当大部分用户来说必要性
+					尚不算高，厂家宣传或者说用户炫耀的意义是要大过其对拍摄
+					体验的提升的。二来则是把单摄成熟方案玩好的大有人在，至少目
+					前 1 大于 2 的例子仍然比比皆是，关键还是看厂商的发挥。
+					
+				</div> 
+				<img src="img/mix/mix6.jpg" width="70%"/>
+				
+				<h2 id="xt" class="hname" >系统</h2>
+				<div class="intro">
+					笔者手上的这台 MIX 2 已经升上了开发版的 MIUI 9，
+					基于的 Android 版本号是 7.1.1。在这版系统中，
+					小米对图标风格、动画等视觉效果又做了些微调，同时还
+					加入了图片快速查找和「传送门」这两项全新的功能。其
+					中前者是以机器学习技术为基础，让手机自动帮你以证件
+					照、银行卡、人物、场景等不同的类别来规整图像。类似
+					的事情苹果、Google 早就在做，尤其是 Google，目前
+					 Photos 能达到的辨识准确率已经相当之高。而小米
+					 这个实际体验下来，一些感觉不算难的分类仍有不低的
+					 概率会出错，只能说对机器的训练还得再加把劲才行。
+					 <br /><br />
+					 至于「传送门」，技术上说是一个建立在语意识别基础上的
+					 效率提升工具。举两个例子，它能在你长按一段含有地址
+					 的文字后，于屏幕下方跳出地图的快速按钮，以便你马
+					 上切换过去查看路线。要是文字中出现类似电影名称
+					 、明星名字这样的内容的话，它也能分辨出来然后给
+					 出跳转到搜索结果的捷径。整套方案背后的概念有那么
+					 点类似之前荣耀 Magic 上面的 Magic Live，
+					 如果算上分析语意后「附赠」的分词功能的话，又会给
+					 人一些 Smartisan OS 里 Big Bang 的既
+					 视感。总的来说，个人感觉「传送门」在某些特定的场
+					 景下还算是比较好用的。但拿来作为 MIUI 9 的「门
+					 」面，份量似乎有点不够。而且老实讲，在这上面笔者也
+					 嗅到了一丝潜在的广告「味道」，但愿小米未来不会对
+					 此加以利用吧...
+				</div> 
+				<img src="img/mix/mix7.jpg" width="70%"/> 
+				<div class="intro">
+					此外，小米这两年主推的 NFC 交通卡功能 MIX 2 也是有的（目前
+					仅限部分城市），很比较遗憾是去掉了顶端的红外线模块，一
+					直以来都颇受好评的「万能遥控器」在这款手机上就没法用了。
+				</div>
+				
+				
+				<h2 id="xhl" class="hname" >性能及续航力</h2>
+				<div class="intro">
+					MIX 2 配备了高通现时最强的 Snapdragon 835 芯片和至少 6GB RAM
+					（尊享版 8GB），性能表现毫无意外冲到了目前 Android 阵营的第
+					一梯队。而且得益于新版的 MIUI，MIX 2 日常使用
+					起来相当顺滑。虽然实际感受未必像一加 5 那样快到都有
+					点「假」，但对比之前的软件版本，速度提升还是非常明
+					显的。另外，设备的发热也还算可以接受，一段时间的大型
+					游戏后手机背部会出现温热感，但并不会烫手到不适。
+				</div> 
+				<img src="img/mix/mix8.jpg" width="70%"/>
+				<div class="intro">
+					而在续航力的部分，MIX 2 所使用的 3,400mAh 电
+					池较前代整整减少了 1,000mAh。规格几乎跟 5 吋的小
+					米 6 相当（3350mAh），但因为屏幕更大片，所以持
+					久性也如预料的一样稍逊一筹。标准化的视频循环 MIX 
+					2 可以维持 12 小时，在 4G 网络下 IM、同步全开，一小
+					时视频、一小时离线听歌、半小时浏览网页、半小时游戏的
+					惯用日常测试后，它还可以余下 43% 的电量。表现不算出
+					众，偏重度的用户最好还是带着移动电源比较保险。快充
+					速度放慢，插上标配的 QC 3.0（18W）充电头以后，
+					半小时能灌入 51% 的电量，完全充满则要花一小时 40 分钟左右。 
+				</div> 
+				
+				
+				
+				<h2 id="zj" class="hname" >总结</h2>
+				<div style="background-image: url(img/mix/mixfoot.jpg);width: 100%;height: 380px;"></div>
+				<div class="intro">
+					单单就产品本身来说，笔者认为 MIX 2 应该能算作一次成熟的升级。
+					尽管许多人关注的屏幕，没有像前代那样极尽可能地去追求「无边框」。
+					但妥协的程度个人觉得可以接受，而且随之而来的体验提升，也都是实打
+					实不容忽视的。实际上，在发布以前笔者就相信，MIX 2「全面屏」
+					以外的东西，才是决定这款手机成败的关键所在。工夫在诗外，二代 M
+					IX 的相机、性能、系统速度都有了明显的改进，同时小米对陶瓷的
+					运用目前已堪称业内翘楚。结合它在所有「真·全面屏」手机（不是
+					那些单单只是把屏幕拉长到 18 : 9 的玩意）中最亲民的价格，这
+					些变化对使用者的意义其实是要胜过那几毫米的「大黑边」的。
+					<br /><br />
+					但是在产品以外，小米却又一次在宣传上犯了错误，一而再再而三，几
+					年了居然还是没有长进。没那么依赖线上销量的华为，今年都因为 P1
+					0 的事情吃了不少苦头，那主力消费群都在线上的小米，难道就没
+					想过给自己敲敲警钟吗？产品要做好，营销也要得当，所谓事
+					不过三，类似给 MIX 2 抹（掉）黑（边）这样的「诗外工夫
+					」，笔者以后是真的不想再看到了。
+					</div> 
+				 
+				 
+				
+				<br />
+				<h2 id="pl" class="hname">评论</h2>
+				<div>
+				    <table class="liuyan" >
+				        <tr>
+				           <td>用户名：</td>
+				           <td><input type="text" name="userame" id="username" required/></td>
+				        </tr>
+				        <tr>
+				            <td>标题：</td>
+				            <td><input type="text" name="title" id="title" required/></td>
+				        </tr>
+				        <tr>
+				            <td>评论：</td>
+				            <td><textarea name="content" id="content" required/></textarea></td>
+				        </tr>
+				        <tr>
+				        	<td></td>
+				        	<td><input type="button" class="tj" value="提交" id="save" onclick="save()"/></td>
+				        </tr>
+				    </table>
+				        <hr>
+				        <input type="button" value="查看留言板" onclick="showAll()" style="color: black;"/>
+						  
+				        <div class="pl">
+				        	<h2>网友评论区</h2><br />
+						<table id="show" border="1" >
+				        </table>
+						</div>
+				</div>
+				
+				
+			</div>
+			
+			
+		</div>
+		
+			<div class="foot" id="bq">
+				版权信息：&copy;软件17201班 - 17180620103  田纪海.
+			</div>
+	</body>
+</html>

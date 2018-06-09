@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>配置比较</title>
+		
+		<link href="css/bootstrap.css" type="text/css" rel="stylesheet" />
+		<link href="css/stylexg.css" rel="stylesheet">
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet" /> 
+		<script src="jquery1.11.3/jquery-1.11.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		
+		<script type="text/javascript"> 
+			
+	    </script>
+   
+		<style>
+			.head{
+				position:absolute;
+				top: 0px;
+				width: 100%;
+				height: 80px;
+				background-color: black;  
+			}
+			.hd{
+				width: 1100px;
+				margin: 0 auto; 
+				height: 100%;   
+			} 
+			.logo {
+				float: left;
+			}
+			.lie{
+				float: left;
+				margin-left: 20px;
+			}
+			.lie li{
+				list-style: none;line-height: 80px;width: 170px;
+				text-align: center ; float: left;
+			}
+			.lie li a{
+				display: block; width: 100%; height: 100%; font-size: 20px;
+				color: white; text-decoration: none;font-family: "幼圆";
+			}
+			.lie li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+			}  
+			.foot{
+				font-size: 17px; 
+				position: absolute;
+				width: 100%; 
+				height: 70px;
+				background: black; 
+				line-height: 70px; 
+				text-align: center;
+				color: white;
+				margin-top:1350px ;
+			}
+			.main{
+				position: absolute;
+				border: 0px solid blue;
+				width: 100%;
+				height: auto;
+				margin-top: 120px;
+			}
+			.mm{
+				margin-top: 30px;
+			}
+			.mm table{
+				margin: 0 auto;
+				width: 1200px;
+				border: 1px solid lightgray;
+			}
+			.mm table td{ 
+				text-align: center;
+				font-size: 16px;
+				padding: 10px;
+			}
+			.mm table img{
+				border-radius: 30px 30px 30px 30px;
+			}
+		</style>
+	</head>
+	<body onload="showAll()">
+		<div class="head">
+			<div class="hd">
+				<div class="logo"><a href="home.html"><img src="img/logo.png"></a></div>
+				<div class="lie">
+					<ul class="hmn">
+						<li><a href="home.html#phone">手机测评</a></li>
+						<li><a href="home.html#computer">电脑测评</a></li> 
+						<li><a href="#bq">版权信息</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		 
+		<div class="main"> 
+			
+		<h1 style="margin-left: 50px;">手机对比</h1>
+		
+		<div class="mm">
+		<TABLE border="1" id="dataTable">
+		<TR style="background-color:#F5F5F5;font-weight: bold;">
+			<TD>图片</TD>
+			<TD>名称</TD>
+			<TD style="width: 150px;">屏幕</TD>
+			<TD style="width: 100px;">相机</TD>
+			<TD>处理器</TD>
+			<TD>内存</TD>
+			<TD>电量</TD>
+			<TD>系统</TD>
+			<TD style="width: 150px;">无线支持</TD>
+			<TD style="width: 60px;">是否防尘防水</TD>
+			<TD>三围大小</TD>
+			
+			<TD style="width:55px;">操作</TD>
+		</TR>
+		
+		</TABLE>
+		<SCRIPT LANGUAGE="JavaScript">
+		  var str=localStorage.getItem("json");
+		  var data= JSON.parse(str);
+		  var table=document.getElementById("dataTable");
+		  for(i=0;i<data.list.length;i++)
+		  {
+		    var tr = document.createElement('tr');  
+		    var td1 = document.createElement('td');  
+		    var td2 = document.createElement('td');  
+		    var td3 = document.createElement('td');  
+		    var td4 = document.createElement('td'); 
+			var td5 = document.createElement('td'); 
+			var td6 = document.createElement('td');  
+		    var td7 = document.createElement('td');  
+		    var td8 = document.createElement('td'); 
+			var td9 = document.createElement('td'); 
+			var td10 = document.createElement('td');  
+		    var td11 = document.createElement('td'); 
+			var td12 = document.createElement('td'); 
+			tr.id=data.list[i].bid;
+		    td1.innerHTML = '<img width="180" height="180" src="/TianJihai/img/phone/'+data.list[i].pic+'">';  
+		    td2.innerHTML = "<span>"+data.list[i].name+"</span>";  
+		    td3.innerHTML = "<span>"+data.list[i].bkname+"</span>";  
+		    td4.innerHTML = "<span>"+data.list[i].cmr+"</span>";  
+		    td5.innerHTML = "<span>"+data.list[i].cenpu+"</span>";  
+		    td6.innerHTML = "<span>"+data.list[i].neic+"</span>";  
+		    td7.innerHTML = "<span>"+data.list[i].dianl+"</span>";  
+		    td8.innerHTML = "<span>"+data.list[i].ios+"</span>";  
+		    td9.innerHTML = "<span>"+data.list[i].wire+"</span>";  
+		    td10.innerHTML = "<span>"+data.list[i].fcfs+"</span>";  
+		    td11.innerHTML = "<span>"+data.list[i].big+"</span>";    
+			td12.innerHTML='<a href="#" onclick="del(\''+data.list[i].bid+'\')">删除</a>';
+		    tr.appendChild(td1);  
+		    tr.appendChild(td2);  
+		    tr.appendChild(td3); 
+			tr.appendChild(td4);
+			tr.appendChild(td5);
+			tr.appendChild(td6);  
+		    tr.appendChild(td7);  
+		    tr.appendChild(td8); 
+			tr.appendChild(td9);
+			tr.appendChild(td10);
+			tr.appendChild(td11);
+			tr.appendChild(td12);
+		    table.appendChild(tr); 
+		  }
+		 function del(bid)
+		  {
+		     var removeObj=document.getElementById(bid);
+			 removeObj.parentNode.removeChild(removeObj);
+			 
+			 for(i=0;i<data.list.length;i++)
+			 {
+			       if(data.list[i].bid==bid)
+				   {
+				        data.list.splice(i, 1);
+			             var str = JSON.stringify(data);
+				         localStorage.setItem("json",str);
+				   }
+			}
+		  }
+		</SCRIPT>
+		</div>
+ 
+		
+		
+		</div>
+			<div class="foot" id="bq">
+				版权信息：&copy;软件17201班 - 17180620103  田纪海.
+			</div>
+	</body>
+</html>

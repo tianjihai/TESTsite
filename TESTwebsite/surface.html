@@ -1,0 +1,599 @@
+<!--http://www.ifanr.com/576352-->
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>微软 Surface Book 评测</title> 
+		<link href="css/bootstrap.css" type="text/css" rel="stylesheet" />
+		<link href="css/stylexg.css" rel="stylesheet">
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet" /> 
+		<script src="jquery1.11.3/jquery-1.11.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script> 
+		<script type="text/javascript">
+		window.onload=function() {
+	            initDB();
+		}
+	        function initDB() {
+	            var db=getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	            		
+	                trans.executeSql("create table if not exists message(username text null,title text null,content text null)", [], 		function (trans, result) {
+	
+	                },
+			function (trans, message) {
+				alert(message);
+	            	});
+			});
+		    }
+	        }
+	        
+		function getDB(){ 
+	            var db = openDatabase("iphonex", "1.0", "My Message Pad", 1024 * 1024); 
+	            if(!db) {
+			alert("您的浏览器不支持HTML5本地数据库");
+			return false;
+		    }
+		    return db;
+		}
+		
+	        function save(){
+		    var username = document.getElementById("username").value;
+	 	    var title = document.getElementById("title").value;
+		    var content = document.getElementById("content").value;
+		    
+	            var db = getDB();
+		    if(db){ 
+	               	db.transaction(function(trans) {
+	                trans.executeSql("insert into message(username,title,content) values(?,?,?) ", [username, title, content], 
+			function (ts, data) {
+				alert("留言保存成功");
+	                }, 
+			function (ts, message) {
+	                	alert(message);
+	                });
+	                });	
+		    }
+	        }
+	        
+	        function showAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("select * from message ", [], 					function (ts, result) {
+	                    if (result) {
+				show.innerHTML += "<th>用户名</th><th>标题</th><th>留言</th>";
+	                        for (var i = 0; i < result.rows.length; i++) {
+	                            writeTable(result.rows.item(i)); 
+	                        }
+	                    }
+	                }, 
+			function (ts, message) {
+				alert(message);
+				var tst = message;
+			});
+	            	});
+		    }
+	        }
+	        
+		function writeTable(data) {
+	            var show=document.getElementById("show");
+	            var username = data.username;
+	            var title = data.title;
+	            var content = data.content;
+	            var str = "";
+		    str += "<tr>";
+		    str += "<td>" + username + "</td>";
+		    str += "<td>" + title + "</td>";
+		    str += "<td>" + content + "</td>";
+		    str += "</tr>";
+		    show.innerHTML += str;
+	            
+	        }
+	        
+		function clearAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("delete from message ", [], 					function (ts, data) {
+	                    alert("已清空留言本所有留言");
+	                }, 
+			function (ts, message) {
+			    alert(message);
+			    var tst = message;
+			});
+	            	});
+		    }
+		}
+	    </script>
+   
+		<style>
+			.head{
+				position:absolute;
+				top: 0px;
+				width: 100%;
+				height: 80px;
+				background-color: black;  
+			}
+			.hd{
+				width: 1100px;
+				margin: 0 auto; 
+				height: 100%;   
+			} 
+			.logo {
+				float: left;
+			}
+			.lie{
+				float: left;
+				margin-left: 20px;
+			}
+			.lie li{
+				list-style: none;line-height: 80px;width: 170px;
+				text-align: center ; float: left;
+			}
+			.lie li a{
+				display: block; width: 100%; height: 100%; font-size: 20px;
+				color: white; text-decoration: none;font-family: "幼圆";
+			}
+			.lie li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+			} 
+			.daohang{
+				background-color: black;
+				width: 150px;
+				height: 320px;
+				position: fixed;
+				border: 0px solid yellow;
+				top: 230px; 
+				z-index: 1111;
+			}
+			.daohang li{   
+				list-style: none;line-height: 40px;width: 110px;
+				 border: 0px solid red; 
+			}
+			.daohang li a{
+				display: block; width: 100%; height: 100%; font-size: 18px;
+				color: white; text-decoration: none;font-family: "comic sans ms";
+				 padding-left: 10px;
+			}
+			.daohang li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+				 padding-left: 10px;
+			} 
+			.main1back{
+				width: 1000px;
+				height: 140px;
+				border-bottom: 1px solid gray;
+				margin: 0 auto;
+				position: relative;
+				top: 110px;
+			}
+			.m1top{
+				width: auto;
+				height: auto;
+				position: relative;
+				top: 1px;
+				left: 1px;
+			}
+			.main2back{
+				width: 1000px;
+				height: auto; 
+				padding-top: 50px;
+				margin: 0 auto;
+				position: relative;
+				top: 110px;
+			} 
+			.main3back{ 
+				width: 1000px;
+				height:auto; 
+				border: 0px solid red;
+				padding-top: 160px; 
+				margin: 0 auto;
+				position: relative;
+				top: 110px; 
+			}
+			.m3l{
+				border: 0px solid blue;
+				width: 50%;
+				height: auto;
+				margin-top: 17px;
+				float: left;
+			}
+			.m3rback{
+				background-color: dimgray;
+				border: 0px solid green;
+				width: 497px;
+				height: 300px;
+				margin-top: 40px;
+				float: left;
+			}
+			.m3rmain{
+				margin-top: 36px;
+				background-color: #E5E4E2;
+				border: 0px solid orange;
+				width: 497px;
+				height: auto;
+				padding: 30px;
+				font-size: 17px; 
+			}
+			.m3a{ 
+				border: 0px solid black;
+				height: 400px;
+				width: auto; 
+			}
+			.m3b{
+				border:0px solid orange; 
+			}
+			.hname{
+				border-bottom: 2px solid gray; 
+				padding-bottom: 15px;
+				width: 300px;
+				font-weight: bold;
+			}
+			.intro{
+				padding-top: 30px;
+				padding-bottom: 30px; 
+				font-size:17px;
+			}
+			.intro li{
+				list-style: disc;
+				margin-left: 80px;
+			}
+			.foot{
+				font-size: 17px; 
+				position: absolute;
+				width: 100%; 
+				height: 70px;
+				background: black; 
+				line-height: 70px; 
+				text-align: center;
+				color: white;
+				margin-top:200px ;
+			}
+			.pl{
+				border: 0px solid red;
+				margin-top: 50px;
+			}
+			.pl table{
+				width: 100%;
+				border: 0px;
+			}
+			.pl table td{
+				border: 1px solid gray;
+				height: 70px;
+				font-size: 20px; 
+			}
+			.liuyan{
+				border: 0px solid blue;
+				margin: 0 auto;
+				padding: 50px;
+			}
+			.liuyan input{
+				width: 300px;
+				border-radius: 15px 15px 15px 15px;
+				border: 1px solid gray;
+				margin: 10px;
+				height: 30px;
+				text-align: center;
+				font-size: 17px;
+			}
+			.liuyan textarea{ 
+				width: 320px;
+				height: 150px; 
+			} 
+			.peizhi{
+				border: 0px solid red;  
+				font-size: 17px;
+				padding: 50px;
+			} 
+			.peizhi tr{
+				height: 30px;
+			}
+			.neir{
+				padding-left: 30px;
+				width: 500px;
+				font-weight: bold;
+				border: 0px;
+				background-color: transparent;
+			}
+			.bttn{
+				width: 190px;
+				height: 40px;
+				background-color: black;
+				border: 1px solid black;
+				border-radius: 20px 20px 20px 20px;
+				color: white;
+			}
+			.bttn:hover{
+				transition: background .500s ease;	
+				width: 190px;
+				height: 40px;
+				background-color: lightblue;
+				border: 1px solid white;
+				border-radius: 20px 20px 20px 20px;
+				color: black;
+			}
+		</style>
+	</head>
+	<body onload="showAll()">
+		<div class="head">
+			<div class="hd">
+				<div class="logo"><a href="home.html"><img src="img/logo.png"></a></div>
+				<div class="lie">
+					<ul class="hmn">
+						<li><a href="home.html#phone">手机测评</a></li>
+						<li><a href="home.html#computer">电脑测评</a></li> 
+						<li><a href="#bq">版权信息</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="main1back">
+			<div class="m1top">
+				<h1>微软 Surface Book 评测</h1> <br />
+				<h4>微软用它来提高人们对 Win PC 产品水平的认知？</h4> 
+			</div>
+		</div>
+		
+		<div class="main2back">
+			<img src="img/surface/suface.jpg" style="width: 100%; "/>
+		</div>
+		 
+		
+		<div class="main3back"> 
+			 
+   				
+			<div class="m3b">  
+		 
+				<h2 id="zdgg" class="hname" >重点规格</h2>
+				
+					<div class="peizhi">
+					  <form>   
+						<input type="hidden" name="imgsrc" value="surface.jpg">  
+						<table>
+							<tr>
+								<td>&gt; 名称：</td>
+								<td><input type="text" name="bookname" value="微软 Surface Book" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 屏幕大小：</td>
+								<td><input type="text" name="bookn" value="13.5 英寸 3000 x 2000分辨率 触控屏" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 上市日期：</td>
+								<td><input type="text" name="camera" value="2015年12月" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 处理器：</td>
+								<td><input type="text" name="cpu" value="Intel 酷睿i7 6600U" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 内存：</td>
+								<td><input type="text" name="ram" value="16GB RAM" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 显卡：</td>
+								<td><input type="text" name="baterry" value="NVIDIA Geforce 1GB" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 预载系统：</td>
+								<td><input type="text" name="os" value="Windows 10" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 无线支持：</td>
+								<td><input type="text" name="wifi" value="支持802.11a/b/g/n/ac无线协议" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 电池电量：</td>
+								<td><input type="text" name="wcws" value="6000mAh" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 三围 重量：</td>
+								<td><input type="text" name="size" value="312.3 x 232.1 x 13mm，重 1.56kg" readonly class="neir"></td>
+							</tr>
+							
+						</table>
+						<br />
+						
+						<INPUT TYPE="button" value="添加比较" onclick="addBj(this)" class="bttn">
+						<INPUT TYPE="button" value="查看比较内容" onclick="javascript:location.href='cbijiao.html';" class="bttn">
+						<INPUT TYPE="button" value="清空比较" onclick="clearBj()" class="bttn">
+						  </form>
+					</div>
+		
+				  
+				  <SCRIPT LANGUAGE="JavaScript">
+				  
+				 function addBj(bt){
+				
+					var str=localStorage.getItem("json2");
+					var json= JSON.parse(str);
+					
+					if(json==null)
+					{
+					json= { "list": []}; 
+					} 
+						var data=new Object;
+						data.bid=json.list.length;
+						data.name=bt.form.bookname.value;
+						data.bkname=bt.form.bookn.value;
+						data.cmr=bt.form.camera.value;
+						data.cenpu=bt.form.cpu.value;
+						data.neic=bt.form.ram.value;
+						data.dianl=bt.form.baterry.value;
+						data.ios=bt.form.os.value;
+						data.wire=bt.form.wifi.value;
+						data.fcfs=bt.form.wcws.value;
+						data.big=bt.form.size.value;
+						
+						path=bt.form.imgsrc.value;
+						var n=path.lastIndexOf("/")+1;
+						data.pic=path.substring(n);
+						
+						json.list.push(data);
+						 var str = JSON.stringify(json);
+						localStorage.setItem("json2",str);
+						alert("添加成功");
+					} 
+				 function clearBj(){
+						localStorage.removeItem("json2"); 
+						alert("比较页面已清空");
+				  	}
+				
+				  </SCRIPT> 
+				  
+				  
+				  <script>
+			  	var c,ctx;
+			  	var img=new Image();
+			  	window.onload=function(){
+					c=document.getElementById("myCanvas");
+			  		ctx=c.getContext("2d");
+			  		img.src="img/surface/sf1.jpg";
+			  		ctx.drawImage(img,0,0,c.width,c.height);  
+			  	}
+			  	function enlarge(ev){
+			  		var ev=ev||window.event;
+			  		var x=ev.clientX-100;
+			  		var y=ev.clientY+100; 
+			 		ctx.drawImage(img,x,y,500,500,0,0,c.width,c.height);  
+			  	} 
+			   </script>
+			   <div style="float: left;width: 100%;">
+		    	<img src="img/surface/sf1.jpg" width="500" height="500" onmousemove="enlarge(event)" style="float: left;margin-top: 10px;margin-bottom: 10px;">
+   				<canvas id="myCanvas" width="400" height="400" style="float: left;margin-top: 15px;margin-bottom: 100px;margin-left: 60px;border-radius: 30px 30px 30px 30px;" ></canvas>
+   				</div>
+   				
+   				
+   				
+				<h2 id="yjsj" class="hname" >硬件设计</h2> 
+				 <div class="intro">
+					外形设计高级感十足。实际上不用多介绍这款产品的外形设计，微软设计和高昂的售价这两点基本上就可以认定这是一台足够漂亮的设备。
+				</div>
+				<img src="img/surface/sf2.jpg" width="70%" />
+				<div class="intro">
+					就外观设计而言，arstechnica 认为，Surface Book 是一款非常吸引人眼球的设备，产品做工考究、精致，它还采用了比较方正的铝镁合金骨架机身。
+					<br /><br />
+					组合屏幕和键盘之后，Surface Book 的外形跟普通的笔记本没有任何区别，而且整体对比苹果入门版的 13 英寸 Retina Macbook Pro 来看，它还轻上不少，重要的是这款产品还拥有独立显卡和触控屏幕，结合配置来说 Surface Book 似乎更具有吸引力。
+					<br /><br />
+					扩展接口分为两个 USB 3.0、SD 卡槽、Mini DP 以及充电口，整体接口配备属于常规水平。这款产品的扬声器被设计在了平板部分的两侧，相当隐蔽，看起来不显得很突兀。
+					<br /><br />
+					合并后让人吐槽的一点是耳机插口，这个耳机插口在平板端右侧顶部，跟传统笔记本产品的位置不同，用起来也感觉有些奇怪，不过分离后在平板模式下倒是很舒适。
+				</div>
+				<img src="img/surface/sf3.gif" width="70%" /> 
+				<div class="intro">
+					铰链是一个比较亮点的设计，虽然人们对于这个铰链的评价褒贬不一，不过 Engadget 认为这是一个比较引人注目的设计，多数编辑因此专门跑过来看这台 Surface Book。
+					<br /><br />
+					这也算是 Surface Book 一个独特、漂亮和令人难忘的地位象征。
+					<br /><br /> 
+				</div>
+				<img src="img/surface/sf4.gif" width="70%" /> 
+				<div class="intro"> 
+					在你需要分离平板的时候，系统如果有运行着 GPU 的软件，它会提醒你这些软件正在使用 GPU 功能，需要关闭后才能拔出平板部分，否则则无法来拆开使用。
+					<br /><br /> 
+					拆卸通过软件机制控制。
+					<br /><br /> 
+					
+				</div> 
+				
+				<h2 id="pl" class="hname">Surface 键盘</h2> 
+				<div class="intro"> 
+					比起 Mac，键盘更好，触控板相仿。
+					<br /><br /> 
+					 用 Surface Book 敲打完了整篇产品使用评测，他们给予了键盘非常高的评价：
+					<br /><br /> 
+					键盘敲击有一些噪音，不过比起 Macbook 以及 ThinkPad 都要好的多，键盘敲击感觉非常好，它们有足够的键帽间距和 1.6mm 的键程。
+					<br /><br />  
+				</div> 
+				<img src="img/surface/sf5.jpg" width="70%" /> 
+				<div class="intro"> 
+					触控板由微软亲自调教，使用起来称的上是微软最好用的触控板也不为过。
+					<br /><br /> 
+					Arstechnica 则认为微软借鉴了苹果的触控板设计，不过这块触控板真的非常好用，一致性也非常棒。
+					<br /><br /> 
+				</div> 
+				
+				<h2 id="pl" class="hname">Surface 屏幕</h2> 
+				<div class="intro"> 
+					Surface Book 采用的是分辨率为 3000 x 2000 的 13.5 英寸显示屏，像素密度为 267ppi。
+					<br /><br /> 
+					实际上，Surface Book 的屏幕长宽比例是遵循 Surface 系的家族产品，微软说这使其在平板模式下有着笔记本电脑式的体验，也是为了保持一致性的使用体验。
+					<br /><br /> 
+				</div>
+				<img src="img/surface/sf6.jpg" width="70%" /> 
+				<div class="intro"> 
+					它更比 Chromebook Pixel（239 ppi）和 13 吋配备 Retina 屏幕的 MacBook Pro（227 ppi）还要精细。
+					<br /><br /> 
+					还有不得不说的一个配件就是 Surface Pen，这个产品拥有 1024 级压力感应，配合上 Windows 10，使用者可以在 Edge 和 OneNote 上进行标记并发送分享、邮件等。
+					<br /><br /> 
+					另外，Surface Book 的屏幕有一种防误触设置，之前好像在 Surface Pro 3 的时候叫 Palm Block 技术，手指在持机时意外放到屏幕上也不会出现问题。
+					<br /><br /> 
+				</div>
+				
+				<h2 id="pl" class="hname">评论</h2>
+				<div class="intro"> 
+					对于产品的定位方向，arstechnica 评价称，虽然微软之前将 Surface Pro 3 作为一款“足以取代笔记本电脑的平板电脑”，但是它所取代的是普通笔记本电脑，而并非像苹果 MacBook Pro 那样的高端笔记本电脑。
+					<br /><br /> 
+					Surface Book 就是狙击其他品牌高端产品的武器。
+					<br /><br /> 
+					综合来看，多家外媒都给予了 Surface Book 很高的评价，这是毋庸置疑的明星级产品，它甚至也可以当之无愧的成为 Win PC 历史中的里程碑式产品。
+					<br /><br /> 
+					Surface Book 是不是终极笔记本我不能确定，不过从微软现阶段推出这款产品的意义上来讲，它的作用在于它给与微软以及 PC 注入了全新的活力，很大意义上讲提高了人们对 Win PC 产品水平的认知。
+					<br /><br /> 
+				</div>
+				
+				
+				
+				<br />
+				<h2 id="pl" class="hname">评论</h2>
+				<div>
+				    <table class="liuyan" >
+				        <tr>
+				           <td>用户名：</td>
+				           <td><input type="text" name="userame" id="username" required/></td>
+				        </tr>
+				        <tr>
+				            <td>标题：</td>
+				            <td><input type="text" name="title" id="title" required/></td>
+				        </tr>
+				        <tr>
+				            <td>评论：</td>
+				            <td><textarea name="content" id="content" required/></textarea></td>
+				        </tr>
+				        <tr>
+				        	<td></td>
+				        	<td><input type="button" class="tj" value="提交" id="save" onclick="save()"/></td>
+				        </tr>
+				    </table>
+				        <hr>
+				        <input type="button" value="查看留言本" onclick="showAll()"/> 
+				        
+				        <div class="pl">
+				        	<h2>网友评论区</h2><br />
+						<table id="show" border="1" >
+				        </table>
+						</div>
+				</div>
+				
+				
+			</div>
+			
+			
+		</div>
+		
+			<div class="foot" id="bq">
+				版权信息：&copy;软件17201班 - 17180620103  田纪海.
+			</div>
+	</body>
+</html>

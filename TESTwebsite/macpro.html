@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>新 Macbook Pro 评测</title> 
+		<link href="css/bootstrap.css" type="text/css" rel="stylesheet" />
+		<link href="css/stylexg.css" rel="stylesheet">
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet" /> 
+		<script src="jquery1.11.3/jquery-1.11.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script> 
+		<script type="text/javascript">
+		window.onload=function() {
+	            initDB();
+		}
+	        function initDB() {
+	            var db=getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	            		
+	                trans.executeSql("create table if not exists message(username text null,title text null,content text null)", [], 		function (trans, result) {
+	
+	                },
+			function (trans, message) {
+				alert(message);
+	            	});
+			});
+		    }
+	        }
+	        
+		function getDB(){
+			
+	            var db = openDatabase("iphonex", "1.0", "My Message Pad", 1024 * 1024); 
+	            if(!db) {
+			alert("您的浏览器不支持HTML5本地数据库");
+			return false;
+		    }
+		    return db;
+		}
+		
+	        function save(){
+		    var username = document.getElementById("username").value;
+	 	    var title = document.getElementById("title").value;
+		    var content = document.getElementById("content").value;
+		    
+	            var db = getDB();
+		    if(db){
+		    	
+	               	db.transaction(function(trans) {
+	                trans.executeSql("insert into message(username,title,content) values(?,?,?) ", [username, title, content], 
+			function (ts, data) {
+				alert("留言保存成功");
+	                }, 
+			function (ts, message) {
+	                	alert(message);
+	                });
+	                });	
+		    }
+	        }
+	        
+	        function showAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("select * from message ", [], 					function (ts, result) {
+	                    if (result) {
+				show.innerHTML += "<th>用户名</th><th>标题</th><th>留言</th>";
+	                        for (var i = 0; i < result.rows.length; i++) {
+	                            writeTable(result.rows.item(i)); 
+	                        }
+	                    }
+	                }, 
+			function (ts, message) {
+				alert(message);
+				var tst = message;
+			});
+	            	});
+		    }
+	        }
+	        
+		function writeTable(data) {
+	            var show=document.getElementById("show");
+	            var username = data.username;
+	            var title = data.title;
+	            var content = data.content;
+	            var str = "";
+		    str += "<tr>";
+		    str += "<td>" + username + "</td>";
+		    str += "<td>" + title + "</td>";
+		    str += "<td>" + content + "</td>";
+		    str += "</tr>";
+		    show.innerHTML += str; 
+	        }
+	        
+		function clearAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("delete from message ", [], 					function (ts, data) {
+	                    alert("已清空留言本所有留言");
+	                }, 
+			function (ts, message) {
+			    alert(message);
+			    var tst = message;
+			});
+	            	});
+		    }
+		}
+	    </script>
+   
+		<style>
+			.head{
+				position:absolute;
+				top: 0px;
+				width: 100%;
+				height: 80px;
+				background-color: black;  
+			}
+			.hd{
+				width: 1100px;
+				margin: 0 auto; 
+				height: 100%;   
+			} 
+			.logo {
+				float: left;
+			}
+			.lie{
+				float: left;
+				margin-left: 20px;
+			}
+			.lie li{
+				list-style: none;line-height: 80px;width: 170px;
+				text-align: center ; float: left;
+			}
+			.lie li a{
+				display: block; width: 100%; height: 100%; font-size: 20px;
+				color: white; text-decoration: none;font-family: "幼圆";
+			}
+			.lie li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+			} 
+			.daohang{
+				background-color: black;
+				width: 150px;
+				height: 320px;
+				position: fixed;
+				border: 0px solid yellow;
+				top: 230px; 
+			}
+			.daohang li{   
+				list-style: none;line-height: 40px;width: 110px;
+				 border: 0px solid red; 
+			}
+			.daohang li a{
+				display: block; width: 100%; height: 100%; font-size: 18px;
+				color: white; text-decoration: none;font-family: "comic sans ms";
+				 padding-left: 10px;
+			}
+			.daohang li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+				 padding-left: 10px;
+			} 
+			.main1back{
+				width: 1000px;
+				height: 140px;
+				border-bottom: 1px solid gray;
+				margin: 0 auto;
+				position: relative;
+				top: 110px;
+			}
+			.m1top{
+				width: auto;
+				height: auto;
+				position: relative;
+				top: 1px;
+				left: 1px;
+			}
+			.main2back{
+				width: 1000px;
+				height: auto; 
+				padding-top: 50px;
+				margin: 0 auto;
+				position: relative;
+				top: 110px;
+			} 
+			.main3back{ 
+				width: 1000px;
+				height:auto; 
+				border: 0px solid red;
+				padding-top: 160px; 
+				margin: 0 auto;
+				position: relative;
+				top: 110px; 
+			}
+			.m3l{
+				border: 0px solid blue;
+				width: 50%;
+				height: auto;
+				margin-top: 17px;
+				float: left;
+			}
+			.m3rback{
+				background-color: dimgray;
+				border: 0px solid green;
+				width: 497px;
+				height: 300px;
+				margin-top: 40px;
+				float: left;
+			}
+			.m3rmain{
+				margin-top: 36px;
+				background-color: #E5E4E2;
+				border: 0px solid orange;
+				width: 497px;
+				height: auto;
+				padding: 30px;
+				font-size: 17px; 
+			}
+			.m3a{ 
+				border: 0px solid black;
+				height: 400px;
+				width: auto; 
+			}
+			.m3b{
+				border:0px solid orange; 
+			}
+			.hname{
+				border-bottom: 2px solid gray; 
+				padding-bottom: 15px;
+				width: 300px;
+				font-weight: bold;
+			}
+			.intro{
+				padding-top: 30px;
+				padding-bottom: 30px; 
+				font-size:17px;
+			}
+			.intro li{
+				list-style: disc;
+				margin-left: 80px;
+			}
+			.foot{
+				font-size: 17px; 
+				position: absolute;
+				width: 100%; 
+				height: 70px;
+				background: black; 
+				line-height: 70px; 
+				text-align: center;
+				color: white;
+				margin-top:200px ;
+			}
+			.pl{
+				border: 0px solid red;
+				margin-top: 50px;
+			}
+			.pl table{
+				width: 100%;
+				border: 0px;
+			}
+			.pl table td{
+				border: 1px solid gray;
+				height: 70px;
+				font-size: 20px; 
+			}
+			.liuyan{
+				border: 0px solid blue;
+				margin: 0 auto;
+				padding: 50px;
+			}
+			.liuyan input{
+				width: 300px;
+				border-radius: 15px 15px 15px 15px;
+				border: 1px solid gray;
+				margin: 10px;
+				height: 30px;
+				text-align: center;
+				font-size: 17px;
+			}
+			.liuyan textarea{ 
+				width: 320px;
+				height: 150px; 
+			} 
+			.peizhi{
+				border: 0px solid red;  
+				font-size: 17px;
+				padding: 50px;
+			} 
+			.peizhi tr{
+				height: 30px;
+			}
+			.neir{
+				padding-left: 30px;
+				width: 500px;
+				font-weight: bold;
+				border: 0px;
+				background-color: transparent;
+			}
+			.bttn{
+				width: 190px;
+				height: 40px;
+				background-color: black;
+				border: 1px solid black;
+				border-radius: 20px 20px 20px 20px;
+				color: white;
+			}
+			.bttn:hover{
+				transition: background .500s ease;	
+				width: 190px;
+				height: 40px;
+				background-color: lightblue;
+				border: 1px solid white;
+				border-radius: 20px 20px 20px 20px;
+				color: black;
+			} 
+		</style>
+	</head>
+	<body onload="showAll()">
+		<div class="head">
+			<div class="hd">
+				<div class="logo"><a href="home.html"><img src="img/logo.png"></a></div>
+				<div class="lie">
+					<ul class="hmn">
+						<li><a href="home.html#phone">手机测评</a></li>
+						<li><a href="home.html#computer">电脑测评</a></li> 
+						<li><a href="#bq">版权信息</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="main1back">
+			<div class="m1top">
+				<h1>新 MacBook Pro 评测</h1> <br />
+				<h4>一身才华，一触，即发。</h4> 
+			</div>
+		</div>
+		
+		<div class="main2back">
+			<img src="img/mac/mac.jpg" style="width: 100%; "/>
+		</div>
+		 
+		
+		<div class="main3back"> 
+			 
+   				
+			<div class="m3b">  
+		 
+				<h2 class="hname" >重点规格</h2>
+				
+					<div class="peizhi" id="zdgg">
+					  <form>   
+						<input type="hidden" name="imgsrc" value="macbook.jpg">  
+						<table>
+							<tr>
+								<td>&gt; 名称：</td>
+								<td><input type="text" name="bookname" value="Apple MacBook Pro" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 屏幕大小：</td>
+								<td><input type="text" name="bookn" value="15.4英寸 1440 x 900分辨率 " readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 上市日期：</td>
+								<td><input type="text" name="camera" value="2016年10月" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 处理器：</td>
+								<td><input type="text" name="cpu" value="Intel 酷睿i7 6700HQ" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 内存：</td>
+								<td><input type="text" name="ram" value="16GB RAM" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 显卡：</td>
+								<td><input type="text" name="baterry" value="AMD Radeon Pro 450＋Intel GMA HD 530" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 预载系统：</td>
+								<td><input type="text" name="os" value="Mac OS" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 无线支持：</td>
+								<td><input type="text" name="wifi" value="支持802.11a/b/g/n/ac无线协议 蓝牙4.2模块" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 电池电量：</td>
+								<td><input type="text" name="wcws" value="5500mAh" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 三围 重量：</td>
+								<td><input type="text" name="size" value="349.3 x 240.7 x 15.5mm，重 1.83kg" readonly class="neir"></td>
+							</tr>
+							
+						</table>
+						<br />
+						
+						<INPUT TYPE="button" value="添加比较" onclick="addBj(this)" class="bttn">
+						<INPUT TYPE="button" value="查看比较内容" onclick="javascript:location.href='cbijiao.html';" class="bttn">
+						<INPUT TYPE="button" value="清空比较" onclick="clearBj()" class="bttn">
+						  </form>
+					</div>
+		
+				  
+				  <SCRIPT LANGUAGE="JavaScript">
+				  
+				 function addBj(bt){
+				
+					var str=localStorage.getItem("json2");
+					var json= JSON.parse(str);
+					
+					if(json==null)
+					{
+					json= { "list": []}; 
+					} 
+						var data=new Object;
+						data.bid=json.list.length;
+						data.name=bt.form.bookname.value;
+						data.bkname=bt.form.bookn.value;
+						data.cmr=bt.form.camera.value;
+						data.cenpu=bt.form.cpu.value;
+						data.neic=bt.form.ram.value;
+						data.dianl=bt.form.baterry.value;
+						data.ios=bt.form.os.value;
+						data.wire=bt.form.wifi.value;
+						data.fcfs=bt.form.wcws.value;
+						data.big=bt.form.size.value;
+						
+						path=bt.form.imgsrc.value;
+						var n=path.lastIndexOf("/")+1;
+						data.pic=path.substring(n);
+						
+						json.list.push(data);
+						 var str = JSON.stringify(json);
+						localStorage.setItem("json2",str);
+						alert("添加成功");
+					} 
+				 function clearBj(){
+						localStorage.removeItem("json2"); 
+						alert("比较页面已清空");
+				  	}
+				
+				  </SCRIPT> 
+				  
+				  
+				  <script>
+			  	var c,ctx;
+			  	var img=new Image();
+			  	window.onload=function(){
+					c=document.getElementById("myCanvas");
+			  		ctx=c.getContext("2d");
+			  		img.src="img/mac/m1.jpg";
+			  		ctx.drawImage(img,0,0,c.width,c.height);  
+			  	}
+			  	function enlarge(ev){
+			  		var ev=ev||window.event;
+			  		var x=ev.clientX-100;
+			  		var y=ev.clientY+100; 
+			 		ctx.drawImage(img,x,y,200,200,0,0,c.width,c.height);  
+			  	} 
+			   </script>
+			   <div style="float: left;width: 100%;">
+		    	<img src="img/mac/m1.jpg" width="500" height="500" onmousemove="enlarge(event)" style="float: left;margin-top: 10px;margin-bottom: 10px;">
+   				<canvas id="myCanvas" width="400" height="400" style="float: left;margin-top: 15px;margin-bottom: 100px;margin-left: 60px;border-radius: 30px 30px 30px 30px;" ></canvas>
+   				</div>
+   				
+   				
+   				
+				<h2 id="yjsj" class="hname" >外观、尺寸</h2> 
+				 <div class="intro">
+					整体上，新 MBP 还是维持了之前的外观设计风格，当然也包括几个“小改动”：A 面 Logo 换为不发光的金属版本；转轴侧面外表改为金属一体加工设计，同时中间转轴下沉至 C 面以下，不再突兀；屏幕黑边上下左右均有变窄。因为黑边变窄，尺寸也缩小了。
+				 </div>
+				<img src="img/mac/m2.jpg" width="70%" /> 
+				<div class="intro">
+					昨天预告中，有读者希望我们能够清晰展示实际外壳颜色。目前，2016 款新 MBP 无论 13、15 寸均只有两个颜色可供选择：银色、深空灰。银色就不多说了，而深空灰很明显是来自 iPhone 6/6s。
+				 </div>
+				 <img src="img/mac/m3.jpg" width="70%" />
+				 <div class="intro">
+					有趣的是，通过与我们手头的 iPhone 6s 比对，实际颜色观感相当接近，所以想提前看配色效果你只需要找台深空灰 iPhone 6/6s。
+				 </div>
+				<img src="img/mac/m4.jpg" width="70%" /> 
+				<div class="intro">
+					外壳尺寸上也同样有所变动，13 寸版本厚度仅 14.9 mm，比上一代薄了 18%，长宽也分别缩减了 10mm 和 7mm，最终体积缩小了 23%；15 寸版本厚度略厚一些，为 15.5 mm，比上一代薄了 12%，长宽也分别缩减了 9.6mm 和 7 mm，体积相应减少 20%。
+					<br /><br />
+					重量上的改变同样明显：13 寸版本重量为 1.37kg，比上一代轻了 0.21kg。15 寸版本重量为 1.83kg，比上一代同样轻了 0.21kg。这也让 13 寸新 MBP 最终重量与 13 寸 MacBook Air 几乎相同。换句话说，你现在能在与 MBA 的便携性下享受到更强性能。
+					<br /><br /> 
+				</div> 
+				
+				<h2 id="pl" class="hname">CPU</h2> 
+				<img src="img/mac/m5.jpg" width="70%" /> 
+				<div class="intro"> 
+					CPU 此前一直是 MBP 系列的最大“弱点”。即便是去年年中更新的 2015 版 MBP最高配 CPU 依旧是 2014 年上市的 4 代酷睿产品。而就在 2 个月前，Intel 实际已经开始出售 2 款第 7 代酷睿产品。
+					<br /><br /> 
+					最终我们在 2016 款 MBR 产品线中迎来了 7 款第 6 代 i5/i7 酷睿处理器，一方面这是因为第 7 代酷睿目前上市的型号性能不足，另外也是因为 6、7 代酷睿之间的差异并不算大。从这个角度来看，苹果这次在 CPU 上已经做到了“最新”。
+					<br /><br /> 
+					根据目前苹果官网的信息，13 寸共有 3 款 i5、1 款 i7（双核四线程“伪 i7”）可供选择；15 寸版本有 3 款 i7 可供选择。它们的核心参数如下：
+					<br /><br />  
+				</div> 
+				<img src="img/mac/m6.jpg" width="70%" /> 
+				<div class="intro"> 
+					虽然看起来很复杂，但仔细对比起来却十分有规律：7 款均为 Skylake 架构、14nm 制程；13 寸可选处理器均为双核四线程、同时核显均设有额外高速显存，处理器功率和集成显卡选项各有两种；15 寸可选处理器的性能和功耗更高。
+				</div> 
+				
+				<h2 id="pl" class="hname">屏幕</h2> 
+				<div class="intro"> 
+					2016 款 MBP 在屏幕上也有所改变，虽然 13、15 寸版本的物理分辨率依旧分别为 2560×1600（227ppi）、2880×1880（220ppi），但实际显示效果仍有所提升。主要集中在三个方面：亮度、对比度、色彩。
+				</div>
+				<img src="img/mac/m7.jpg" width="70%" /> 
+				<div class="intro"> 
+					当然，消费者最容易感受到的应该还是亮度，67% 亮度提高意味着镜面屏的 MBP 也能够放心地在日照充足的情况下进行使用。对比度的变化则体现在“屏幕能更黑”，这会直接影响屏幕的灰度显示能力。最后是广色域。这对于视觉设计工作者来说无异于天籁。
+					<br /><br /> 
+					在屏幕的硬件提升之外，这次新 MBP 还有一个“隐形改变”：13、15 寸的默认分辨率均有所提升。13 寸从 1280×800 升级到 1440×900，15 寸从 1440×900 升级为 1680×1050。这个改动带来的直接改变是“屏幕显示更多内容”。由于 MBP 本身 Retina 屏幕的显示质量比较好，且放大比例不算太大，“锯齿感”并不明显。
+					<br /><br /> 
+				</div>
+				
+				<h2 id="pl" class="hname">TouchBar</h2> 
+				<div class="intro"> 
+					对，我们终于要开始说 2016 款 MBP 的核心争议点——Touch Bar 了。
+				</div>
+				<img src="img/mac/m8.jpg" width="70%" /> 
+				<div class="intro"> 
+					关机状态下，这条横置在键盘区域之上的“黑条”，完全覆盖了原来顶部的功能键。乍一看，甚至以为是一个装饰物。但在用对应手指轻触右侧的指纹识别模块之后，你就会一瞬间“冒出”一排额外“按键”。
+				</div>
+				<img src="img/mac/m9.jpg" width="70%" /> 
+				<div class="intro"> 
+					Touch Bar 实际是一块 2017 x 60 像素 OLED 触摸屏，并且在最右开机按钮上加入了指纹模块。它会通过环境感应会自动调节亮度，正常情况下，Touch Bar 会亮 60 秒然后慢慢变暗，再过 10 秒自动休眠。实际触摸点击感受跟 iPhone 并没有什么差别。
+					<br /><br />
+					但与提供了基础操控能力、要求用户学会组合操控的键盘，与提供了模拟能力、要求用户尴尬进行模拟操作的鼠标和触控板相比，Touch Bar 能够“更换显示内容”以及“用户自定义”的确有着从用户自身解决需求的能力。当然，这必然有学习成本。我们也无法断言用户是否会接受这样一个新生事物，唯有时间能证明一切。
+				</div>
+				
+				
+				<h2 id="pl" class="hname">评论</h2>
+				<div class="intro"> 
+					对于产品的定位方向，arstechnica 评价称，虽然微软之前将 Surface Pro 3 作为一款“足以取代笔记本电脑的平板电脑”，但是它所取代的是普通笔记本电脑，而并非像苹果 MacBook Pro 那样的高端笔记本电脑。
+					<br /><br /> 
+					Surface Book 就是狙击其他品牌高端产品的武器。
+					<br /><br /> 
+					综合来看，多家外媒都给予了 Surface Book 很高的评价，这是毋庸置疑的明星级产品，它甚至也可以当之无愧的成为 Win PC 历史中的里程碑式产品。
+					<br /><br /> 
+					Surface Book 是不是终极笔记本我不能确定，不过从微软现阶段推出这款产品的意义上来讲，它的作用在于它给与微软以及 PC 注入了全新的活力，很大意义上讲提高了人们对 Win PC 产品水平的认知。
+					<br /><br /> 
+				</div>
+				
+				
+				
+				<br />
+				<h2 id="pl" class="hname">评论</h2>
+				<div>
+				    <table class="liuyan" >
+				        <tr>
+				           <td>用户名：</td>
+				           <td><input type="text" name="userame" id="username" required/></td>
+				        </tr>
+				        <tr>
+				            <td>标题：</td>
+				            <td><input type="text" name="title" id="title" required/></td>
+				        </tr>
+				        <tr>
+				            <td>评论：</td>
+				            <td><textarea name="content" id="content" required/></textarea></td>
+				        </tr>
+				        <tr>
+				        	<td></td>
+				        	<td><input type="button" class="tj" value="提交" id="save" onclick="save()"/></td>
+				        </tr>
+				    </table>
+				        <hr>
+				        <input type="button" value="查看留言本" onclick="showAll()"/>
+						 
+				        <div class="pl">
+				        	<h2>网友评论区</h2><br />
+						<table id="show" border="1" >
+				        </table>
+						</div>
+				</div>
+				
+				
+			</div>
+			
+			
+		</div>
+		
+			<div class="foot" id="bq">
+				版权信息：&copy;软件17201班 - 17180620103  田纪海.
+			</div>
+	</body>
+</html>

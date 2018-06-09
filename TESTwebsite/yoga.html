@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>联想 YOGA 3 PRO 评测</title>
+		
+		<link href="css/bootstrap.css" type="text/css" rel="stylesheet" />
+		<link href="css/stylexg.css" rel="stylesheet">
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet" /> 
+		<script src="jquery1.11.3/jquery-1.11.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script> 
+		<script type="text/javascript">
+		window.onload=function() {
+	            initDB();
+		}
+	        function initDB() {
+	            var db=getDB();
+		    if(db){
+	            	db.transaction(function (trans) { 
+	                trans.executeSql("create table if not exists message(username text null,title text null,content text null)", [], 		function (trans, result) {
+	
+	                },
+			function (trans, message) {
+				alert(message);
+	            	});
+			});
+		    }
+	        }
+	        
+		function getDB(){ 
+	            var db = openDatabase("iphonex", "1.0", "My Message Pad", 1024 * 1024); 
+	            if(!db) {
+			alert("您的浏览器不支持HTML5本地数据库");
+			return false;
+		    }
+		    return db;
+		}
+		
+	        function save(){
+		    var username = document.getElementById("username").value;
+	 	    var title = document.getElementById("title").value;
+		    var content = document.getElementById("content").value;
+		    
+	            var db = getDB();
+		    if(db){ 
+	               	db.transaction(function(trans) {
+	                trans.executeSql("insert into message(username,title,content) values(?,?,?) ", [username, title, content], 
+			function (ts, data) {
+				alert("留言保存成功");
+	                }, 
+			function (ts, message) {
+	                	alert(message);
+	                });
+	                });	
+		    }
+	        }
+	        
+	        function showAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("select * from message ", [], 					function (ts, result) {
+	                    if (result) {
+				show.innerHTML += "<th>用户名</th><th>标题</th><th>留言</th>";
+	                        for (var i = 0; i < result.rows.length; i++) {
+	                            writeTable(result.rows.item(i)); 
+	                        }
+	                    }
+	                }, 
+			function (ts, message) {
+				alert(message);
+				var tst = message;
+			});
+	            	});
+		    }
+	        }
+	        
+		function writeTable(data) {
+	            var show=document.getElementById("show");
+	            var username = data.username;
+	            var title = data.title;
+	            var content = data.content;
+	            var str = "";
+		    str += "<tr>";
+		    str += "<td>" + username + "</td>";
+		    str += "<td>" + title + "</td>";
+		    str += "<td>" + content + "</td>";
+		    str += "</tr>";
+		    show.innerHTML += str;
+	            
+	        }
+	        
+		function clearAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("delete from message ", [], 					function (ts, data) {
+	                    alert("已清空留言本所有留言");
+	                }, 
+			function (ts, message) {
+			    alert(message);
+			    var tst = message;
+			});
+	            	});
+		    }
+		}
+	    </script>
+   
+		<style>
+			.head{
+				position:absolute;
+				top: 0px;
+				width: 100%;
+				height: 80px;
+				background-color: black;  
+			}
+			.hd{
+				width: 1100px;
+				margin: 0 auto; 
+				height: 100%;   
+			} 
+			.logo {
+				float: left;
+			}
+			.lie{
+				float: left;
+				margin-left: 20px;
+			}
+			.lie li{
+				list-style: none;line-height: 80px;width: 170px;
+				text-align: center ; float: left;
+			}
+			.lie li a{
+				display: block; width: 100%; height: 100%; font-size: 20px;
+				color: white; text-decoration: none;font-family: "幼圆";
+			}
+			.lie li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+			} 
+			.daohang{
+				background-color: black;
+				width: 150px;
+				height: 320px;
+				position: fixed;
+				border: 0px solid yellow;
+				top: 230px; 
+			}
+			.daohang li{   
+				list-style: none;line-height: 40px;width: 110px;
+				 border: 0px solid red; 
+			}
+			.daohang li a{
+				display: block; width: 100%; height: 100%; font-size: 18px;
+				color: white; text-decoration: none;font-family: "comic sans ms";
+				 padding-left: 10px;
+			}
+			.daohang li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+				 padding-left: 10px;
+			} 
+			.main1back{
+				width: 1000px;
+				height: 140px;
+				border-bottom: 1px solid gray;
+				margin: 0 auto;
+				position: relative;
+				top: 110px;
+			}
+			.m1top{
+				width: auto;
+				height: auto;
+				position: relative;
+				top: 1px;
+				left: 1px;
+			}
+			.main2back{
+				width: 1000px;
+				height: auto; 
+				padding-top: 50px;
+				margin: 0 auto;
+				position: relative;
+				top: 110px;
+			} 
+			.main3back{ 
+				width: 1000px;
+				height:auto; 
+				border: 0px solid red;
+				padding-top: 160px; 
+				margin: 0 auto;
+				position: relative;
+				top: 110px; 
+			}
+			.m3l{
+				border: 0px solid blue;
+				width: 50%;
+				height: auto;
+				margin-top: 17px;
+				float: left;
+			}
+			.m3rback{
+				background-color: dimgray;
+				border: 0px solid green;
+				width: 497px;
+				height: 300px;
+				margin-top: 40px;
+				float: left;
+			}
+			.m3rmain{
+				margin-top: 36px;
+				background-color: #E5E4E2;
+				border: 0px solid orange;
+				width: 497px;
+				height: auto;
+				padding: 30px;
+				font-size: 17px; 
+			}
+			.m3a{ 
+				border: 0px solid black;
+				height: 400px;
+				width: auto; 
+			}
+			.m3b{
+				border:0px solid orange; 
+			}
+			.hname{
+				border-bottom: 2px solid gray; 
+				padding-bottom: 15px;
+				width: 300px;
+				font-weight: bold;
+			}
+			.intro{
+				padding-top: 30px;
+				padding-bottom: 30px; 
+				font-size:17px;
+			}
+			.intro li{
+				list-style: disc;
+				margin-left: 80px;
+			}
+			.foot{
+				font-size: 17px; 
+				position: absolute;
+				width: 100%; 
+				height: 70px;
+				background: black; 
+				line-height: 70px; 
+				text-align: center;
+				color: white;
+				margin-top:200px ;
+			}
+			.pl{
+				border: 0px solid red;
+				margin-top: 50px;
+			}
+			.pl table{
+				width: 100%;
+				border: 0px;
+			}
+			.pl table td{
+				border: 1px solid gray;
+				height: 70px;
+				font-size: 20px; 
+			}
+			.liuyan{
+				border: 0px solid blue;
+				margin: 0 auto;
+				padding: 50px;
+			}
+			.liuyan input{
+				width: 300px;
+				border-radius: 15px 15px 15px 15px;
+				border: 1px solid gray;
+				margin: 10px;
+				height: 30px;
+				text-align: center;
+				font-size: 17px;
+			}
+			.liuyan textarea{ 
+				width: 320px;
+				height: 150px; 
+			} 
+			.peizhi{
+				border: 0px solid red;  
+				font-size: 17px;
+				padding: 50px;
+			} 
+			.peizhi tr{
+				height: 30px;
+			}
+			.neir{
+				padding-left: 30px;
+				width: 500px;
+				font-weight: bold;
+				border: 0px;
+				background-color: transparent;
+			}
+			.bttn{
+				width: 190px;
+				height: 40px;
+				background-color: black;
+				border: 1px solid black;
+				border-radius: 20px 20px 20px 20px;
+				color: white;
+			}
+			.bttn:hover{
+				transition: background .500s ease;	
+				width: 190px;
+				height: 40px;
+				background-color: lightblue;
+				border: 1px solid white;
+				border-radius: 20px 20px 20px 20px;
+				color: black;
+			}
+		</style>
+	</head>
+	<body onload="showAll()">
+		<div class="head">
+			<div class="hd">
+				<div class="logo"><a href="home.html"><img src="img/logo.png"></a></div>
+				<div class="lie">
+					<ul class="hmn">
+						<li><a href="home.html#phone">手机测评</a></li>
+						<li><a href="home.html#computer">电脑测评</a></li> 
+						<li><a href="#bq">版权信息</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="main1back">
+			<div class="m1top">
+				<h1>联想 YOGA 3 Pro 评测</h1> <br />
+				<h4>难得的诚意之作。</h4> 
+			</div>
+		</div>
+		
+		<div class="main2back">
+			<img src="img/yoga/yoga1.jpg" style="width: 100%; "/>
+		</div>
+		 
+		
+		<div class="main3back"> 
+			 
+   				
+			<div class="m3b">  
+		 
+				<h2 id="zdgg" class="hname" >重点规格</h2>
+				
+					<div class="peizhi">
+					  <form>   
+						<input type="hidden" name="imgsrc" value="yogapro.jpg">  
+						<table>
+							<tr>
+								<td>&gt; 名称：</td>
+								<td><input type="text" name="bookname" value="联想 YOGA 3 PRO" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 屏幕大小：</td>
+								<td><input type="text" name="bookn" value="13.9 英寸 触控屏" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 上市日期：</td>
+								<td><input type="text" name="camera" value="2017年10月" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 处理器：</td>
+								<td><input type="text" name="cpu" value="Intel 酷睿i5 8250U" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 内存：</td>
+								<td><input type="text" name="ram" value="8GB RAM" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 显卡：</td>
+								<td><input type="text" name="baterry" value="Intel GMA UHD 620 核心显卡" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 预载系统：</td>
+								<td><input type="text" name="os" value="Windows 10" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 无线支持：</td>
+								<td><input type="text" name="wifi" value="支持802.11ac无线协议  支持，蓝牙4.1模块" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 电池电量：</td>
+								<td><input type="text" name="wcws" value="4400mAh" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 三围 重量：</td>
+								<td><input type="text" name="size" value="323.5 x 223.8 x 13.6mm，重 1.37kg" readonly class="neir"></td>
+							</tr>
+							
+						</table>
+						<br />
+						
+						<INPUT TYPE="button" value="添加比较" onclick="addBj(this)" class="bttn">
+						<INPUT TYPE="button" value="查看比较内容" onclick="javascript:location.href='cbijiao.html';" class="bttn">
+						<INPUT TYPE="button" value="清空比较" onclick="clearBj()" class="bttn">
+						  </form>
+					</div>
+		
+				  
+				  <SCRIPT LANGUAGE="JavaScript">
+				  
+				 function addBj(bt){
+				
+					var str=localStorage.getItem("json2");
+					var json= JSON.parse(str);
+					
+					if(json==null)
+					{
+					json= { "list": []};
+					
+					}
+					
+						var data=new Object;
+						data.bid=json.list.length;
+						data.name=bt.form.bookname.value;
+						data.bkname=bt.form.bookn.value;
+						data.cmr=bt.form.camera.value;
+						data.cenpu=bt.form.cpu.value;
+						data.neic=bt.form.ram.value;
+						data.dianl=bt.form.baterry.value;
+						data.ios=bt.form.os.value;
+						data.wire=bt.form.wifi.value;
+						data.fcfs=bt.form.wcws.value;
+						data.big=bt.form.size.value;
+						
+						path=bt.form.imgsrc.value;
+						var n=path.lastIndexOf("/")+1;
+						data.pic=path.substring(n);
+						
+						json.list.push(data);
+						 var str = JSON.stringify(json);
+						localStorage.setItem("json2",str);
+						alert("添加成功");
+					} 
+				 function clearBj(){
+						localStorage.removeItem("json2"); 
+						alert("比较页面已清空");
+				  	}
+				
+				  </SCRIPT> 
+				  
+				  
+				  <script>
+			  	var c,ctx;
+			  	var img=new Image();
+			  	window.onload=function(){
+					c=document.getElementById("myCanvas");
+			  		ctx=c.getContext("2d");
+			  		img.src="img/yoga/yoga.jpg";
+			  		ctx.drawImage(img,0,0,c.width,c.height);  
+			  	}
+			  	function enlarge(ev){
+			  		var ev=ev||window.event;
+			  		var x=ev.clientX-100;
+			  		var y=ev.clientY+100; 
+			 		ctx.drawImage(img,x,y,300,300,0,0,c.width,c.height);  
+			  	} 
+			   </script>
+			   <div style="float: left;width: 100%;">
+		    	<img src="img/yoga/yoga.jpg" width="500" height="500" onmousemove="enlarge(event)" style="float: left;margin-top: 10px;margin-bottom: 10px;">
+   				<canvas id="myCanvas" width="400" height="400" style="float: left;margin-top: 15px;margin-bottom: 100px;margin-left: 60px;border-radius: 30px 30px 30px 30px;" ></canvas>
+   				</div>
+   				
+   				
+   				
+				<h2 id="yjsj" class="hname" >硬件设计</h2> 
+				 <div class="intro">
+					和过去一样，YOGA 3 Pro 保持了“翻转”的特色，而机身整体比前
+					任要显得更加轻薄——它比以轻薄为重要特征的 MacBook Air
+					 还要薄，数据上看，YOGA 3 Pro 的厚度和重量仅为 12.8 
+					 mm 和 1.19 Kg，而 MacBook Air 则为 17 mm，1.3
+					 5 Kg。而且它并没有采用讨好用户眼球的楔形设计，而是整体
+					 都保持同样的轻薄，这一点十分考验联想产品设计的功夫。
+				</div>
+				<img src="img/yoga/yoga2.jpg" width="70%" />
+				<div class="intro">
+					从外观来看，最显眼的是处于笔记本屏幕与键盘之间的转轴，它采用了手
+					表当中常见的铰链式设计，让它成为这款笔记本外观当中最吸引人目光的部分。
+					<br /><br />
+					经过一段时间的使用，我依然保持此前上手时的印象：<br />
+					金属表带式的设计提升了笔记本的材质，并增加了一种时尚感，
+					也成为 YOGA Pro 3 与其它笔记本产品上在外观上最大的区别。 
+					
+					<br /><br /><br />
+					所有看到 YOGA 3 Pro 的人，很难不被这个特别的设计吸引。当然，也有人觉得
+					，这个转轴的设计过于抢戏，反而让人忽略 YOGA 3 Pro 的整体。
+					但是，考虑到当下笔记本电脑产品的材质十分成熟，除非 YOGA 3
+					 Pro 采用全金属一体成型的机壳，否则视觉上的冲击力难以保证
+					 。至少，这个金属铰链能够帮助消费者记住 YOGA 3 Pro。
+				</div>
+				<img src="img/yoga/yoga3.jpg" width="70%" /> 
+				<div class="intro">
+					这个道理，就和许多手机喜欢采用“熊猫脸”的设计一
+					样，并不是因为有多好看，而是因为这样的设计识别度高，容易引起别人的注意，留下印象。<br />
+					从产品设计上，联想认为这个金属铰链十分必要，因为如果按照原来的转轴设计，由于物理结构的关系，
+					整体机身是没办法做到那么轻薄的，而采纳了这样的设计之后，产品还获得了额外的
+					好处：因为转轴阻尼增加，屏幕变得不晃动，方便消费者触摸屏幕。<br />
+					从产品外观来看，要挑 YOGA 3 Pro 毛病的话，可能是屏幕、键盘四周的空间太
+					多，显得不够精致、紧凑。然而，如果了解了 YOGA 3 Pro 背后的
+					设计，就会觉得情有可原。——为了实现更加轻薄的机身，联想特地设计
+					了高集成度，宽度极窄的主板， 位置放在键盘前方。采用这样的设计，好处
+					是除了为电池腾出更多的空间外，主板所散发的热量不会直接传导到键盘
+					以及腕托上，让人在打字的时候保持清爽。
+				</div>
+				<img src="img/yoga/yoga4.jpg" width="70%" /> 
+				<div class="intro"> 
+					实际测试的时候，当 YOGA 3 Pro 运行时间较长（3 – 4 个小时以上），键盘和腕托
+					部分会感到一点温热，完全达不到烫手的程度，可以说 YOGA 3 Pro 的散热表现十分优秀。
+					<br /><br />
+					其实笔记本电脑产品进化到今天，比较规格的意义不大，只要搭载 SSD 硬
+					盘，那么系统的启动速度，软件的反应速度都会有质的提升。从实际测试得
+					到的印象来看，YOGA 3 Pro 的系统启动过程不需要 1 分钟，而软件
+					也能达到“秒开”的程度。对于一款主打商务需求的笔记本来说，YOGA 3 Pro 的配置
+					与性能已经足够应付。<br /><br />
+					相比起硬件规格，我更想讨论 YOGA 3 Pro 那分辨率高达 3200 x 
+					1800 的 IPS 屏幕：颜色渲染和字体的细腻程度来说，可圈可点。在没
+					有 MacBook Pro Retina 的情况下，YOGA 3 Pro 这块屏幕
+					是吸引我持续使用的理由。但是， 很可惜的是，Windows 8.1 对高
+					分辨率的优化还做得不够好，常常出现以下几种情况：
+				</div>
+				<img src="img/yoga/yoga5.jpg" width="70%" /> 
+				<div class="intro"> 
+					实际测试的时候，当 YOGA 3 Pro 运行时间较长（3 – 4 个小时以上），键盘和腕托
+					部分会感到一点温热，完全达不到烫手的程度，可以说 YOGA 3 Pro 的散热表现十分优秀。
+					<br /><br />
+					其实笔记本电脑产品进化到今天，比较规格的意义不大，只要搭载 SSD 硬
+					盘，那么系统的启动速度，软件的反应速度都会有质的提升。从实际测试得
+					到的印象来看，YOGA 3 Pro 的系统启动过程不需要 1 分钟，而软件
+					也能达到“秒开”的程度。对于一款主打商务需求的笔记本来说，YOGA 3 Pro 的配置
+					与性能已经足够应付。<br /><br />
+					相比起硬件规格，我更想讨论 YOGA 3 Pro 那分辨率高达 3200 x 
+					1800 的 IPS 屏幕：颜色渲染和字体的细腻程度来说，可圈可点。在没
+					有 MacBook Pro Retina 的情况下，YOGA 3 Pro 这块屏幕
+					是吸引我持续使用的理由。但是， 很可惜的是，Windows 8.1 对高
+					分辨率的优化还做得不够好，常常出现以下几种情况：
+				</div>
+				<img src="img/yoga/yoga6.jpg" width="70%" /> 
+				<div class="intro"> 
+					另外值得一提的是，联想对产品的优化已经十分深入。YOGA 3 Pro 搭载的 
+					Harmony 软件，能够自动识别 YOGA 3 Pro 处于哪种模式之下，并
+					且记录哪种模式用户最喜欢使用，以及不同模式下用户最常使用的软件/
+					应用；除此之外，它还负责在不同模式下，改变笔记本屏幕的色温，音箱
+					的声音效果，以更好地适应不同场景下的使用。<br /><br />
+					YOGA 3 Pro 这款产品体现出联想对产品的把握——和 YOGA 平板 2 Pro 
+					一样，联想是从场景出发来考虑产品，而不是从功能出发来考虑产品。而
+					从全球品牌来看，联想亟需像 YOGA 这样的产品来表明自己已经从过
+					去的联想，变成现在不是亦步亦趋，而是对产品拥有独到见解，并且有
+					勇气实践的公司。<br /><br />
+					尽管从市场份额来看，联想的主要根基依然在传统 PC 领域，然而
+					拥有产品设计能力的它，应当足以应付来自智能手机、平板电脑等新
+					领域的挑战。最近，联想似乎已经做好了心理准备，发动转型，两天
+					前联想宣布成立一家全新子公司，探索互联网模式，将于 2015 年 4 月 1 日正式运营。
+				</div>
+				
+				
+				
+				
+				
+				
+				
+				<br />
+				<h2 id="pl" class="hname">评论</h2>
+				<div>
+				    <table class="liuyan" >
+				        <tr>
+				           <td>用户名：</td>
+				           <td><input type="text" name="userame" id="username" required/></td>
+				        </tr>
+				        <tr>
+				            <td>标题：</td>
+				            <td><input type="text" name="title" id="title" required/></td>
+				        </tr>
+				        <tr>
+				            <td>评论：</td>
+				            <td><textarea name="content" id="content" required/></textarea></td>
+				        </tr>
+				        <tr>
+				        	<td></td>
+				        	<td><input type="button" class="tj" value="提交" id="save" onclick="save()"/></td>
+				        </tr>
+				    </table>
+				        <hr>
+				        <input type="button" value="查看留言本" onclick="showAll()"/> 
+				        
+				        <div class="pl">
+				        	<h2>网友评论区</h2><br />
+						<table id="show" border="1" >
+				        </table>
+						</div>
+				</div>
+				
+				
+			</div>
+			
+			
+		</div>
+		
+			<div class="foot" id="bq">
+				版权信息：&copy;软件17201班 - 17180620103  田纪海.
+			</div>
+	</body>
+</html>

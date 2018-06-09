@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>iPhone X 评测</title> 
+		<link href="css/bootstrap.css" type="text/css" rel="stylesheet" />
+		<link href="css/stylexg.css" rel="stylesheet">
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet" /> 
+		<script src="jquery1.11.3/jquery-1.11.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		
+		<script type="text/javascript">
+		window.onload=function() {
+	            initDB();
+		}
+	        function initDB() {
+	            var db=getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	            		
+	                trans.executeSql("create table if not exists message(username text null,title text null,content text null)", [], 		function (trans, result) {
+	
+	                },
+			function (trans, message) {
+				alert(message);
+	            	});
+			});
+		    }
+	        }
+	        
+		function getDB(){
+			
+	            var db = openDatabase("iphonex", "1.0", "My Message Pad", 1024 * 1024); 
+	            if(!db) {
+			alert("您的浏览器不支持HTML5本地数据库");
+			return false;
+		    }
+		    return db;
+		}
+		
+	        function save(){
+		    var username = document.getElementById("username").value;
+	 	    var title = document.getElementById("title").value;
+		    var content = document.getElementById("content").value;
+		    
+	            var db = getDB();
+		    if(db){
+		    	
+	               	db.transaction(function(trans) {
+	                trans.executeSql("insert into message(username,title,content) values(?,?,?) ", [username, title, content], 
+			function (ts, data) {
+				alert("留言保存成功");
+	                }, 
+			function (ts, message) {
+	                	alert(message);
+	                });
+	                });	
+		    }
+	        }
+	        
+	        function showAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("select * from message ", [], 					function (ts, result) {
+	                    if (result) {
+				show.innerHTML += "<th>用户名</th><th>标题</th><th>留言</th>";
+	                        for (var i = 0; i < result.rows.length; i++) {
+	                            writeTable(result.rows.item(i)); 
+	                        }
+	                    }
+	                }, 
+			function (ts, message) {
+				alert(message);
+				var tst = message;
+			});
+	            	});
+		    }
+	        }
+	        
+		function writeTable(data) {
+	            var show=document.getElementById("show");
+	            var username = data.username;
+	            var title = data.title;
+	            var content = data.content;
+	            var str = "";
+		    str += "<tr>";
+		    str += "<td>" + username + "</td>";
+		    str += "<td>" + title + "</td>";
+		    str += "<td>" + content + "</td>";
+		    str += "</tr>";
+		    show.innerHTML += str;
+	            
+	        }
+	        
+		function clearAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("delete from message ", [], 					function (ts, data) {
+	                    alert("已清空留言本所有留言");
+	                }, 
+			function (ts, message) {
+			    alert(message);
+			    var tst = message;
+			});
+	            	});
+		    }
+		}
+	    </script>
+   
+		<style>
+			.head{
+				position:absolute;
+				top: 0px;
+				width: 100%;
+				height: 80px;
+				background-color: black;  
+			}
+			.hd{
+				width: 1100px;
+				margin: 0 auto; 
+				height: 100%;   
+			} 
+			.logo {
+				float: left;
+			}
+			.lie{
+				float: left;
+				margin-left: 20px;
+			}
+			.lie li{
+				list-style: none;line-height: 80px;width: 170px;
+				text-align: center ; float: left;
+			}
+			.lie li a{
+				display: block; width: 100%; height: 100%; font-size: 20px;
+				color: white; text-decoration: none;font-family: "幼圆";
+			}
+			.lie li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+			} 
+			.daohang{
+				background-color: black;
+				width: 150px;
+				height: 280px;
+				position: fixed;
+				border: 0px solid yellow;
+				top: 220px; 
+				z-index: 111;
+			}
+			.daohang li{   
+				list-style: none;line-height: 40px;width: 110px;
+				 border: 0px solid red; 
+			}
+			.daohang li a{
+				display: block; width: 100%; height: 100%; font-size: 18px;
+				color: white; text-decoration: none;font-family: "comic sans ms";
+				 padding-left: 10px;
+			}
+			.daohang li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+				 padding-left: 10px;
+			} 
+			.main1back{
+				width: 1000px;
+				height: 140px;
+				border-bottom: 1px solid gray;
+				margin: 0 auto;
+				position: relative;
+				top: 1300px;
+			}
+			.m1top{
+				width: auto;
+				height: auto;
+				position: relative;
+				top: 1px;
+				left: 1px;
+			}
+			.main2back{
+				width: 1000px;
+				height: auto; 
+				padding-top: 50px;
+				margin: 0 auto;
+				position: relative;
+				top: 1300px;
+			} 
+			.main3back{ 
+				background-color: white;
+				width: 1000px;
+				height:auto; 
+				border: 0px solid red;
+				padding-top: 200px;
+				margin: 0 auto;
+				position: relative;
+				top: 1300px; 
+			}
+			.m3l{
+				border: 0px solid blue;
+				width: auto;
+				height: auto;
+				float: left;
+			}
+			.m3rback{
+				background-color: gray;
+				border: 1px solid green;
+				width: 497px;
+				height: 375px;
+				float: left;
+			}
+			.m3rmain{
+				margin-top: 50px;
+				background-color: lightgray;
+				border: 0px solid orange;
+				width: 497px;
+				height: auto;
+				padding: 30px;
+				font-size: 17px; 
+			}
+			.m3a{ 
+				border: 0px solid black;
+				height: 400px;
+				width: auto; 
+			}
+			.m3b{
+				border: 0px solid orange;
+				padding-top: 60px;
+			}
+			.m3b img{
+				width: 250px;
+				border-radius: 20px 20px 20px 20px; 
+				transition: width .500s ease-out;
+				animation: donghuaout 5s ;
+				position: relative;
+				top: 0px;
+				left: 0px;
+			}
+			.m3b img:hover{
+				animation: donghuain 5s  ;
+				position: relative;
+				top: 0px;
+				left: 0px;
+				transition: width .500s ease-in;	 
+				width: 600px;
+				border-radius: 20px 20px 20px 20px; 
+			} 
+			@keyframes donghuain{
+				0%{top: 0px;left: 0px;}
+				100%{top: 0px; left: 15%;}
+			}
+			@keyframes donghuaout{
+				0%{top: 0px;left: 15%;}
+				100%{top: 0px; left: 0px;}
+			}
+			.hname{
+				border-bottom: 2px solid gray; 
+				padding-bottom: 15px;
+				width: 300px;
+				font-weight: bold;
+			}
+			.intro{
+				padding-top: 30px;
+				padding-bottom: 30px; 
+				font-size:17px;
+			}
+			.foot{
+				font-size: 17px; 
+				position: absolute;
+				width: 100%; 
+				height: 70px;
+				background: black; 
+				line-height: 70px; 
+				text-align: center;
+				color: white;
+				margin-top:1350px ;
+			}
+			
+			.bd{
+				position: fixed;   
+				top: 0px;
+				width: 100%;
+				height: 100%;
+				border: 0px solid blue;
+			}
+			.x{
+				border: 0px solid red;
+				width: 385px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-top: -200px;
+				margin-left: -200px;
+			} 
+			.hdimg{ 
+				position: absolute; 
+				z-index: 111;
+				width: 100%;
+				margin-top: 600px; 
+				border: 0px solid red;
+			}
+			.phone{
+				border: 0px solid green;
+				margin: 0 auto;
+				width: 550px;
+			}
+			.pl{
+				border: 0px solid red;
+				margin-top: 50px;
+			}
+			.pl table{
+				width: 100%;
+				border: 0px;
+			}
+			.pl table td{
+				border: 1px solid gray;
+				height: 70px;
+				font-size: 20px; 
+			}
+			.liuyan{
+				border: 0px solid blue;
+				margin: 0 auto;
+				padding: 50px;
+			}
+			.liuyan input{
+				width: 300px;
+				border-radius: 15px 15px 15px 15px;
+				border: 1px solid gray;
+				margin: 10px;
+				height: 30px;
+				text-align: center;
+				font-size: 17px;
+			}
+			.liuyan textarea{ 
+				width: 320px;
+				height: 150px; 
+			} 
+			.peizhi{
+				border: 0px solid red;  
+				font-size: 17px;
+				padding: 50px;
+			} 
+			.peizhi tr{
+				height: 30px;
+			}
+			.neir{
+				width: 500px;
+				font-weight: bold;
+				border: 0px;
+				background-color: transparent;
+			}
+			.bttn{
+				width: 190px;
+				height: 40px;
+				background-color: black;
+				border: 1px solid black;
+				border-radius: 20px 20px 20px 20px;
+				color: white;
+			}
+			.bttn:hover{
+				transition: background .500s ease;	
+				width: 190px;
+				height: 40px;
+				background-color:  lightgray;
+				border: 1px solid white;
+				border-radius: 20px 20px 20px 20px;
+				color: black;
+			}
+		</style>
+	</head>
+	<body onload="showAll()">
+		<div class="bd">
+			<div class="x">
+				<img src="img/iphonex/ipxHero.png" width="380px"/>
+			</div> 
+		</div>
+		
+		<div class="hdimg">
+			<div class="phone">
+				<img src="img/iphonex/iphoneXhero2.png" width="550px"  />
+			</div>
+			
+		</div>
+		
+		<div class="head">
+			<div class="hd">
+				<div class="logo"><a href="home.html"><img src="img/logo.png"></a></div>
+				<div class="lie">
+					<ul class="hmn">
+						<li><a href="home.html#phone">手机测评</a></li>
+						<li><a href="home.html#computer">电脑测评</a></li> 
+						<li><a href="#bq">版权信息</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="main1back">
+			<div class="m1top">
+				<h1>iPhone X 评测：手机的下一个十年</h1> <br />
+				<h4>未来手机还未到，但我们看的是手机的未来。</h4> 
+			</div>
+		</div>
+		
+		<div class="main2back">
+			<img src="img/iphonex/ipx.png" style="width: 100%; "/>
+		</div>
+		
+		<div class="daohang">
+			<ul>
+				<li><a href="#zdgg">重点规格</a></li>
+				<li><a href="#wg">外观设计</a></li>
+				<li><a href="#pm">屏幕</a></li>
+				<li><a href="#xj">相机</a></li>
+				<li><a href="#face">Face ID</a></li>
+				<li><a href="#zj">总结</a></li>
+				<li><a href="#pl">评论</a></li>
+			</ul>
+		</div>
+		
+		<div class="main3back">
+			<div class="m3a">
+			<div class="m3l">
+				<img src="img/iphonex/ipx2.jpg" />
+			</div>
+			<div class="m3rback">
+				<div class="m3rmain">
+					11月3日，iPhone X正式在全球同步上市，iPhone X采用了
+					和iPhone 8相同的64位的A11 Bonic处理器配置。
+					在屏幕上，苹果首次在自家手机上使用了OLED面板，
+					5.8英寸曲面OLED面板分辨率为2436x1165，
+					支持HDR10以及P3广色域显示。1200万像素双焦段摄像头支持光学防抖，
+					并具备HDR照片和视频记录功能。在采用全面屏设计后，
+					苹果应用了FaceID脸部身份识别技术以取代按键TouchID指纹。
+					iPhone X运行iOS11系统，64GB和256GB存储版本发售。
+				</div>
+			</div>
+			</div>
+			
+			
+			
+			<script>
+			  	var c,ctx;
+			  	var img=new Image();
+			  	window.onload=function(){
+					c=document.getElementById("myCanvas");
+			  		ctx=c.getContext("2d");
+			  		img.src="img/iphonex/ipxde.jpg";
+			  		ctx.drawImage(img,0,0,c.width,c.height);  
+			  	}
+			  	function enlarge(ev){
+			  		var ev=ev||window.event;
+			  		var x=ev.clientX-100;
+			  		var y=ev.clientY-100; 
+			 		ctx.drawImage(img,x,y,180,180,0,0,c.width,c.height);  
+			  	} 
+			   </script>
+			   <div style="float: left;width: 100%;">
+		    	<img src="img/iphonex/ipxde.jpg" width="500" height="500" onmousemove="enlarge(event)" style="float: left;margin-top: 100px;margin-bottom: 100px;">
+   				<canvas id="myCanvas" width="400" height="400" style="float: left;margin-top: 150px;margin-bottom: 100px;margin-left: 60px;border-radius: 30px 30px 30px 30px;" ></canvas>
+   				</div>
+   				
+   				
+   				
+			<div class="m3b"> 
+				
+				<h2 class="hname" >重点规格</h2>
+				
+					<div class="peizhi" id="zdgg" >
+					  <form>   
+						<input type="hidden" name="imgsrc" value="iphx.png">  
+						<table>
+							<tr>
+								<td>&gt; 名称：</td>
+								<td><input type="text" name="bookname" value="苹果 iPhone X" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 屏幕：</td>
+								<td><input type="text" name="bookn" value="5.8 英寸 2436 x 1125 像素  OLED 全面屏多点触控显示屏" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 相机：</td>
+								<td><input type="text" name="camera" value="1200 万像素摄像头   ƒ/1.8 光圈" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 处理器：</td>
+								<td><input type="text" name="cpu" value="64 位架构的 A11 仿生处理器  嵌入式 M11 运动协处理器" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 内存：</td>
+								<td><input type="text" name="ram" value="3GB RAM" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 电量：</td>
+								<td><input type="text" name="baterry" value="2716mAh" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 预载系统：</td>
+								<td><input type="text" name="os" value="iOS 11" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 无线支持：</td>
+								<td><input type="text" name="wifi" value="802.11ac 无线网络，具备 MIMO技术   蓝牙 5.0   支持NFC" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 是否防尘防水：</td>
+								<td><input type="text" name="wcws" value="是" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 三围 重量：</td>
+								<td><input type="text" name="size" value="143.6 x 70.9 x 7.7mm，重 174g" readonly class="neir"></td>
+							</tr>
+							
+						</table>
+						<br />
+						
+						<INPUT TYPE="button" value="添加比较" onclick="addBj(this)" class="bttn">
+						<INPUT TYPE="button" value="查看比较内容" onclick="javascript:location.href='bijiao.html';" class="bttn">
+						<INPUT TYPE="button" value="清空比较" onclick="clearBj()" class="bttn">
+						  </form>
+					</div>
+		
+				  
+				  <SCRIPT LANGUAGE="JavaScript">
+				  
+				 function addBj(bt){
+				
+					var str=localStorage.getItem("json");
+					var json= JSON.parse(str);
+					
+					if(json==null)
+					{
+					json= { "list": []};
+					
+					}
+					
+						var data=new Object;
+						data.bid=json.list.length;
+						data.name=bt.form.bookname.value;
+						data.bkname=bt.form.bookn.value;
+						data.cmr=bt.form.camera.value;
+						data.cenpu=bt.form.cpu.value;
+						data.neic=bt.form.ram.value;
+						data.dianl=bt.form.baterry.value;
+						data.ios=bt.form.os.value;
+						data.wire=bt.form.wifi.value;
+						data.fcfs=bt.form.wcws.value;
+						data.big=bt.form.size.value;
+						
+						path=bt.form.imgsrc.value;
+						var n=path.lastIndexOf("/")+1;
+						data.pic=path.substring(n);
+						
+						json.list.push(data);
+						 var str = JSON.stringify(json);
+						localStorage.setItem("json",str);
+						alert("添加成功");
+					} 
+				 function clearBj(){
+						localStorage.removeItem("json"); 
+						alert("比较页面已清空");
+				  	}
+				
+				  </SCRIPT> 
+				  
+				  
+				<h2 id="wg" class="hname" >外观设计</h2>
+				<div class="intro">
+					iPhone X 在外观上最叫人注目的，必然是其屏幕顶端的「小刘海」，
+					点亮屏幕后就会明显看到画面上方有着一个「凹」状缺口。
+					说实话，虽然这缺口对于操作使用并没有带来影响，
+					可是不多不少也有影响观感了... 不过这个「小刘海」里藏着的，
+					却是颠覆苹果通过 iPhone X 展示未来手机应有模样的一个重要部分：
+					TrueDepth 镜头系统。更多有关的功能会在稍后再谈。
+					虽然就我们肉眼能看到的其实只有扬声器和前置镜头，
+					但其实里面包含了其他 5 种感应器，所以占用的空间也算是少了（吧？）。
+					除了 TrueDepth 之外，iPhone X 的正面就只有那片 5.8 吋的 Super Retina HD 屏幕了。
+					大家习惯的主页键和粗粗边框，在 iPhone X 上面都不复存在，
+					所以小编在初次点亮屏幕的时候，也稍稍有种被震撼的感觉：
+					「这台真的是我们常用的 iPhone？」
+				</div>
+				<img src="img/iphonex/ipx3.jpg" width="60%" onmousemove="enlarge(event)" />
+				 <div class="intro">
+					借测的这台银色版本 iPhone X 的机背是偏银、灰调，配合覆在上面的玻璃背板，
+					摸上去就有玉石般的温软感觉，非常舒服。苹果方面补充说 iPhone X 
+					的前后两块玻璃都是智能手机界中最耐用的玻璃。
+					印在上面的就跟 iPhone 8 / 8 Plus 一样，
+					只有简单的苹果图标和 iPhone 字样，
+					不过 iPhone X 的双相机模块就改以垂直摆放，
+					而且更整合了 4-LED True Tone 补光灯到两颗相机之间，
+					进一步减少开孔，有更具一体化的观感。
+				</div>
+				<img src="img/iphonex/ipx4.jpg" width="70%" />
+				<div class="intro">
+					那医疗级不锈钢中框上的按键布局虽与 iPhone 7 / 8 系列相似，
+					但大家惯用的电源键因为在 iPhone X 被赋予了更多的责任，
+					所以为了让大家更好按到它，这颗侧边按钮的尺吋要稍微比过去变长了一点。
+					再细看一下，这种经过抛光处理的不锈钢感觉甚至会有种初代 iPhone 的影子呢。
+					反而太空灰版本的中框是加上了相对低调的黑色亮面 PVD 涂层，也是一个很好的配搭。
+				</div>
+				
+				<h2 id="pm" class="hname" >屏幕</h2>
+				<div class="intro">
+					iPhone X 是苹果首次应用 OLED 材质面板到 iPhone 之上，
+					官方并大胆表示这是业界中最能抵抗烧屏问题的 OLED 屏幕，
+					并且是颜色最准确的屏幕（基于 DCI-P3 色域）。
+					原先小编也有点担心他们会否太习惯于使用 LCD，
+					而对表现有如野马般难驯的 OLED 没辙。
+					幸好 iPhone X 的真机表现也没有叫人失望，
+					在室外也有 625 cd/m2 的最大亮度加持。
+					配合会按照环境光线而改变显示色调的 True Tone 显示，
+					这片分辨率为 2,436 x 1,125 的 Super Retina HD 屏幕，
+					在显示内容时依然细致好看。
+				</div>
+				<img src="img/iphonex/ipx5.jpg" width="70%"/>
+				<div class="intro">
+					iPhone X 有支持 Dolby Vision 和 HDR 10 两种 HDR 格式播放，
+					所以在打开 Netflix 等的内容就自动对应到有 HDR 显示。
+					可是，要是你把 iPhone X 和 iPhone 8 Plus 
+					两台同样支持 True Tone 显示的手机屏幕同放一起比较，
+					会发现 iPhone X 的色调会稍为偏暖一点，
+					但这已经算是 OLED 屏幕上较容易被接受的效果了。 
+					<br /><br />
+					相信大家都会对画面内容如何迁就 iPhone X 的「小刘海」感到好奇。
+					如果是原生的播放器，或是 Netflix 等已经有优化的 app，
+					会首先以较小的画面显示，但有需要的话则可以双击屏幕来填满画面，
+					这时候「小浏海」就变得非常醒目了。
+				</div>
+				
+				<h2 id="xj" class="hname" >相机</h2>
+				<div class="intro">
+					iPhone X 的双相机组合是两颗同样具备光学防抖的 12MP 相机，
+					差异就在标准广角镜头的光圈较大，达 f/1.8；长焦距镜头则为 f/2.4，
+					都能轻易获得足够光量拍摄，低光环境的表现也很不错，
+					而且标准镜的原生浅景深效果相当明显。
+					当然，苹果借双相机而做出来的「人像模式」更是因为 A11 Bionic SoC 而获得强化，
+					拍出来的强行浅景深效果也变得自然一点。不过更重要的还是在 iPhone X 上，
+					前置相机因为 TrueDepth 镜头系统的关系而补上了，
+					在拍 Selfie 的时候就能更轻易拍出佳作吧。
+				</div>
+				<img src="img/iphonex/ipx6.jpg" width="70%" />
+				<div class="intro">
+					相机界面一如往常的简单，提醒一下的就是在 iOS 11 里会预设使用 HEIF 文件格式以
+					及 HEVC 编码，虽然能把相片及视频所需的存储空间减半，
+					但要是以电邮或 AirDrop 分享出去的话，一般 app 不一定能打开文件的啊。
+				</div>
+				
+				<h2 id="face" class="hname" >Face ID</h2>
+				<div class="intro">
+					Face ID 配合 A11 Bionic 处理器的神经网络引擎会一直观察使用者脸部的小变动并作出调整，
+					所以平常的化妆或剃须都不会干扰 Face ID。
+					当然，如果脸部真的有相对大的变化的话，
+					Face ID 会要求使用者输入密码去认证。
+					据指街上随机找个一个陌生人来以 Face ID 
+					成功解锁的机会率只有一百万分之一，
+					远低于 Touch ID 的五万分之一！
+					当然如果你找来一对同卵双生的双胞胎来挑战 Face ID 的话，
+					这就已经在根本上改变游戏规则了，那倒不如直接偷看密码。
+				</div>
+				<img src="img/iphonex/ipx7.jpg" width="70%"/>
+				<div class="intro">
+					有了面部轮廓的 3D 数据后，Face ID 就可以用作 iPhone X 
+					的安全认证。以往有使用 Touch ID 认证的应用在 iPhone X 
+					上会直接改为使用 Face ID。同样地，面孔的数据都只会存储在 
+					iPhone X 里，并由 A11 Bionic SoC 里的 Secure 
+					Enclave 加密保护着，苹果也不能取得你资料啊。相比之下，
+					Face ID 的明显优势在于不需要做一个解锁动作的情况下，
+					可以直接在锁定页面里解除屏蔽新通知的信息，更为方便。
+				</div>
+				
+				<h2 id="zj" class="hname" >总结</h2>
+				<div class="intro">
+					回应着市场期待的，苹果以 iPhone X 做为纪念 iPhone 改变市场历史的十周年。
+					在纸面规格上，iPhone X 未必是一台拥有最强大硬件配置的智能手机，
+					甚至更只是与自家兄弟同级，但却引入了叫人意想不到
+					的 TrueDepth 镜头系统及几乎是真 · 全面屏的高质 OLED 屏幕。
+					可是一台手机最重要的还是其系统，在 iPhone X 里
+					的 iOS 11 是示范了着未来手机该有的姿态 -- 配合无实体键
+					的全手势操作，会与周遭环境互动的能力（AR）。
+					当然 iPhone X 并不是来自未来的手机，但它所展示的，
+					是苹果预言着日后手机的发展路向该是怎么，
+					所以它至少会是未来手机设计的一个基石。
+					<br /><br />
+					未来手机还未到，但我们看的是手机的未来。
+				</div>
+				<img src="img/iphonex/ipx8.jpg" width="70%" />
+				
+				<br />
+				<h2 id="pl" class="hname">评论</h2>
+				<div>
+				    <table class="liuyan" >
+				        <tr>
+				           <td>用户名：</td>
+				           <td><input type="text" name="userame" id="username" required/></td>
+				        </tr>
+				        <tr>
+				            <td>标题：</td>
+				            <td><input type="text" name="title" id="title" required/></td>
+				        </tr>
+				        <tr>
+				            <td>评论：</td>
+				            <td><textarea name="content" id="content" required/></textarea></td>
+				        </tr>
+				        <tr>
+				        	<td></td>
+				        	<td><input type="button" class="tj" value="提交" id="save" onclick="save()"/></td>
+				        </tr>
+				    </table>
+				        <hr>
+				        <input type="button" value="查看评论区" onclick="showAll()"/>
+						 
+				        <div class="pl">
+				        	<h2>网友评论区</h2><br />
+						<table id="show" border="1" >
+				        </table>
+						</div>
+				</div>
+				
+				
+			</div>
+			
+			
+		</div>
+		
+			<div class="foot" id="bq">
+				版权信息：&copy;软件17201班 - 17180620103  田纪海.
+			</div>
+	</body>
+</html>

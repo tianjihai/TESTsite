@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>华为Mate 10评测</title>
+		<link href="css/bootstrap.css" type="text/css" rel="stylesheet" />
+		<link href="css/stylexg.css" rel="stylesheet">
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet" /> 
+		<script src="jquery1.11.3/jquery-1.11.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script> 
+		<script type="text/javascript">
+		window.onload=function() {
+	            initDB();
+		}
+	        function initDB() {
+	            var db=getDB();
+		    if(db){
+	            	db.transaction(function (trans) { 
+	                trans.executeSql("create table if not exists message(username text null,title text null,content text null)", [], 		function (trans, result) {
+	
+	                },
+			function (trans, message) {
+				alert(message);
+	            	});
+			});
+		    }
+	        } 
+		function getDB(){
+			
+	            var db = openDatabase("iphonex", "1.0", "My Message Pad", 1024 * 1024); 
+	            if(!db) {
+			alert("您的浏览器不支持HTML5本地数据库");
+			return false;
+		    }
+		    return db;
+		}
+		
+	        function save(){
+		    var username = document.getElementById("username").value;
+	 	    var title = document.getElementById("title").value;
+		    var content = document.getElementById("content").value; 
+	            var db = getDB();
+		    if(db){
+		    	
+	               	db.transaction(function(trans) {
+	                trans.executeSql("insert into message(username,title,content) values(?,?,?) ", [username, title, content], 
+			function (ts, data) {
+				alert("留言保存成功");
+	                }, 
+			function (ts, message) {
+	                	alert(message);
+	                });
+	                });	
+		    }
+	        }
+	        
+	        function showAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("select * from message ", [], 					function (ts, result) {
+	                    if (result) {
+				show.innerHTML += "<th>用户名</th><th>标题</th><th>留言</th>";
+	                        for (var i = 0; i < result.rows.length; i++) {
+	                            writeTable(result.rows.item(i)); 
+	                        }
+	                    }
+	                }, 
+			function (ts, message) {
+				alert(message);
+				var tst = message;
+			});
+	            	});
+		    }
+	        }
+	        
+		function writeTable(data) {
+	            var show=document.getElementById("show");
+	            var username = data.username;
+	            var title = data.title;
+	            var content = data.content;
+	            var str = "";
+		    str += "<tr>";
+		    str += "<td>" + username + "</td>";
+		    str += "<td>" + title + "</td>";
+		    str += "<td>" + content + "</td>";
+		    str += "</tr>";
+		    show.innerHTML += str; 
+	        }
+	        
+		function clearAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("delete from message ", [], 					function (ts, data) {
+	                    alert("已清空留言本所有留言");
+	                }, 
+			function (ts, message) {
+			    alert(message);
+			    var tst = message;
+			});
+	            	});
+		    }
+		}
+	    </script>
+   
+		<style>
+			.head{
+				position:absolute;
+				top: 0px;
+				width: 100%;
+				height: 80px;
+				background-color: black;  
+			}
+			.hd{
+				width: 1100px;
+				margin: 0 auto; 
+				height: 100%;   
+			} 
+			.logo {
+				float: left;
+			}
+			.lie{
+				float: left;
+				margin-left: 20px;
+			}
+			.lie li{
+				list-style: none;line-height: 80px;width: 170px;
+				text-align: center ; float: left;
+			}
+			.lie li a{
+				display: block; width: 100%; height: 100%; font-size: 20px;
+				color: white; text-decoration: none;font-family: "幼圆";
+			}
+			.lie li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+			} 
+			.daohang{
+				background-color: black;
+				width: 150px;
+				height: 350px;
+				position: fixed;
+				border: 0px solid yellow;
+				top: 200px; 
+				z-index: 1111;
+			}
+			.daohang li{   
+				list-style: none;line-height: 40px;width: 110px;
+				 border: 0px solid red; 
+			}
+			.daohang li a{
+				display: block; width: 100%; height: 100%; font-size: 18px;
+				color: white; text-decoration: none;font-family: "comic sans ms";
+				 padding-left: 10px;
+			}
+			.daohang li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+				 padding-left: 10px;
+			} 
+			.main1back{
+				width: 1000px;
+				height: 140px;
+				border-bottom: 1px solid gray;
+				margin: 0 auto;
+				position: relative;
+				top: 110px;
+				color: white;
+			}
+			.m1top{
+				width: auto;
+				height: auto;
+				position: relative;
+				top: 1px;
+				left: 1px;
+			}
+			.main2back{
+				width: 1000px;
+				height: auto; 
+				padding-top: 50px;
+				margin: 0 auto;
+				position: relative;
+				top: 110px;
+			} 
+			.main3back{ 
+				width: 1000px;
+				height:auto; 
+				border: 0px solid red;
+				padding-top: 100px; 
+				margin: 0 auto;
+				position: relative;
+				top: 110px; 
+			}
+			.m3l{
+				border: 0px solid blue;
+				width: 50%;
+				height: auto; 
+				float: left; 
+			}
+			.m3rback{
+				background-color: #282828;
+				border: 0px solid green;
+				width: 497px;
+				height: 300px;
+				margin-top: 100px;
+				float: left;
+				border-radius: 20px 20px 20px 20px;
+			}
+			.m3rmain{
+				margin-top: 30px;
+				background-color: #282828; 
+				width: 495px;
+				height: auto;
+				padding: 30px;
+				font-size: 17px; 
+				color: white;
+				border-radius: 20px 20px 20px 20px;
+				text-align: center;
+			}
+			.m3a{ 
+				border: 0px solid black;
+				height: 400px;
+				width: auto; 
+			}
+			.m3b{
+				border: 0px solid orange;
+				padding-top: 60px;
+				color: white;
+			}
+			.m3b img{
+				width: 250px;
+				border-radius: 20px 20px 20px 20px; 
+				transition: width .500s ease-out;
+				animation: donghuaout 5s;
+				position: relative;
+				top: 0px;
+				left: 0px;
+			}
+			.m3b img:hover{
+				animation: donghuain 5s;
+				position: relative;
+				top: 0px;
+				left: 0px;
+				transition: width .500s ease-in;	 
+				width: 600px;
+				border-radius: 20px 20px 20px 20px; 
+			} 
+			@keyframes donghuain{
+				0%{top: 0px;left: 0px;}
+				100%{top: 0px; left: 15%;}
+			}
+			@keyframes donghuaout{
+				0%{top: 0px;left: 15%;}
+				100%{top: 0px; left: 0px;}
+			}
+			.hname{
+				border-bottom: 2px solid gray; 
+				padding-bottom: 15px;
+				width: 300px;
+				font-weight: bold;
+			}
+			.intro{
+				padding-top: 30px;
+				padding-bottom: 30px; 
+				font-size:17px;
+			}
+			.intro li{
+				list-style: disc;
+				margin-left: 80px;
+			}
+			.foot{
+				font-size: 17px; 
+				position: absolute;
+				width: 100%; 
+				height: 70px;
+				background: black; 
+				line-height: 70px; 
+				text-align: center;
+				color: white;
+				margin-top:200px ;
+			}
+			.pl{
+				border: 0px solid red;
+				margin-top: 50px;
+			}
+			.pl table{
+				width: 100%;
+				border: 0px;
+			}
+			.pl tr{
+				border-bottom: 1px solid gray;
+			}
+			.pl table td{
+				border: 0px solid gray;
+				height: 70px;
+				font-size: 20px; 
+			}
+			.liuyan{
+				border: 0px solid blue;
+				margin: 0 auto;
+				padding: 50px;
+			}
+			.liuyan input{
+				width: 300px;
+				border-radius: 15px 15px 15px 15px;
+				border: 0px solid gray;
+				margin: 10px;
+				height: 30px;
+				text-align: center;
+				font-size: 17px;
+				color: black;
+			}
+			.liuyan textarea{ 
+				width: 320px;
+				height: 150px; 
+				color: black;
+			} 
+			body{
+				background-color: black;
+			}
+			.peizhi{
+				border: 0px solid red;  
+				font-size: 17px;
+				padding: 50px;
+				color: white;
+			} 
+			.peizhi tr{
+				height: 30px;
+			}
+			.neir{
+				padding-left: 30px;
+				width: 500px;
+				font-weight: bold;
+				border: 0px;
+				background-color: transparent;
+			}
+			.bttn{
+				width: 190px;
+				height: 40px;
+				background-color: white;
+				border: 1px solid black;
+				border-radius: 20px 20px 20px 20px;
+				color: black;
+			}
+			.bttn:hover{
+				transition: background .500s ease;	
+				width: 190px;
+				height: 40px;
+				background-color:  lightblue;
+				border: 1px solid lightblue;
+				border-radius: 20px 20px 20px 20px;
+				color: dimgray;
+			}
+		</style>
+	</head>
+	<body onload="showAll()">
+		<div class="head">
+			<div class="hd">
+				<div class="logo"><a href="home.html"><img src="img/logo.png"></a></div>
+				<div class="lie">
+					<ul class="hmn">
+						<li><a href="home.html#phone">手机测评</a></li>
+						<li><a href="home.html#computer">电脑测评</a></li> 
+						<li><a href="#bq">版权信息</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="main1back">
+			<div class="m1top">
+				<h1>华为 Mate 10 评测：大智若愚</h1> <br />
+				<h4>外在看不到的聪明，要时间来体会。</h4> 
+			</div>
+		</div>
+		
+		<div class="main2back">
+			<img src="img/mate10/m2.jpg" style="width: 100%; "/>
+		</div>
+		
+		<div class="daohang">
+			<ul>
+				<li><a href="#zdgg">重点规格</a></li>
+				<li><a href="#yjsj">外形设计</a></li>
+				<li><a href="#rjgn">软件功能</a></li>
+				<li><a href="#xj">相机</a></li>
+				<li><a href="#xhl">性能续航力</a></li> 
+				<li><a href="#zj">总结</a></li>
+				<li><a href="#pl">评论</a></li>
+			</ul>
+		</div>
+		
+		<div class="main3back">
+			<div class="m3a">
+			<div class="m3l" align="center">
+				<img src="img/mate10/mate00.png" height="480px" />
+			</div>
+			<div class="m3rback">
+				<div class="m3rmain">
+					华为Mate10是一款由华为技术有限公司研发的智能手机，
+					该机采用10nm制程的麒麟970处理器和6寸1080p屏幕，
+					预装基于Android 8.0的EMUI8.0操作系统。
+					近年的新手机产品都教人即惊且喜的华为，
+					来到年末更新的时候推出了搭载新一代麒麟 970 SoC 的 Mate 10 系列。
+					以新增的 NPU 挂帅，声称为 Mate 10 系列带来的机器学习能力，
+					让它即使在用了一段日子也能保持爽快，这显然是针对着一众只求稳定好用的商务人士而来
+				</div>
+			</div>
+			</div>
+			
+			
+			 <script>
+			  	var c,ctx;
+			  	var img=new Image();
+			  	window.onload=function(){
+					c=document.getElementById("myCanvas");
+			  		ctx=c.getContext("2d");
+			  		img.src="img/mate10/mt10.jpg";
+			  		ctx.drawImage(img,0,0,c.width,c.height);  
+			  	}
+			  	function enlarge(ev){
+			  		var ev=ev||window.event;
+			  		var x=ev.clientX-100;
+			  		var y=ev.clientY+100; 
+			 		ctx.drawImage(img,x,y,500,500,0,0,c.width,c.height);  
+			  	} 
+			   </script>
+			   <div style="float: left;width: 100%;">
+		    	<img src="img/mate10/mt10.jpg" width="500" height="500" onmousemove="enlarge(event)" style="float: left;margin-top: 100px;margin-bottom: 100px;">
+   				<canvas id="myCanvas" width="400" height="400" style="float: left;margin-top: 150px;margin-bottom: 100px;margin-left: 60px;border-radius: 30px 30px 30px 30px;" ></canvas>
+   				</div>
+   				
+   				
+			<div class="m3b">  
+				
+				<h2 class="hname" >重点规格</h2>
+				
+					<div class="peizhi" id="zdgg">
+					  <form>   
+						<input type="hidden" name="imgsrc" value="mate10.jpg">  
+						<table>
+							<tr>
+								<td>&gt; 名称：</td>
+								<td><input type="text" name="bookname" value="华为 Mata10" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 屏幕：</td>
+								<td><input type="text" name="bookn" value="5.9 英寸 2560 x 1440 像素   TFT材质显示屏" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 相机：</td>
+								<td><input type="text" name="camera" value="1200万像素 + 2000万像素" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 处理器：</td>
+								<td><input type="text" name="cpu" value="海思 Kirin 970" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 内存：</td>
+								<td><input type="text" name="ram" value="4GB RAM" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 电量：</td>
+								<td><input type="text" name="baterry" value="4000mAh" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 预载系统：</td>
+								<td><input type="text" name="os" value="EMUI 8.0（基于Android 8.0）" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 无线支持：</td>
+								<td><input type="text" name="wifi" value="802.11 a/b/g/n/ac ，蓝牙 4.2  NFC" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 是否防尘防水：</td>
+								<td><input type="text" name="wcws" value="否" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 三围 重量：</td>
+								<td><input type="text" name="size" value="150.5 x 77.8 x 8.2 mm，重 186g" readonly class="neir"></td>
+							</tr>
+							
+						</table>
+						<br />
+						
+						<INPUT TYPE="button" value="添加比较" onclick="addBj(this)" class="bttn">
+						<INPUT TYPE="button" value="查看比较内容" onclick="javascript:location.href='bijiao.html';" class="bttn">
+						<INPUT TYPE="button" value="清空比较" onclick="clearBj()" class="bttn">
+						  </form>
+					</div>
+		
+				  
+				  <SCRIPT LANGUAGE="JavaScript">
+				  
+				 function addBj(bt){
+				
+					var str=localStorage.getItem("json");
+					var json= JSON.parse(str);
+					
+					if(json==null)
+					{
+					json= { "list": []};
+					
+					}
+					
+						var data=new Object;
+						data.bid=json.list.length;
+						data.name=bt.form.bookname.value;
+						data.bkname=bt.form.bookn.value;
+						data.cmr=bt.form.camera.value;
+						data.cenpu=bt.form.cpu.value;
+						data.neic=bt.form.ram.value;
+						data.dianl=bt.form.baterry.value;
+						data.ios=bt.form.os.value;
+						data.wire=bt.form.wifi.value;
+						data.fcfs=bt.form.wcws.value;
+						data.big=bt.form.size.value;
+						
+						path=bt.form.imgsrc.value;
+						var n=path.lastIndexOf("/")+1;
+						data.pic=path.substring(n);
+						
+						json.list.push(data);
+						 var str = JSON.stringify(json);
+						localStorage.setItem("json",str);
+						alert("添加成功");
+					} 
+				 function clearBj(){
+						localStorage.removeItem("json"); 
+						alert("比较页面已清空");
+				  	}
+				
+				  </SCRIPT> 
+				  
+				  
+				<h2 id="yjsj" class="hname" >外形设计</h2>  
+				 <div class="intro">
+					借测的这台亮黑色普通版 Mate 10，其玻璃机背设计有点像叫人趋之若鹜的陶瓷感觉 -- 
+					贵气、耐看。上方相机的部分更有一带横幅，把获得徕卡加持的新一代 SUMMILUX-H 双摄相机，
+					以颜色深浅的对比效果突显出来，要不是两颗镜头突起来的存在感如此高的话，
+					以「最美机背」来形容 Mate 10 也不为过。再怎样也已经要比连续三颗圈圈竖着放的 
+					Mate 10 Pro 好很多了.
+				</div>
+				<img src="img/mate10/m5.jpg" width="60%"  /> 
+				<div class="intro">
+					Mate 10 系列的指纹辨识器位置刚好与前代相反：
+					普通版是把长修形的指纹辨识器放在屏幕下方，反而 Pro 版则搬回背后。
+					在这个吹着一片全面屏风气的市场上，
+					Mate 10 的 5.9 寸屏幕边框在今天也只能算作极窄，
+					不过也因此保留了 16:9 的显示比例，看一般比例的视频时就能用尽所有空间了。
+				</div> 
+				<img src="img/mate10/m3.jpg" width="70%" />
+				<div class="intro">
+					点亮屏幕后，这片 2K（2,560 x 1,440）LCD 面板亮丽出色，
+					显示效果绝不失礼。底下的指纹辨识器跟 Mate 9 Pro 一样 ，
+					在不想使用虚拟导般键的时候，它能像 mBack 般通过轻点、长按、
+					滑动来取代返回键、主页键和多工键的用途，不过左右两颗热感键就没有了，外观进一步简化。
+				</div>
+				
+				<h2 id="rjgn" class="hname" >软件功能</h2>
+				<div class="intro">
+					Mate 10 是再一台预载 Android Oreo 的手机产品，
+					不过就功能来说，华为要比 Sony 更能保留新版本系统的新卖点，
+					起码之前小编试不出来的通知点功能，在 Mate 10 上都能完全用到。
+				</div>
+				<img src="img/mate10/m6.jpg" width="70%"/>
+				<div class="intro">
+					香港版本 Mate 10 除了预载谷歌的一些 app 之外，
+					另外再有 Facebook、Messenger、Instagram、
+					Booking.com 和 CNN。微软更有为华为人工智能芯片定制优化了其翻译工具，
+					不过其效果却强差人意，简单翻译几个日文字也能乱七八糟。
+					只是微软翻译的风评一向不够好，所以小编也搞不清楚是华为或是微软的问题了。 
+				</div>
+				<img src="img/mate10/m7.jpg" width="70%"/>
+				<div class="intro">
+					香港版本 Mate 10 除了预载谷歌的一些 app 之外，
+					另外再有 Facebook、Messenger、Instagram、
+					Booking.com 和 CNN。微软更有为华为人工智能芯片定制优化了其翻译工具，
+					不过其效果却强差人意，简单翻译几个日文字也能乱七八糟。
+					只是微软翻译的风评一向不够好，所以小编也搞不清楚是华为或是微软的问题了。
+					<br /><br />
+					再多的软件功能优化，小编是非常希望能在这次的评测里给大家个人使用感受，
+					不过所谓的 AI 优化，都是通过机器学习而为软件执行时进行优化，
+					所以在一般使用时不太能直接感受到分别。
+					而且更是需要在使用好一段日子（打比方说半年），
+					再拿出一台新的机器来比较才能看到。不过华为会打着如此的旗号，
+					相信也是有着一定自信和理据的了。
+				</div>
+				
+				
+				
+				<h2 id="xj" class="hname" >相机</h2>
+				<div class="intro">
+					华为再一次在其旗舰手机上搭载徕卡加持的 SUMMILUX-H 双摄相机，
+					虽然像素分别停留在黑白的 20MP 和 RGB 的 12MP，
+					不过就支持双 f/1.6 大光圈，也有 OIS 防抖能力，
+					可谓是追逐像素之后的补品；前置相机也有 8MP f/2.0 的规格。
+					在功能上更表示了因为 AI 计算的加入，让相机懂得根据景物的特点而调整参数，
+					像是食物、夜景等。可惜的是 HDR 效果还是需要手动选取，
+					这不该才是最应该自动选用的拍摄模式来的吗？对了，
+					Mate 10 还有个显然是参考 iPhone 的
+					 Live Photo 而来的 Movie Photo，可惜的是这
+					  Movie Photo 在分享的时候就只是一张体积很大的静态相片，
+					  未能像 Live Photo 一样在社交平台上「活起来」。
+				</div>
+				<img src="img/mate10/m8.jpg" width="70%" />
+				<div class="intro">
+					通过 Mate 10 所拍摄的照片，依旧叫小编赞叹：
+					优异的色彩还原能力、细腻的细节。这次更因为大光圈和 AI 加持，
+					使得拍摄速度能进一步提升，相当适合街头拍 Mate 10 的相机菜单里，
+					如果不太贪心去选用的最高虚化程度的话，相片的效果其实也不错看，
+					拍拍小物件、人像的话也是堪用的。
+				</div> 
+				
+				<h2 id="xhl" class="hname" >性能和续航力</h2>
+				<div class="intro">
+					Mate 10 搭载着自家研发的麒麟 970 SoC，
+					里头最叫人注目的就是专属负责机器学习用途的 NPU，
+					另外处理器则由四颗 2.4GHz Cortex-A73 配合四颗 
+					1.8GHz Cortex-A53 组成的八核心处理器，
+					而且更是以 10nm 制程打造；GPU 是 12 核心的
+					 Mali G72 MP12。单是于帐面上，要比对手高通
+					 的 Snapdragon 835 SoC 要强不少。
+				</div> 
+				<img src="img/mate10/m9.jpg" width="70%"/> 
+				<div class="intro">
+					只是这台借测的 4GB RAM + 64GB 存储空间版本的 Mate 10，
+					在各项跑分工具的成绩都相当诡异，惯常用以测网页浏览性能和硬件性能的
+					 Vellamo 2 HTML 和 CF-Bench 分别是未能完成测试，
+					 以及交出比平均高出数十倍的分数，所以也只好用一个工具了。
+					 幸好还有测 GPU 的 3DMark 没有出现这问题，PCMark 
+					 的续航力测试也顺利进行；分数上，麒麟 970 的 GPU 
+					 能抗衡一向在图像处理上占有优势的高通，
+					 所以玩游戏也相信不会难到 Mate 10。
+					<br /><br />
+					电池也是 Mate 10 另一个重点提到的部分，
+					容量虽然是与前代 Mate 9 Pro 同样是 4,000mAh（已经很厉害了），
+					但这次华为更是把充电部分都特意拿出来（望向 Note 7）。
+					他们表示 Mate 10 系列的 4.5V/5A 低压快充 SuperCharge 
+					充电方案是首个端至端都通过德国测试机构 TÜV Rheinland 的认证，
+					同时具备效率和安全性。可是在 PCMark 的续航力测试里，
+					这片电池在满电、一半亮度和连上 Wi-Fi 的情况下，
+					跑了 7 个小时多就落到 20%，未能追上其他只有 3,000 mAh 
+					等级的对手。幸好 Mate 10 的待机省电，一个晚上也只扣了几个百份比。
+				</div>
+				
+				<h2 id="zj" class="hname" >总结</h2>
+				<div style="background-image: url(img/mate10/m4.jpg);width: 100%;height: 380px;"></div>
+				<div class="intro">
+					华为去年推出的一台 Mate 9 Pro，
+					其美美的修长外形、强悍的硬件和有着长足改进的软件设计，
+					给了小编一大惊喜。到了今年的迭代 Mate 10，
+					没有盲目跟随 18:9 全面屏和无线充电的潮流
+					（好了，Mate 10 Pro 还是有全面屏了），
+					反而华为以 AI 为题，使出铺天盖地的宣传攻势
+					（起码在香港有这样）来点出新旗舰的最主要两个卖点：稳定和流畅。
+					<br /><br />
+					在评测期间，Mate 10 的确都能妥善地完成各种操作要求，
+					规格上也刻意点出他们为充电部分获得的安全认证。给予小编的感觉就是
+					，在对比去年 Mate 9 在功能、设计上的大幅转舵后，
+					Mate 10 就是来仔细修正各个细节。当然，Mate 10 系列最重要的部分，
+					其实是新增到麒麟 970 的 NPU -- 能通过机器学习来保持 Mate 10 的使用表现，
+					但可惜小编总不能用个一年半载才再回来测试。所以对于这部分的表现，
+					就要靠大家消费者日后的评价了。不过幸好的是，
+					我们能在相机里更容易地体验到 AI 的存在，华为利用软件的力量，
+					来把原本已经相当不错的徕卡认证相机再度进化。
+					<br /><br />
+					Mate 10 就像一个稳重的老管家，能务实、妥善地完成工作，而且还有一些需要仔细发掘才能感受到的智能。
+				</div> 
+				 
+				 
+				
+				<br />
+				<h2 id="pl" class="hname">评论</h2>
+				<div>
+				    <table class="liuyan" >
+				        <tr>
+				           <td>用户名：</td>
+				           <td><input type="text" name="userame" id="username" required/></td>
+				        </tr>
+				        <tr>
+				            <td>标题：</td>
+				            <td><input type="text" name="title" id="title" required/></td>
+				        </tr>
+				        <tr>
+				            <td>评论：</td>
+				            <td><textarea name="content" id="content" required/></textarea></td>
+				        </tr>
+				        <tr>
+				        	<td></td>
+				        	<td><input type="button" class="tj" value="提交" id="save" onclick="save()"/></td>
+				        </tr>
+				    </table>
+				        <hr>
+				        <input type="button" value="查看留言板" onclick="showAll()" style="color: black;"/>
+						 
+				        <div class="pl">
+				        	<h2>网友评论区</h2><br />
+						<table id="show" border="1" >
+				        </table>
+						</div>
+				</div>
+				
+				
+			</div>
+			
+			
+		</div>
+		
+			<div class="foot" id="bq">
+				版权信息：&copy;软件17201班 - 17180620103  田纪海.
+			</div>
+	</body>
+</html>

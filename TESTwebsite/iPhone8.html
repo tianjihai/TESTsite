@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>iPhone 8 评测</title> 
+		<link href="css/bootstrap.css" type="text/css" rel="stylesheet" />
+		<link href="css/stylexg.css" rel="stylesheet">
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet" /> 
+		<script src="jquery1.11.3/jquery-1.11.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script> 
+		<script type="text/javascript">
+		window.onload=function() {
+	            initDB();
+		}
+	        function initDB() {
+	            var db=getDB();
+		    if(db){
+	            	db.transaction(function (trans) { 
+	                trans.executeSql("create table if not exists message(username text null,title text null,content text null)", [], 		function (trans, result) {
+	
+	                },
+			function (trans, message) {
+				alert(message);
+	            	});
+			});
+		    }
+	        }
+	        
+		function getDB(){
+			
+	            var db = openDatabase("fffdsa", "1.0", "My Message Pad", 1024 * 1024); 
+	            if(!db) {
+			alert("您的浏览器不支持HTML5本地数据库");
+			return false;
+		    }
+		    return db;
+		}
+		
+	        function save(){
+		    var username = document.getElementById("username").value;
+	 	    var title = document.getElementById("title").value;
+		    var content = document.getElementById("content").value;
+		    
+	            var db = getDB();
+		    if(db){
+		    	
+	               	db.transaction(function(trans) {
+	                trans.executeSql("insert into message(username,title,content) values(?,?,?) ", [username, title, content], 
+			function (ts, data) {
+				alert("留言保存成功");
+	                }, 
+			function (ts, message) {
+	                	alert(message);
+	                });
+	                });	
+		    }
+	        }
+	        
+	        function showAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("select * from message ", [], 					function (ts, result) {
+	                    if (result) {
+				show.innerHTML += "<th>用户名</th><th>标题</th><th>留言</th>";
+	                        for (var i = 0; i < result.rows.length; i++) {
+	                            writeTable(result.rows.item(i));
+	                        }
+	                    }
+	                }, 
+			function (ts, message) {
+				alert(message);
+				var tst = message;
+			});
+	            	});
+		    }
+	        }
+	        
+		function writeTable(data) {
+	            var show=document.getElementById("show");
+	            var username = data.username;
+	            var title = data.title;
+	            var content = data.content;
+	            var str = "";
+		    str += "<tr>";
+		    str += "<td>" + username + "</td>";
+		    str += "<td>" + title + "</td>";
+		    str += "<td>" + content + "</td>";
+		    str += "</tr>";
+		    show.innerHTML += str;
+	            
+	        }
+	        
+		function clearAll() {
+		    var show=document.getElementById("show");
+	            show.innerHTML="";
+	            var db = getDB();
+		    if(db){
+	            	db.transaction(function (trans) {
+	                trans.executeSql("delete from message ", [], 					function (ts, data) {
+	                    alert("已清空留言本所有留言");
+	                }, 
+			function (ts, message) {
+			    alert(message);
+			    var tst = message;
+			});
+	            	});
+		    }
+		}
+	    </script>
+	    
+		<style>
+			.head{
+				position:absolute;
+				top: 0px;
+				width: 100%;
+				height: 80px;
+				background-color: black;  
+			}
+			.hd{
+				width: 1100px;
+				margin: 0 auto; 
+				height: 100%;   
+			} 
+			.logo {
+				float: left;
+			}
+			.lie{
+				float: left;
+				margin-left: 20px;
+			}
+			.lie li{
+				list-style: none;line-height: 80px;width: 170px;
+				text-align: center ; float: left;
+			}
+			.lie li a{
+				display: block; width: 100%; height: 100%; font-size: 20px;
+				color: white; text-decoration: none;font-family: "幼圆";
+			}
+			.lie li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+			} 
+			.daohang{
+				background-color: black;
+				width: 150px;
+				height: 280px;
+				position: fixed;
+				border: 0px solid yellow;
+				top: 230px; 
+				z-index: 1111;
+			}
+			.daohang li{   
+				list-style: none;line-height: 40px;width: 110px;
+				 border: 0px solid red; 
+			}
+			.daohang li a{
+				display: block; width: 100%; height: 100%; font-size: 18px;
+				color: white; text-decoration: none;font-family: "comic sans ms";
+				 padding-left: 10px;
+			}
+			.daohang li a:hover{
+				transition: background .500s ease;		
+				background-color: white;
+				color: black;
+				 padding-left: 10px;
+			} 
+			.main1back{
+				width: 1000px;
+				height: 140px;
+				border: 0px solid gray;
+				margin: 0 auto;
+				position: relative;
+				top: 1500px;
+			}
+			.m1top{
+				width: auto;
+				height: auto;
+				position: relative;
+				top: 1px;
+				left: 1px;
+			}
+			.main2back{
+				width: 1000px;
+				height: auto; 
+				padding-top: 50px;
+				margin: 0 auto;
+				position: relative;
+				top: 1300px;
+			} 
+			.main3back{ 
+				width: 1000px;
+				height:auto; 
+				border: 0px solid red;
+				padding-top: 50px;
+				margin: 0 auto;
+				position: relative;
+				top: 1500px; 
+			}
+			.m3l{
+				border: 0px solid blue;
+				width: auto;
+				height: auto;
+				float: left;
+			}
+			.m3rback{
+				background-color: gray;
+				border: 0px solid green;
+				width: 497px;
+				height: 420px;
+				float: left;
+				border-radius: 0px 30px 30px 0px;
+			}
+			.m3rmain{
+				margin-top: 60px;
+				background-color: lightgray;
+				border: 0px solid orange;
+				width: 497px;
+				height: auto;
+				padding: 30px;
+				font-size: 17px; 
+			}
+			.m3a{ 
+				border: 0px solid black;
+				height: 423px;
+				width: auto; 
+			}
+			.m3b{
+				border: 0px solid deeppink;
+				margin-top: 20px;
+			}
+			.m3b img{
+				width: 200px;
+				border-radius: 20px 20px 20px 20px; 
+				transition: width .500s ease-out;
+				animation: donghuaout 5s ;
+				position: relative;
+				top: 0px;
+				left: 0px;
+			}
+			.m3b img:hover{
+				animation: donghuain 5s  ;
+				position: relative;
+				top: 0px;
+				left: 0px;
+				transition: width .500s ease-in;	 
+				width: 600px;
+				border-radius: 20px 20px 20px 20px; 
+			} 
+			@keyframes donghuain{
+				0%{top: 0px;left: 0px;}
+				100%{top: 0px; left: 15%;}
+			}
+			@keyframes donghuaout{
+				0%{top: 0px;left: 15%;}
+				100%{top: 0px; left: 0px;}
+			}
+			.hname{
+				border-bottom: 2px solid gray; 
+				padding-bottom: 15px;
+				width: 300px;
+				font-weight: bold;
+			}
+			.intro{
+				padding-top: 30px;
+				padding-bottom: 30px; 
+				font-size:17px;
+			}
+			.foot{
+				font-size: 17px; 
+				position: absolute;
+				width: 100%; 
+				height: 70px;
+				background: black; 
+				line-height: 70px; 
+				text-align: center;
+				color: white;
+				margin-top:1600px ;
+			}
+			body{
+				background-color: #feede3; 
+			}
+			.bd{
+				position: fixed;   
+				top: 100px;
+				width: 100%;
+				border: 0px solid blue;
+			}
+			.eight{
+				border: 0px solid red;
+				width: 385px;
+				margin: 0 auto;
+			} 
+			.hdimg{ 
+				position: absolute; 
+				z-index: 111;
+				width: 100%;
+				margin-top: 650px; 
+				border: 0px solid red;
+			}
+			.phone{
+				border: 0px solid green;
+				margin: 0 auto;
+				width: 400px;
+			}
+			.pl{
+				border: 0px solid red;
+				margin-top: 50px;
+			}
+			.pl table{
+				width: 100%;
+				border: 0px;
+			}
+			.pl table td{
+				border: 1px solid gray;
+				height: 70px;
+				font-size: 20px; 
+			}
+			.liuyan{
+				border: 0px solid blue;
+				margin: 0 auto;
+				padding: 50px;
+			}
+			.liuyan input{
+				width: 300px;
+				border-radius: 15px 15px 15px 15px;
+				border: 1px solid gray;
+				margin: 10px;
+				height: 30px;
+				text-align: center;
+				font-size: 17px;
+			}
+			.liuyan textarea{ 
+				width: 320px;
+				height: 150px; 
+			} 
+			.peizhi{
+				border: 0px solid red;  
+				font-size: 17px;
+				padding: 50px;
+			} 
+			.peizhi tr{
+				height: 30px;
+			}
+			.neir{
+				width: 500px;
+				font-weight: bold;
+				border: 0px;
+				background-color: transparent;
+			}
+			.bttn{
+				width: 190px;
+				height: 40px;
+				background-color: black;
+				border: 1px solid black;
+				border-radius: 20px 20px 20px 20px;
+				color: white;
+			}
+			.bttn:hover{
+				transition: background .500s ease;	
+				width: 190px;
+				height: 40px;
+				background-color:  white;
+				border: 1px solid white;
+				border-radius: 20px 20px 20px 20px;
+				color: black;
+			}
+		</style>
+	</head>
+	<body  onload="showAll()"> 
+		
+		<div class="bd">
+			<div class="eight">
+				<img src="img/iph8/hero_8.png" width="380px"/>
+			</div> 
+		</div>
+		
+		<div class="hdimg">
+			<div class="phone">
+				<img src="img/iph8/design_hero.png" width="400px"  />
+			</div> 
+		</div>
+		
+		<div class="head">
+			<div class="hd">
+				<div class="logo"><a href="home.html"><img src="img/logo.png"></a></div>
+				<div class="lie">
+					<ul class="hmn">
+						<li><a href="home.html#phone">手机测评</a></li>
+						<li><a href="home.html#computer">电脑测评</a></li> 
+						<li><a href="#bq">版权信息</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="main1back">
+			<div class="m1top">
+				<h1 style="color: dimgray;">iPhone 8 评测：看不到的大变化</h1> <br />
+				<h4 style="color: dimgray;">为还没准备好放弃 Home 键的人准备的好选择。</h4> 
+			</div>
+		</div>
+		 
+		
+		<div class="daohang">
+			<ul>
+				<li><a href="#zdgg">重点规格</a></li>
+				<li><a href="#yj">硬件</a></li>
+				<li><a href="#pm">屏幕</a></li>
+				<li><a href="#rj">软件</a></li>
+				<li><a href="#xj">相机</a></li>
+				<li><a href="#xn">性能及续航</a></li>
+				<li><a href="#pl">评论</a></li>
+			</ul>
+		</div>
+		
+		<div class="main3back">
+			<div class="m3a">
+			<div class="m3l">
+				<img src="img/iph8/ipe1.jpg" width="500px" style="border-radius: 30px 0px 0px 30px;"/>
+			</div>
+			<div class="m3rback">
+				<div class="m3rmain">
+					智能手机随着时间的进展，不仅屏幕愈来愈大，边框同时也愈来愈小。
+					可以说我们使用者与信息间的距离无论是概念上还是事实上，都愈来愈近。
+					看到了这样的趋势，苹果推出了 iPhone X 做为回应，但同时为了让转移不要那么突然，
+					同时还发布了 iPhone 8 和 8 Plus 两款机型。
+					它们外观是大家熟悉的样子，操作起来也一如预期，甚至可以说是「传统」。
+					虽然未来的 iPhone 不意外的话都会向着 iPhone X 的方向靠拢，
+					但做为「再战一年」的末代设计，8 与 8 Plus 依然是设计优良、高性能的好机器，
+					在新世代夺得主控权之前，最后一次发光发热。
+				</div>
+			</div> 
+			</div>
+			
+			    <script>
+			  	var c,ctx;
+			  	var img=new Image();
+			  	window.onload=function(){
+					c=document.getElementById("myCanvas");
+			  		ctx=c.getContext("2d");
+			  		img.src="img/iph8/ipe1.jpg";
+			  		ctx.drawImage(img,0,0,c.width,c.height);  
+			  	}
+			  	function enlarge(ev){
+			  		var ev=ev||window.event;
+			  		var x=ev.clientX+100;
+			  		var y=ev.clientY+100; 
+			 		ctx.drawImage(img,x,y,180,180,0,0,c.width,c.height);  
+			  	} 
+			   </script>
+			   <div style="float: left;width: 100%;">
+		    	<img src="img/iph8/ipe1.jpg" width="500" height="500" onmousemove="enlarge(event)" style="float: left;margin-top: 100px;margin-bottom: 100px;">
+   				<canvas id="myCanvas" width="400" height="400" style="float: left;margin-top: 150px;margin-bottom: 100px;margin-left: 60px;border-radius: 30px 30px 30px 30px;" ></canvas>
+   				</div>
+   
+			<div class="m3b"> 
+				
+				<h2 class="hname" >重点规格</h2>
+				
+					<div class="peizhi" id="zdgg">
+					  <form method="post">   
+						<input type="hidden" name="imgsrc" value="ip8.jpg">  
+						<table>
+							<tr>
+								<td>&gt; 名称：</td>
+								<td><input type="text" name="bookname" value="苹果 iPhone 8" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 屏幕：</td>
+								<td><input type="text" name="bookn" value="4.7 英寸1334 x 750像素 LCD 宽屏多点触控显示屏" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 相机：</td>
+								<td><input type="text" name="camera" value="1200 万像素摄像头   ƒ/1.8 光圈" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 处理器：</td>
+								<td><input type="text" name="cpu" value="64 位架构的 A11 仿生处理器  嵌入式 M11 运动协处理器" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 内存：</td>
+								<td><input type="text" name="ram" value="2GB RAM" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 电量：</td>
+								<td><input type="text" name="baterry" value="1821mAh" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 预载系统：</td>
+								<td><input type="text" name="os" value="iOS 11" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 无线支持：</td>
+								<td><input type="text" name="wifi" value="802.11ac 无线网络，具备 MIMO技术   蓝牙 5.0   支持NFC" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 是否防尘防水：</td>
+								<td><input type="text" name="wcws" value="是" readonly class="neir"></td>
+							</tr>
+							<tr>
+								<td>&gt; 三围 重量：</td>
+								<td><input type="text" name="size" value="138.4 x 67.3 x 7.3mm，重 148g" readonly class="neir"></td>
+							</tr>
+							
+						</table>
+						<br />
+						
+						<INPUT TYPE="button" value="添加比较" onclick="addBj(this)" class="bttn">
+						<INPUT TYPE="button" value="查看比较内容" onclick="javascript:location.href='bijiao.html';" class="bttn">
+						<INPUT TYPE="button" value="清空比较" onclick="clearBj()" class="bttn">
+						  </form>
+					</div>
+		
+				  
+				  <SCRIPT LANGUAGE="JavaScript">
+				  
+				 function addBj(bt){
+				
+					var str=localStorage.getItem("json");
+					var json= JSON.parse(str);
+					
+					if(json==null)
+					{
+					json= { "list": []};
+					
+					}
+					
+						var data=new Object;
+						data.bid=json.list.length;
+						data.name=bt.form.bookname.value;
+						data.bkname=bt.form.bookn.value;
+						data.cmr=bt.form.camera.value;
+						data.cenpu=bt.form.cpu.value;
+						data.neic=bt.form.ram.value;
+						data.dianl=bt.form.baterry.value;
+						data.ios=bt.form.os.value;
+						data.wire=bt.form.wifi.value;
+						data.fcfs=bt.form.wcws.value;
+						data.big=bt.form.size.value;
+						
+						path=bt.form.imgsrc.value;
+						var n=path.lastIndexOf("/")+1;
+						data.pic=path.substring(n);
+						
+						json.list.push(data);
+						 var str = JSON.stringify(json);
+						localStorage.setItem("json",str);
+						alert("添加成功");
+					} 
+				 function clearBj(){
+						localStorage.removeItem("json"); 
+						alert("比较页面已清空");
+				  	}
+				
+				  </SCRIPT> 
+				  
+				  
+				
+				<h2 id="yj" class="hname" >硬件</h2>
+				<div class="intro">
+					今年的iPhone 8并没有明显的变化，只是在它们外表改用钢制的机身，外面包上一圈 7000 系列铝合金，
+					并在背后覆上玻璃背盖了。这让它们可以进行无线充电，但应该会有不少人担心，
+					光是保护一个正面玻璃就已经够困难了，再加上背面还得了？
+					苹果是表示 8 与 8 Plus 采用的是「智能手机上最耐用的玻璃」，
+					和主站编辑一天就把亮黑版 iPhone 7 刮伤相比，
+					至少 iPhone 7 在背面里滚了一个礼拜也没事。
+					耐摔性估且不论，耐刮应该是没有问题的。
+					玻璃的另一个好处，是无线讯号可以透出来，
+					所以从背后就不用再看到硅胶条了。
+					事实上，主站编辑认为 iPhone 8 是他见过最「干净」的背面设计，
+					除了镜头之外，就只有一个苹果的 logo 和「iPhone」的字样，
+					连原本 Design by Apple 那串字都被移除了。
+					主站编辑也认为玻璃的握感比金属更佳，
+					不仅比较温暖，也比较不滑手。不过放在桌子上都是一样会打滑就是了。
+				</div>
+				<img src="img/iph8/ipe2.jpg" width="70%"  />
+				 <div class="intro">
+					不过所有这些元素相加起来，结果却是比前代更长、也更厚了。
+					举例来说，iPhone 8 和理当大一号的 7 Plus 一样厚，8 Plus 
+					更是所有人当中最重的一只。比较小的 iPhone 8 相对来说还好一点，
+					长时间使用问题也不大，但 8 Plus 的重量与厚边框组合的结果，
+					就是它是主站编辑近来使用过握感最差的手机之一。相较之下，
+					屏幕更大的 Galaxy S8 Plus 和 LG V30 握感都优于 iPhone 8 Plus。
+				<br /><br />
+					幸好，不看「外在美」的话，「内在美」还是有不少让人喜爱之处的。
+					苹果总算弃了 32GB 容量，变成从 64GB 起，往上就是 256GB 的存储空间。
+					今年也是第一次苹果设计自己的 GPU 来搭配 A11 Bionic 芯片，
+					而 -- 完全不令人惊讶的 -- 两只手机都跑得非常顺。和往常一样，
+					如果你能接受更大的机身和更贵的售价的话，拥有双镜头和较大颗电池的 8 
+					Plus 应该会是更诱人的选择才是。
+				</div>
+				
+				<h2 id="pm" class="hname" >屏幕</h2>
+				<div class="intro">
+					iPhone 8 和 iPhone 8 Plus 的屏幕规格，
+					相信许多人就算没用过也已经相当熟悉了。前者配备了 4.7 吋的 
+					1,334 x 750 IPS LCD 面板，后者则是将尺吋和分辨率分别提升到了
+					 5.5 吋和 1080p。换句话说，就是跟 7 系列毫无差别，
+					 而且 DCI-P3 色域也有，亮度、对比度等表现也都维持了相同的水准。
+				</div>
+				<img src="img/iph8/ipe3.jpg" width="70%"/>
+				<div class="intro">
+					唯一的不同，在于新一代 iPhone 从 iPad Pro 
+					那里把 True Tone 色温调节功能给借鉴了过来，
+					也能借助环境光感应器来自动对屏幕的整体色彩进行调整。
+					这个选项在预设状态下是开启的，但根据不同的个人习惯也可以把它关掉。
+					我们的主站同事倾向于把它一直打开，因为他觉得这对提升不同光线环境下的色准有所帮助，
+					而且看起东西来眼睛也会比较舒适。
+				</div>
+				<img src="img/iph8/ipe4.jpg" width="70%"/>
+				
+				<h2 id="rj" class="hname" >软件</h2>
+				<div class="intro">
+					在这篇文章推出之时，相信你的 iPhone 也已经收到并更新至 iOS11 了吧。
+					这次的系统更新里，就如之前 iOS 11 的发布描述一样，可说是有着翻天覆地的变化，
+					不过主站的评测机器里还没能用到 AirPlay 2 和 P2P Apple Pay 交易功能，
+					所以这次的评测里就只好缺席。以下就针对着能在 iPhone 8 和 iPhone 8 Plus 
+					上能用到的新功能来评测吧。
+					<br /><br />
+					首先，在界面上的最大变化是字体都用上粗体，不管是 Apple Music，
+					就连讯息、相片等的文字部分都有着既大、且粗体的标题文字。
+				</div>
+				<img src="img/iph8/ipe5.gif" width="70%" />
+				<div class="intro">
+					iOS 控制中心的是全新的可自定式块状设计，在同一个简单的面板里就能开关各种功能，
+					包括 True Tone 显示和车用请勿打扰模式，后者对于驾驶人士来说是个不可多得的新功能，
+					因为它能阻挡手机发出通知，让驾驶人能专心行车。不过这个新的控制中心设计还是有点缺憾的，
+					因为在想着拉下时，很容易就会错误碰到屏幕亮度和音量条。
+					大家就只好习惯一下了。
+				</div>
+				<img src="img/iph8/ipe6.gif" width="70%" />
+				<div class="intro">
+					Siri 在 iOS 11 里也变得更强大，首先是他（或她）的声线会变更自然，
+					更像在与真人对话的感觉。外语翻译时，也能直接以更自然的方式向 Siri 提问，
+					同时也能听懂相对糢糊的要求，像是「播放一些悲伤的音乐」。
+				</div>
+				
+				
+				<h2 id="xj" class="hname" >相机</h2>
+				<img src="img/iph8/ipe7.jpeg" width="70%" style="margin-top: 20px;"/>
+				<div class="intro"> 
+					虽说仍然为 12MP，官方表示 iPhone 8 与 8 Plus 的主相机有着更好的对焦与画质表现，
+					就我们的试用来讲，它的确拥有可以轻松拍出好照片的能力。
+					在我们与 iPhone 7 Plus 的交叉测试中，新款 iPhone 有着更好的细节，
+					比较之下会觉得旧款抹除的比较激进些。
+					日间拍摄甚至觉得比 Galaxy Note 8 细节还要更多 -- 
+					虽说差距很小啦。
+					<br /><br />
+					这个部分主站编辑觉得 iPhone 8 与 8 Plus 的颜色表现相当自然
+					，而 Note8 的话就是感觉偏亮与有点过于美化。
+					这次的测试我们都是开启 HDR 进行的，在这部新款 iPhone 上，苹果预设就是直接启动 HDR，
+					但其实也是可以手动关闭这个选项的。
+				</div>
+				
+				
+				
+				<h2 id="xn" class="hname" >性能及续航力</h2>
+				<div class="intro">
+					在六核心 A11 Bionic 处理器的加持下，iPhone 8 和 8 Plus 
+					的流畅度是完全不用担心的（当然啰，几乎所有新发的 iPhone 一上来都是顺滑无比）。
+					它们比较厉害的地方，是芯片新架构可以让处理器更好地按需出力。
+					如果你是从 iPhone 7 或 7 Plus 转过来的话，
+					日常操作或是启动软件并不会让人察觉到很明显的分别。
+				</div>
+				<img src="img/iph8/ipe8.jpg" width="70%" />
+				<div class="intro"> 
+					是说，在类似这样相对不算重度的使用场景中，
+					8 系列一般会根据不同需求来搭配使用那四颗「效率」（efficiency）核心。
+					如果你开始玩游戏或是进行繁琐的多工操作的话，
+					A11 的两颗「性能」（performance）核心便会加入。
+					而且在这个过程中，设备基本上都会保持至少一颗「性能」
+					加一颗「效率」核心一同工作。此外跟往常一样，得益于 RAM 规格上的优势，
+					3GB 的 iPhone 8 Plus 综合体验也会稍稍优于 2GB 的 iPhone 8。 
+					<br /><br />
+					另外，A11 Bionic 提高的那部分性能，在你运行 AR 应用的时候会带来相当大的帮助。
+					主站同事在评测期间体验了发布会上示范过的《Ikea Place》和
+					《Machines》这两款尚未最终完成的作品，玩过之后 AR Kit 
+					给他留下了非常深刻的印象。手机在实体表面上渲染虚拟物体的效果很好，
+					甚至要好过 Google 已经发展了不少时间的 Tango 平台。
+					尽管 AR Kit 这边对应的软件目前还未开始大规模上线，
+					但其未来的前景应该是很值得期待的。
+					比较遗憾的是，8 和 8 Plus 并没有标配快速充电器，
+					但 Qi 无线充电的体验还算比较好。而且需要指出的是，
+					许多人担心保护套影响无线充电的事其实没太大必要，至少厂方给我们的保护套，
+					戴上之后无线充电的速度并没有减慢。另外，理论上说新 iPhone 
+					应该是能在所有符合 Qi 标准的无线充电板上充电的。 
+				</div>
+				
+				
+				<h2 id="pl" class="hname">评论</h2>
+				<div>
+				    <table class="liuyan" >
+				        <tr>
+				           <td>用户名：</td>
+				           <td><input type="text" name="userame" id="username" required/></td>
+				        </tr>
+				        <tr>
+				            <td>标题：</td>
+				            <td><input type="text" name="title" id="title" required/></td>
+				        </tr>
+				        <tr>
+				            <td>评论：</td>
+				            <td><textarea name="content" id="content" required/></textarea></td>
+				        </tr>
+				        <tr>
+				        	<td></td>
+				        	<td><input type="button" class="tj" value="提交" id="save" onclick="save()"/></td>
+				        </tr>
+				    </table>
+				        <hr>
+				        <input type="button" value="查看评论区" onclick="showAll()"/>
+						 
+				        <div class="pl">
+				        	<h2>网友评论区</h2><br />
+						<table id="show" border="1" >
+				        </table>
+						</div>
+				</div>
+				
+				
+			</div>
+			
+			
+		</div>
+		
+			<div class="foot" id="bq">
+				版权信息：&copy;软件17201班 - 17180620103  田纪海.
+			</div>
+	</body>
+</html>
